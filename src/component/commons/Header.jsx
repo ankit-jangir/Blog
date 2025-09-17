@@ -246,11 +246,17 @@ export default function Header() {
                     Photos
                   </NavLink>
 
-                  {/* Blog accordion */}
+                  {/* Blog accordion (parent label navigates to /blog) */}
                   <Accordion type="single" collapsible>
                     <AccordionItem value="blog" className="border-b-0">
-                      <AccordionTrigger className="px-3 py-3 text-[15px]">
-                        Blog
+                      <AccordionTrigger className="px-3 py-3 text-[15px] flex w-full">
+                        <Link
+                          to="/blog"
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex-1 text-left"
+                        >
+                          Blog
+                        </Link>
                       </AccordionTrigger>
                       <AccordionContent className="pb-2">
                         <div className="flex flex-col gap-1 pl-4">
