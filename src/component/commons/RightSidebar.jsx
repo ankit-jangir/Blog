@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Facebook as FbIcon, Twitter as XIcon, Instagram, Linkedin, MessageCircle } from 'lucide-react'
 
 const DEFAULT_CATEGORY_IMAGE = 'https://picsum.photos/seed/sidebar-category/1200/800'
+const DEFAULT_TOP_IMAGE = (seed) => `https://picsum.photos/seed/topweek-${seed}/100/100`
 
 function CategoryTile({ item }) {
   const data = { ...item, image: item.image || DEFAULT_CATEGORY_IMAGE }
@@ -69,16 +70,33 @@ function TopOnTheWeek({ items }) {
     <div className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5">
       <div className="border-b px-4 py-3 text-[11px] font-semibold tracking-wider text-slate-600">TOP ON THE WEEK</div>
       <ul className="divide-y">
-        {items.map((it, idx) => (
-          <li key={idx} className="flex items-center gap-3 px-4 py-3">
-            <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 font-semibold text-slate-700">
-              {idx + 1}
-            </span>
-            <Link to={it.to} className="block text-[15px] font-semibold leading-snug text-slate-900 hover:text-emerald-600">
-              {it.title}
-            </Link>
-          </li>
-        ))}
+        {items.map((it, idx) => {
+          const thumb = it.image || DEFAULT_TOP_IMAGE(idx + 1)
+          return (
+            <li key={idx} className="group flex items-center gap-3 px-4 py-3">
+              <div className="relative h-10 w-10 shrink-0">
+                {/* number (default visible) */}
+                <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-slate-100 font-semibold text-slate-700 transition-opacity duration-200 group-hover:opacity-0">
+                  {idx + 1}
+                </div>
+                {/* image (shows on hover) */}
+                <img
+                  src={thumb}
+                  alt={it.title}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full rounded-xl object-cover opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+                />
+                {/* keep number visible on hover as small badge */}
+                <span className="pointer-events-none absolute -bottom-1 -right-1 hidden h-5 w-5 items-center justify-center rounded-full bg-white text-[11px] font-semibold text-slate-700 ring-1 ring-black/5 group-hover:flex">
+                  {idx + 1}
+                </span>
+              </div>
+              <Link to={it.to} className="block text-[15px] font-semibold leading-snug text-slate-900 hover:text-emerald-600 break-words">
+                {it.title}
+              </Link>
+            </li>
+          )
+        })}
       </ul>
     </div>
   )
