@@ -64,6 +64,38 @@ function FeaturedPosts({ items }) {
   )
 }
 
+function CategoryList({ items }) {
+  if (!items || items.length === 0) return null
+  const [hovered, setHovered] = React.useState(-1)
+  const preview = items[hovered >= 0 ? hovered : 0]?.image
+  return (
+    <div className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5">
+      <div className="h-28 w-full overflow-hidden sm:h-32">
+        {preview && (
+          <img src={preview} alt="preview" className="h-full w-full object-cover" loading="lazy" />
+        )}
+      </div>
+      <ul>
+        {items.map((it, idx) => (
+          <li
+            key={it.to || it.key || idx}
+            onMouseEnter={() => setHovered(idx)}
+            onMouseLeave={() => setHovered(-1)}
+            className="group flex items-center justify-between px-4 py-4 hover:bg-slate-50 cursor-pointer"
+          >
+            <Link to={it.to} className="text-[15px] font-semibold text-slate-900 group-hover:text-emerald-600">
+              {it.title}
+            </Link>
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-slate-700 text-white text-[13px] font-semibold">
+              {typeof it.count === 'number' ? it.count : ''}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
 function TopOnTheWeek({ items }) {
   if (!items || items.length === 0) return null
   return (
@@ -142,10 +174,12 @@ const RightSidebar = ({
   showFeatured = true,
   showTopWeek = true,
   showSocial = true,
+  showCategoryList = false,
+  categoriesPosition = 'top',
 }) => {
   return (
     <aside className="space-y-4">
-      {showCategories && categories.length > 0 && (
+      {showCategories && categoriesPosition === 'top' && categories.length > 0 && (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
           {categories.map((c) => (
             <CategoryTile key={c.to || c.key} item={c} />
@@ -154,6 +188,19 @@ const RightSidebar = ({
       )}
       {showFeatured && <FeaturedPosts items={featured} />}
       {showTopWeek && <TopOnTheWeek items={topWeek} />}
+      {showCategories && categoriesPosition === 'bottom' && categories.length > 0 && (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
+          {categories.map((c) => (
+            <CategoryTile key={c.to || c.key} item={c} />
+          ))}
+        </div>
+      )}
+      {showCategoryList && (
+        <div className="mt-2">
+          <div className="border-b px-4 py-3 text-[11px] font-semibold tracking-wider text-slate-600">BROWSING CATEGORY</div>
+          <CategoryList items={categories} />
+        </div>
+      )}
       {showSocial && (
         <div
           className={"md:sticky lg:sticky md:[top:var(--stickyOffsetMd)] lg:[top:var(--stickyOffsetLg)]"}

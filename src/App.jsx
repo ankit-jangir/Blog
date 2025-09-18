@@ -5,6 +5,7 @@ import Home from './component/Home'
 import BlogSingle from './component/BlogSingle'
 import CategoryPage from './component/CategoryPage'
 import TagPage from './component/TagPage'
+import Author from './component/Author'
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
       <Route path="/blog/:slug" element={<BlogSingle />} />
       <Route path="/category/:slug" element={<CategoryPage />} />
       <Route path="/tag/:slug" element={<TagPage />} />
+      <Route path="/author/:slug" element={<Author />} />
     </Routes>
   )
 }

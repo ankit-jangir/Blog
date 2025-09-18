@@ -7,7 +7,7 @@ export const CATEGORIES = [
     count: 12,
     image:
       'https://images.unsplash.com/photo-1543007630-9710e4a00a20?q=80&w=1200&auto=format&fit=crop',
-    to: '/blog/passport',
+    to: '/category/passport-services',
   },
   {
     key: 'oci',
@@ -15,7 +15,7 @@ export const CATEGORIES = [
     count: 8,
     image:
       'https://mlvrpw5wpdmq.i.optimole.com/w:768/h:558/q:mauto/ig:avif/https://documitra.com/blog/wp-content/uploads/2025/08/OCI-2.1-1.png',
-    to: '/blog/oci',
+    to: '/category/oci-card-services',
   },
   {
     key: 'nri-legal',
@@ -23,7 +23,7 @@ export const CATEGORIES = [
     count: 6,
     image:
       'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop',
-    to: '/blog/legal',
+    to: '/category/legal-financial-insights-for-nri',
   },
   {
     key: 'indian-visa',
@@ -31,7 +31,7 @@ export const CATEGORIES = [
     count: 16,
     image:
       'https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1200&auto=format&fit=crop',
-    to: '/blog/indian-visa',
+    to: '/category/indian-visa-travel-tips-and-tricks',
   },
   {
     key: 'apostille',
@@ -39,7 +39,7 @@ export const CATEGORIES = [
     count: 3,
     image:
       'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1200&auto=format&fit=crop',
-    to: '/blog/apostille',
+    to: '/category/apostille-and-attestation',
   },
 ]
 

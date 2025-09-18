@@ -57,16 +57,16 @@ const SERVICES = [
 ];
 
 const BLOG = [
-  { label: "Passport Services", to: "/blog/passport" },
-  { label: "OCI Card Services", to: "/blog/oci" },
-  { label: "Indian Visa Travel Tips and Tricks", to: "/blog/indian-visa" },
-  { label: "Europe Visa Travel Tips and Tricks", to: "/blog/europe-visa" },
-  { label: "North America Visa Travel Tips and Tricks", to: "/blog/north-america" },
-  { label: "Asia Pacific Visa Travel Tips and Tricks", to: "/blog/asia-pacific" },
-  { label: "Apostille and Attestation", to: "/blog/apostille" },
-  { label: "Legal & Financial Insights for NRI", to: "/blog/legal" },
-  { label: "News & Updates by Documitra", to: "/blog/news" },
-  { label: "Other Travel Tips and Tricks", to: "/blog/other" },
+  { label: "Passport Services", to: "/category/passport-services" },
+  { label: "OCI Card Services", to: "/category/oci-card-services" },
+  { label: "Indian Visa Travel Tips and Tricks", to: "/category/indian-visa-travel-tips-and-tricks" },
+  { label: "Europe Visa Travel Tips and Tricks", to: "/category/europe-visa-travel-tips-and-tricks" },
+  { label: "North America Visa Travel Tips and Tricks", to: "/category/north-america-visa-travel-tips-and-tricks" },
+  { label: "Asia Pacific Visa Travel Tips and Tricks", to: "/category/asia-pacific-visa-travel-tips-and-tricks" },
+  { label: "Apostille and Attestation", to: "/category/apostille-and-attestation" },
+  { label: "Legal & Financial Insights for NRI", to: "/category/legal-financial-insights-for-nri" },
+  { label: "News & Updates by Documitra", to: "/category/news-updates" },
+  { label: "Other Travel Tips and Tricks", to: "/category/other-travel-tips-and-tricks" },
 ];
 
 /* ------------------------------------------------
@@ -383,7 +383,7 @@ export default function Header() {
             <DropdownMenu open={blogOpen} onOpenChange={setBlogOpen}>
               <DropdownMenuTrigger asChild>
                 <NavLink to="/blog" className="flex items-center gap-1 text-[17px] font-semibold text-gray-700 hover:text-blue-800 focus:outline-none">
-                  Blog <ChevronDown className="h-4 w-4" />
+                Blog <ChevronDown className="h-4 w-4" />
                 </NavLink>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-80">

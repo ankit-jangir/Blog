@@ -167,6 +167,66 @@ const DUMMY_POSTS = [
     publishedAt: '2023-10-18',
     readTime: '5 min read',
   },
+  {
+    id: 14,
+    slug: 'passport-photo-requirements',
+    coverImage:
+      'https://images.unsplash.com/photo-1520975784900-5cbf0c58e7dc?q=80&w=1600&auto=format&fit=crop',
+    title: 'Passport Photo Requirements: Do’s and Don’ts',
+    excerpt:
+      'Avoid rejections with correct size, background, glasses policy, and digital vs. print tips.',
+    category: 'Passport Services',
+    publishedAt: '2024-03-22',
+    readTime: '4 min read',
+  },
+  {
+    id: 15,
+    slug: 'oci-renewal-tips',
+    coverImage:
+      'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1600&auto=format&fit=crop',
+    title: 'OCI Renewal Tips: Documents and Timelines',
+    excerpt:
+      'When to renew, what to upload, and common mistakes applicants make while renewing OCI.',
+    category: 'OCI Card Services',
+    publishedAt: '2024-03-02',
+    readTime: '6 min read',
+  },
+  {
+    id: 16,
+    slug: 'packing-checklist-international',
+    coverImage:
+      'https://images.unsplash.com/photo-1502920514313-52581002a659?q=80&w=1600&auto=format&fit=crop',
+    title: 'International Travel Packing Checklist',
+    excerpt:
+      'Smart packing templates, medication rules, power adapters, and security-friendly bags.',
+    category: 'Travel Tips',
+    publishedAt: '2024-02-18',
+    readTime: '5 min read',
+  },
+  {
+    id: 17,
+    slug: 'indian-visa-appointment-guide',
+    coverImage:
+      'https://images.unsplash.com/photo-1519160558534-579f5104b9a3?q=80&w=1600&auto=format&fit=crop',
+    title: 'Booking Your Indian Visa Appointment: Step‑by‑Step',
+    excerpt:
+      'How to pick centers, upload documents, and avoid last‑minute rescheduling issues.',
+    category: 'Indian Visa Travel Tips and Tricks',
+    publishedAt: '2024-01-28',
+    readTime: '7 min read',
+  },
+  {
+    id: 18,
+    slug: 'nri-tax-basics',
+    coverImage:
+      'https://images.unsplash.com/photo-1454165205744-3b78555e5572?q=80&w=1600&auto=format&fit=crop',
+    title: 'NRI Tax Basics: Residency, Accounts, and Reporting',
+    excerpt:
+      'Understand residential status, NRE/NRO accounts, and compliance essentials for NRIs.',
+    category: 'Legal & Financial Insights for NRI',
+    publishedAt: '2023-12-05',
+    readTime: '6 min read',
+  },
 ]
 
 function cn(...args) {
@@ -180,6 +240,40 @@ function formatDate(dateStr) {
   } catch {
     return ''
   }
+}
+
+function normalize(text) {
+  return String(text || '')
+    .toLowerCase()
+    .replace(/&/g, ' ')
+    .replace(/[-_/]+/g, ' ')
+    .replace(/[^a-z0-9 ]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function titleCase(text) {
+  return String(text || '')
+    .split(' ')
+    .map((w) => (w ? w.charAt(0).toUpperCase() + w.slice(1) : ''))
+    .join(' ')
+}
+
+function toWordsUpper(text) {
+  return String(text || '')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((w) => w.toUpperCase())
+}
+
+function buildCategoryCounts(posts) {
+  const counts = new Map()
+  posts.forEach((p) => {
+    const key = normalize(p.category)
+    counts.set(key, (counts.get(key) || 0) + 1)
+  })
+  return counts
 }
 
 // Fallback images for posts and categories
@@ -207,11 +301,11 @@ function PostHero({ post }) {
             {post?.title}
           </h2>
           <p className="mt-3 line-clamp-3 text-[15px] text-slate-600">{post?.excerpt}</p>
-          <div className="relative mt-auto h-5 border-t border-slate-200 pt-4">
-            <span className="absolute left-0 top-0 text-sm text-slate-500 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
+          <div className="relative mt-auto h-8 border-t border-slate-200">
+            <span className="absolute left-0 top-2 text-sm text-slate-500 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
               {post?.readTime || '5 min read'}
             </span>
-            <span className="absolute left-0 top-0 text-xs font-semibold uppercase tracking-wide text-emerald-600 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">
+            <span className="absolute left-0 top-2 text-xs font-semibold uppercase tracking-wide text-emerald-600 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">
               Read more
             </span>
             <span className="absolute bottom-0 left-0 h-0.5 w-0 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full" />
@@ -241,11 +335,11 @@ function PostCard({ post }) {
             {post?.title}
           </h3>
           <p className="mt-3 line-clamp-3 text-[15px] text-slate-600">{post?.excerpt}</p>
-        <div className="relative mt-auto h-5 border-t border-slate-200 pt-4">
-            <span className="absolute left-0 top-0 text-sm text-slate-500 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
+        <div className="relative mt-auto h-8 border-t border-slate-200">
+            <span className="absolute left-0 top-2 text-sm text-slate-500 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
               {post?.readTime || '5 min read'}
             </span>
-          <span className="absolute left-0 top-0 text-xs font-semibold uppercase tracking-wide text-emerald-600 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">
+          <span className="absolute left-0 top-2 text-xs font-semibold uppercase tracking-wide text-emerald-600 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">
               Read more
             </span>
           <span className="absolute bottom-0 left-0 h-0.5 w-0 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full" />
@@ -279,11 +373,11 @@ function PostFullCard({ post }) {
           className="mt-4 h-72 w-full object-cover"
           loading="lazy"
         />
-        <div className="relative px-5 py-4">
+        <div className="relative border-t border-slate-200 px-5 pt-5 pb-4">
           <span className="text-sm text-slate-500 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
             {post?.readTime || '3 min read'}
           </span>
-          <span className="absolute left-5 top-4 text-xs font-semibold uppercase tracking-wide text-emerald-600 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">
+          <span className="absolute left-5 top-5 text-xs font-semibold uppercase tracking-wide text-emerald-600 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">
             Read more
           </span>
           <span className="absolute bottom-0 left-5 h-0.5 w-0 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-[calc(100%-2.5rem)]" />
@@ -315,11 +409,11 @@ function PostOverlayCard({ post }) {
           <p className="mt-2 line-clamp-2 text-sm text-white/80 drop-shadow">
             {post?.excerpt}
           </p>
-          <div className="relative mt-4 border-t border-white/20 pt-3">
+          <div className="relative mt-4 border-t border-white/20 pt-4">
             <span className="text-sm text-white/80 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
               {post?.readTime || '3 min read'}
             </span>
-            <span className="absolute left-0 top-3 text-xs font-semibold uppercase tracking-wide text-emerald-300 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">
+            <span className="absolute left-0 top-4 text-xs font-semibold uppercase tracking-wide text-emerald-300 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">
               Read more
             </span>
             <span className="absolute bottom-0 left-0 h-0.5 w-0 rounded-full bg-emerald-300 transition-all duration-300 group-hover:w-full" />
@@ -571,7 +665,7 @@ function GetSocial() {
   )
 }
 
-const Blog = ({ filter }) => {
+const Blog = ({ filter, sidebarShowCategoryList = false, showCategoryHeader = false }) => {
   const [posts, setPosts] = useState(DUMMY_POSTS)
 
   // Ensure the initial left section order matches the desired layout:
@@ -599,7 +693,8 @@ const Blog = ({ filter }) => {
     const base = orderedPosts
     if (!filter) return base
     if (filter.category) {
-      return base.filter((p) => (p.category || '').toLowerCase().includes(filter.category.toLowerCase()))
+      const query = normalize(filter.category)
+      return base.filter((p) => normalize(p.category).includes(query))
     }
     if (filter.tag) {
       return base.filter((p) => (p.tags || []).some((t) => t.toLowerCase().includes(filter.tag.toLowerCase())))
@@ -613,6 +708,16 @@ const Blog = ({ filter }) => {
   const [visibleCount, setVisibleCount] = useState(9)
   const [loadingMore, setLoadingMore] = useState(false)
 
+  // Dynamic sidebar category counts derived from available posts
+  const categoryCounts = useMemo(() => buildCategoryCounts(orderedPosts), [orderedPosts])
+  const sidebarCategories = useMemo(() => {
+    return SIDEBAR_CATEGORIES.map((c) => {
+      const key = normalize(c.title)
+      const dynamic = categoryCounts.get(key)
+      return { ...c, count: typeof dynamic === 'number' ? dynamic : (c.count || 0) }
+    })
+  }, [categoryCounts])
+
   function handleLoadMore() {
     if (loadingMore) return
     if (visibleCount >= rest.length) return
@@ -624,11 +729,20 @@ const Blog = ({ filter }) => {
     }, 500)
   }
 
+  // Scroll to top on route/filter change
+  useEffect(() => {
+    try {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } catch {
+      window.scrollTo(0, 0)
+    }
+  }, [filter?.category, filter?.tag])
+
   return (
     <div className="w-full bg-slate-50">
       <Header />
       <main className="min-h-screen w-full">
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-[1400px] px-3 py-6 sm:px-4 lg:px-6">
           {loading && <LoadingSkeleton />}
           {!loading && error && (
             <div className="rounded-lg bg-red-50 p-4 text-sm text-red-700">{error}</div>
@@ -636,8 +750,17 @@ const Blog = ({ filter }) => {
 
             {!loading && !error && (
              <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_320px] lg:grid-cols-[minmax(0,1fr)_360px]">
-              {/* Left: hero + post list */}
+              {/* Left: optional category header + hero + post list */}
               <div className="space-y-6">
+                {showCategoryHeader && filter?.category && (
+                  <section className="mt-2">
+                    <div className="mb-2 text-[12px] font-semibold tracking-wider text-slate-600">BROWSING CATEGORY</div>
+                    <h1 className="heading-tight text-[35px] font-bold text-slate-800 sm:text-[45px] lg:text-[40px]">
+                      {titleCase(normalize(filter.category))}
+                    </h1>
+                    <div className="mt-2 text-[13px] sm:text-[14px] text-slate-500">{filtered.length} posts</div>
+                  </section>
+                )}
                 {hero && <PostHero post={hero} />}
 
                 <div className="space-y-6">
@@ -654,7 +777,7 @@ const Blog = ({ filter }) => {
                   })}
                 </div>
                 <div className="py-6">
-                  <LoadMoreButton
+                  <LoadMoreButton 
                     onClick={handleLoadMore}
                     disabled={visibleCount >= rest.length}
                     loading={loadingMore}
@@ -663,11 +786,13 @@ const Blog = ({ filter }) => {
               </div>
 
               <RightSidebar
-                categories={SIDEBAR_CATEGORIES}
+                categories={sidebarCategories}
                 featured={SIDEBAR_FEATURED}
                 topWeek={SIDEBAR_TOP_WEEK}
                 stickyTopMd={100}
                 stickyTopLg={150}
+                showCategoryList={sidebarShowCategoryList}
+                categoriesPosition={filter?.category ? 'bottom' : 'top'}
               />
             </div>
           )}
