@@ -379,7 +379,7 @@ const BlogSingle = () => {
                 excerpt:
                   'Exciting news for Indian travelers planning a trip to Japan! Starting April 1, 2024, Japan is revolutionizing...',
                 image:
-                  'https://images.unsplash.com/photo-1518544801976-3e188ea8c4a0?q=80&w=1200&auto=format&fit=crop',
+                  'https://japan-evisa.info/images/egypt-e-visa-from-japan.png',
                 readTime: '5 MIN READ',
               },
               {
@@ -410,7 +410,7 @@ const BlogSingle = () => {
                 excerpt:
                   'What is a Schengen Visa? A Schengen visa is a short‑stay visa that allows travelers to visit any of the 27...',
                 image:
-                  'https://images.unsplash.com/photo-1530035424504-2a5b9b1d9d8a?q=80&w=1200&auto=format&fit=crop',
+                  'https://i0.wp.com/schengenvisa.news/wp-content/uploads/2024/02/schengen-countries.png',
                 readTime: '3 MIN READ',
               },
             ]
@@ -428,12 +428,16 @@ const BlogSingle = () => {
                   </h3>
                   <div className="mt-2 text-xs text-slate-500">{it.date}</div>
                   <p className="mt-3 text-[14px] text-slate-600 line-clamp-2 min-h-[44px]">{it.excerpt}</p>
-                  <img src={it.image} alt={it.title} className="mt-4 h-48 w-full object-cover" loading="lazy" />
+                  <div className="mt-4 overflow-hidden">
+                    <div className="relative aspect-[3/2] w-full">
+                      <img src={it.image} alt={it.title} className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+                    </div>
+                  </div>
                 </div>
                 <div className="relative border-t mt-2 bg-white px-5 py-3">
                   <span className="text-[12px] text-slate-500 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">{it.readTime}</span>
-                  <span className="absolute left-5 top-3 text-[11px] font-semibold uppercase tracking-wide text-emerald-600 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">Read more</span>
-                  <span className="absolute bottom-0 left-5 z-10 h-0.5 w-0 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-[calc(100%-2.5rem)]" />
+                  <span className="absolute right-5 top-4 text-[12px] font-semibold uppercase tracking-wide text-emerald-600 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">Read more</span>
+                  <span className="absolute bottom-0 right-5 z-10 h-0.5 w-0 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-[calc(100%-2.5rem)]" />
                 </div>
               </Link>
             ))}
