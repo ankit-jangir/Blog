@@ -54,7 +54,7 @@ function FeaturedPosts({ items }) {
                 </>
               )}
             </div>
-            <Link to={it.to} className="block text-[15px] font-semibold leading-snug text-slate-900 hover:text-emerald-600">
+            <Link to={it.to} state={{ author: it.author, date: it.date }} className="block text-[15px] font-semibold leading-snug text-slate-900 hover:text-emerald-600">
               {it.title}
             </Link>
           </li>
@@ -123,7 +123,7 @@ function TopOnTheWeek({ items }) {
                   {idx + 1}
                 </span>
               </div>
-              <Link to={it.to} className="block text-[15px] font-semibold leading-snug text-slate-900 hover:text-emerald-600 break-words">
+              <Link to={it.to} state={{ author: it.author, date: it.date }} className="block text-[15px] font-semibold leading-snug text-slate-900 hover:text-emerald-600 break-words">
                 {it.title}
               </Link>
             </li>
@@ -164,6 +164,29 @@ function GetSocial() {
   )
 }
 
+function TagsSection({ tags = [] }) {
+  if (!tags || tags.length === 0) return null
+  const toSlug = (t) => String(t || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+  return (
+    <div className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5">
+      <div className="border-b px-4 py-3 text-[11px] font-semibold tracking-wider text-slate-600">TAGS</div>
+      <div className="p-4">
+        <div className="flex flex-wrap gap-2">
+          {tags.map((t) => (
+            <Link
+              key={t}
+              to={`/tag/${toSlug(t)}`}
+              className="inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-1 text-[13px] font-medium text-slate-700 hover:bg-slate-50 hover:text-emerald-600"
+            >
+              {t}
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 const RightSidebar = ({
   categories = [],
   featured = [],
@@ -176,6 +199,8 @@ const RightSidebar = ({
   showSocial = true,
   showCategoryList = false,
   categoriesPosition = 'top',
+  showTags = false,
+  tags = [],
 }) => {
   return (
     <aside className="space-y-4">
@@ -188,6 +213,7 @@ const RightSidebar = ({
       )}
       {showFeatured && <FeaturedPosts items={featured} />}
       {showTopWeek && <TopOnTheWeek items={topWeek} />}
+      {showTags && <TagsSection tags={tags} />}
       {showCategories && categoriesPosition === 'bottom' && categories.length > 0 && (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
           {categories.map((c) => (

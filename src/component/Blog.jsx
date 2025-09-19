@@ -4,7 +4,7 @@ import Header from './commons/Header'
 import Footer from './commons/Footer'
 import BackToTop from './commons/BackToTop'
 import RightSidebar from './commons/RightSidebar'
-import { CATEGORIES as SIDEBAR_CATEGORIES, FEATURED as SIDEBAR_FEATURED, TOP_WEEK as SIDEBAR_TOP_WEEK } from './data/rightSidebar'
+import { CATEGORIES as SIDEBAR_CATEGORIES, FEATURED as SIDEBAR_FEATURED, TOP_WEEK as SIDEBAR_TOP_WEEK, TAGS as SIDEBAR_TAGS } from './data/rightSidebar'
 import { Plus, Loader2, Facebook as FbIcon, Twitter as XIcon, Instagram, Linkedin, MessageCircle } from 'lucide-react'
 
 // Dummy posts (static) – replace with real API later
@@ -61,7 +61,7 @@ const DUMMY_POSTS = [
     id: 5,
     slug: 'apostille-101',
     coverImage:
-      'https://images.unsplash.com/photo-1529336953121-a5c62d0f9f6e?q=80&w=1600&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1200&auto=format&fit=crop',
     title: 'Apostille & Attestation: Simple Checklist',
     excerpt:
       'Understand the difference, when you need which, and the documents required—without the jargon.',
@@ -109,7 +109,7 @@ const DUMMY_POSTS = [
     id: 9,
     slug: 'trusted-traveler-programs-2025',
     coverImage:
-      'https://images.unsplash.com/photo-1558980664-10ea292c40ec?q=80&w=1600&auto=format&fit=crop',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbDTcXWZrsLuQNDPFiRLcIh10oIR5PMSHZgA&s',
     title: 'Trusted Traveler Programs (TTP) Updates in 2025',
     excerpt:
       'Global Entry, NEXUS, SENTRI—what changed this year and which program is best for you?',
@@ -171,7 +171,7 @@ const DUMMY_POSTS = [
     id: 14,
     slug: 'passport-photo-requirements',
     coverImage:
-      'https://images.unsplash.com/photo-1520975784900-5cbf0c58e7dc?q=80&w=1600&auto=format&fit=crop',
+      'https://passport-photo-software.com/img/content/canadian-passport-photo-requirements-example1.jpg',
     title: 'Passport Photo Requirements: Do’s and Don’ts',
     excerpt:
       'Avoid rejections with correct size, background, glasses policy, and digital vs. print tips.',
@@ -207,7 +207,7 @@ const DUMMY_POSTS = [
     id: 17,
     slug: 'indian-visa-appointment-guide',
     coverImage:
-      'https://images.unsplash.com/photo-1519160558534-579f5104b9a3?q=80&w=1600&auto=format&fit=crop',
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQah54MViq3NNX1qiScUJHWJt5VJZdJPbqUjQ&s',
     title: 'Booking Your Indian Visa Appointment: Step‑by‑Step',
     excerpt:
       'How to pick centers, upload documents, and avoid last‑minute rescheduling issues.',
@@ -302,13 +302,13 @@ function PostHero({ post }) {
           </h2>
           <p className="mt-3 line-clamp-3 text-[15px] text-slate-600">{post?.excerpt}</p>
           <div className="relative mt-auto h-8 border-t border-slate-200">
-            <span className="absolute left-0 top-2 text-sm text-slate-500 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
+            <span className="absolute right-0 top-4 text-md text-slate-500 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
               {post?.readTime || '5 min read'}
             </span>
-            <span className="absolute left-0 top-2 text-xs font-semibold uppercase tracking-wide text-emerald-600 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">
+            <span className="absolute right-0 top-4 text-sm font-semibold uppercase tracking-wide text-emerald-600 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">
               Read more
             </span>
-            <span className="absolute bottom-0 left-0 h-0.5 w-0 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full" />
+            <span className="absolute top-0 right-0 h-0.5 w-0 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full" />
           </div>
         </div>
       </Link>
@@ -335,14 +335,14 @@ function PostCard({ post }) {
             {post?.title}
           </h3>
           <p className="mt-3 line-clamp-3 text-[15px] text-slate-600">{post?.excerpt}</p>
-        <div className="relative mt-auto h-8 border-t border-slate-200">
-            <span className="absolute left-0 top-2 text-sm text-slate-500 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
+          <div className="relative mt-auto h-8 border-t border-slate-200">
+            <span className="absolute right-0 top-4 text-md text-slate-500 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
               {post?.readTime || '5 min read'}
             </span>
-          <span className="absolute left-0 top-2 text-xs font-semibold uppercase tracking-wide text-emerald-600 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">
+            <span className="absolute right-0 top-4 text-sm font-semibold uppercase tracking-wide text-emerald-600 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">
               Read more
             </span>
-          <span className="absolute bottom-0 left-0 h-0.5 w-0 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full" />
+            <span className="absolute top-0 right-0 h-0.5 w-0 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full" />
           </div>
         </div>
       </Link>
@@ -370,18 +370,19 @@ function PostFullCard({ post }) {
         <img
           src={post?.coverImage || DEFAULT_POST_IMAGE}
           alt={post?.title}
-          className="mt-4 h-72 w-full object-cover"
+          className="mt-4 h-64 md:h-80 lg:h-[420px] w-full rounded-2xl object-cover px-5"
           loading="lazy"
         />
-        <div className="relative border-t border-slate-200 px-5 pt-5 pb-4">
-          <span className="text-sm text-slate-500 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
+        <div className="relative border-t border-slate-200 px-5 pt-5 pb-9">
+          <span className="absolute right-5 top-5 text-md text-slate-500 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
             {post?.readTime || '3 min read'}
           </span>
-          <span className="absolute left-5 top-5 text-xs font-semibold uppercase tracking-wide text-emerald-600 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">
+          <span className="absolute right-5 top-5 text-sm font-semibold uppercase tracking-wide text-emerald-600 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">
             Read more
           </span>
-          <span className="absolute bottom-0 left-5 h-0.5 w-0 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-[calc(100%-2.5rem)]" />
+          <span className="absolute bottom-0 right-5 h-0.5 w-0 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-[calc(100%-2.5rem)]" />
         </div>
+
       </Link>
     </article>
   )
@@ -409,14 +410,14 @@ function PostOverlayCard({ post }) {
           <p className="mt-2 line-clamp-2 text-sm text-white/80 drop-shadow">
             {post?.excerpt}
           </p>
-          <div className="relative mt-4 border-t border-white/20 pt-4">
-            <span className="text-sm text-white/80 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
+          <div className="relative mt-9 border-t border-white/20 pt-4">
+            <span className=" absolute text-md top-2 right-0 text-white/80 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
               {post?.readTime || '3 min read'}
             </span>
-            <span className="absolute left-0 top-4 text-xs font-semibold uppercase tracking-wide text-emerald-300 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">
+            <span className="absolute right-0 top-4 text-sm font-semibold uppercase tracking-wide text-emerald-300 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">
               Read more
             </span>
-            <span className="absolute bottom-0 left-0 h-0.5 w-0 rounded-full bg-emerald-300 transition-all duration-300 group-hover:w-full" />
+            <span className="absolute top-0 right-0 h-0.5 w-0 rounded-full bg-emerald-300 transition-all duration-300 group-hover:w-full" />
           </div>
         </div>
       </Link>
@@ -562,7 +563,7 @@ const DUMMY_FEATURED = [
     title: 'India’s e‑Passport: Everything You Need to Know',
     author: 'Nikita',
     date: '2025-06-24',
-    to: '/blog/india-e-passport', 
+    to: '/blog/india-e-passport',
   },
   {
     title: 'New OCI Portal: What Applicants Need to Know',
@@ -724,7 +725,7 @@ const Blog = ({ filter, sidebarShowCategoryList = false, showCategoryHeader = fa
     setLoadingMore(true)
     // Simulate async loading
     setTimeout(() => {
-      setVisibleCount((c) => Math.min(c + 1, rest.length))
+      setVisibleCount((c) => Math.min(c + 4, rest.length))
       setLoadingMore(false)
     }, 500)
   }
@@ -748,10 +749,15 @@ const Blog = ({ filter, sidebarShowCategoryList = false, showCategoryHeader = fa
             <div className="rounded-lg bg-red-50 p-4 text-sm text-red-700">{error}</div>
           )}
 
-            {!loading && !error && (
-             <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_320px] lg:grid-cols-[minmax(0,1fr)_360px]">
+          {!loading && !error && (
+            <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_320px] lg:grid-cols-[minmax(0,1fr)_360px]">
               {/* Left: optional category header + hero + post list */}
               <div className="space-y-6">
+                {(!hero && (filtered?.length || 0) === 0) && (
+                  <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-slate-600">
+                    No posts found.
+                  </div>
+                )}
                 {showCategoryHeader && filter?.category && (
                   <section className="mt-2">
                     <div className="mb-2 text-[12px] font-semibold tracking-wider text-slate-600">BROWSING CATEGORY</div>
@@ -777,7 +783,7 @@ const Blog = ({ filter, sidebarShowCategoryList = false, showCategoryHeader = fa
                   })}
                 </div>
                 <div className="py-6">
-                  <LoadMoreButton 
+                  <LoadMoreButton
                     onClick={handleLoadMore}
                     disabled={visibleCount >= rest.length}
                     loading={loadingMore}
@@ -793,6 +799,8 @@ const Blog = ({ filter, sidebarShowCategoryList = false, showCategoryHeader = fa
                 stickyTopLg={150}
                 showCategoryList={sidebarShowCategoryList}
                 categoriesPosition={filter?.category ? 'bottom' : 'top'}
+                showTags={true}
+                tags={SIDEBAR_TAGS}
               />
             </div>
           )}
@@ -800,7 +808,7 @@ const Blog = ({ filter, sidebarShowCategoryList = false, showCategoryHeader = fa
       </main>
       <Footer />
       <BackToTop />
-        </div>
+    </div>
   )
 }
 

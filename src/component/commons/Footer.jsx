@@ -54,12 +54,12 @@ function LinkRow({ href = '#', icon, children }) {
   return (
     <a
       href={href}
-      className="flex items-center gap-3 text-[15px] text-white/90 hover:text-white"
+      className="flex items-center gap-3 text-[15px] text-white/90 hover:text-white underline underline-offset-4"
     >
       <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/70">
         {icon}
       </span>
-      <span className="underline-offset-4 hover:underline">{children}</span>
+      <span>{children}</span>
     </a>
   )
 }
@@ -69,8 +69,8 @@ const Footer = () => {
     <footer className="bg-[#0b4091] text-white">
       <div className="px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24 2xl:px-36 py-10 lg:py-14">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-12">
-          {/* Left intro column */}
-          <div className="hidden lg:block lg:col-span-4">
+          {/* Left intro column (visible on all screens) */}
+          <div className="col-span-2 md:col-span-12 lg:col-span-3">
             <div className="flex items-center gap-4">
               <span className="flex h-14 w-14 items-center justify-center rounded-lg bg-white/95 shadow">
                 <img src="/logo.jpeg" alt="Documitra" className="h-10 w-auto object-contain" />
@@ -91,13 +91,13 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Services */}
-          <div className="hidden lg:block lg:col-span-3">
+          {/* Services (visible on all screens) */}
+          <div className="col-span-2 md:col-span-6 lg:col-span-3">
             <h4 className="text-lg font-semibold">Services</h4>
             <ul className="mt-4 space-y-2 text-[15px]">
               {SERVICES.map((s) => (
                 <li key={s.to}>
-                  <Link to={s.to} className="hover:underline text-white/90 hover:text-white">
+                  <Link to={s.to} className="underline underline-offset-4 text-white/90 hover:text-white">
                     {s.label}
                   </Link>
                 </li>
@@ -111,7 +111,7 @@ const Footer = () => {
             <ul className="mt-4 space-y-2 text-[15px]">
               {DOCUMITRA.map((l) => (
                 <li key={l.to}>
-                  <Link to={l.to} className="hover:underline text-white/90 hover:text-white">
+                  <Link to={l.to} className="underline underline-offset-4 text-white/90 hover:text-white">
                     {l.label}
                   </Link>
                 </li>
@@ -120,13 +120,13 @@ const Footer = () => {
           </div>
 
           {/* Connect */}
-          <div className="col-span-1 md:col-span-6 lg:col-span-2">
+          <div className="col-span-2 md:col-span-6 lg:col-span-2">
             <h4 className="text-lg font-semibold">Connect</h4>
             <div className="mt-4 space-y-4">
               <LinkRow icon={<Facebook className="h-4 w-4" />}>Facebook Page</LinkRow>
               <LinkRow icon={<Facebook className="h-4 w-4" />}>Facebook Group</LinkRow>
 
-              <div className="grid grid-cols-6 lg:grid-cols-3 gap-3 lg:gap-4 pt-1">
+              <div className="flex flex-wrap items-center gap-3 lg:grid lg:grid-cols-3 lg:gap-4 pt-1">
                 <SocialIcon href="#" label="Email">
                   <Mail className="h-4 w-4" />
                 </SocialIcon>
@@ -150,21 +150,21 @@ const Footer = () => {
           </div>
 
           {/* Badges column (right) */}
-          <div className="col-span-2 md:col-span-12 lg:col-span-1 lg:max-w-[300px]">
+          <div className="col-span-2 md:col-span-12 lg:col-span-2 lg:max-w-[420px]">
             <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-1 gap-4">
-              <div className="w-full rounded-lg bg-white shadow flex items-center justify-center md:justify-start px-4 h-16 md:h-20 lg:h-24">
+              <div className="w-full rounded-lg bg-white shadow flex items-center justify-center md:justify-start px-4 h-14 md:h-18 lg:h-20">
                 <img src="/ssl.png" alt="Secure SSL" className="h-10 md:h-12 lg:h-16 w-auto object-contain" />
               </div>
-              <div className="w-full rounded-lg bg-white shadow flex items-center justify-center md:justify-start px-4 h-16 md:h-20 lg:h-24">
+              <div className="w-full rounded-lg bg-white shadow flex items-center justify-center md:justify-start px-4 h-14 md:h-18 lg:h-20">
                 <img src="/cards.jpg" alt="Cards Supported" className="h-10 md:h-12 lg:h-16 w-auto object-contain" />
               </div>
-              <div className="w-full rounded-lg bg-white shadow flex items-center justify-center md:justify-start px-4 h-16 md:h-20 lg:h-24">
+              <div className="w-full rounded-lg bg-white shadow flex items-center justify-center md:justify-start px-4 h-14 md:h-18 lg:h-20">
                 <img src="/payments.png" alt="Paytm / PhonePe" className="h-10 md:h-12 lg:h-16 w-auto object-contain" />
               </div>
-              <div className="w-full rounded-lg bg-white shadow flex items-center justify-center md:justify-start px-4 h-16 md:h-20 lg:h-24">
+              <div className="w-full rounded-lg bg-white shadow flex items-center justify-center md:justify-start px-4 h-14 md:h-18 lg:h-20">
                 <img src="/upi.png" alt="UPI Supported" className="h-10 md:h-12 lg:h-16 w-auto object-contain" />
               </div>
-              <div className="w-full rounded-lg bg-white shadow flex items-center justify-center md:justify-start px-4 h-16 md:h-20 lg:h-24">
+              <div className="w-full rounded-lg bg-white shadow flex items-center justify-center md:justify-start px-4 h-14 md:h-18 lg:h-20">
                 <img src="/trustpilot.png" alt="Trustpilot" className="h-10 md:h-12 lg:h-16 w-auto object-contain" />
               </div>
             </div>
@@ -175,10 +175,10 @@ const Footer = () => {
           <div className="flex flex-col-reverse gap-4 md:flex-row md:items-center md:justify-between">
             <div>© 2020–2026. All rights reserved</div>
             <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
-              <li><Link to="#" className="hover:underline">Privacy Policy and Cookies</Link></li>
-              <li><Link to="#" className="hover:underline">Terms of Use</Link></li>
-              <li><Link to="#" className="hover:underline">Refund Policy</Link></li>
-              <li><Link to="#" className="hover:underline">Sitemap</Link></li>
+              <li><Link to="#" className="underline underline-offset-4">Privacy Policy and Cookies</Link></li>
+              <li><Link to="#" className="underline underline-offset-4">Terms of Use</Link></li>
+              <li><Link to="#" className="underline underline-offset-4">Refund Policy</Link></li>
+              <li><Link to="#" className="underline underline-offset-4">Sitemap</Link></li>
             </ul>
           </div>
         </div>

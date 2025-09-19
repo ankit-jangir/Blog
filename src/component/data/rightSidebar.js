@@ -78,4 +78,35 @@ export const FEATURED = [
 
 export const TOP_WEEK = FEATURED.slice(0, 5)
 
+export const TAGS = [
+  'Passport Services',
+  'Indian Passport Renewal',
+  'Lost or Damaged Passport',
+  'Minor Passport Renewal',
+  'e‑Passport',
+  'OCI Card Services',
+  'New OCI Portal',
+  'OCI Application Tips',
+  'Indian Visa',
+  'e‑Visa vs Paper Visa',
+  'Business e‑Visa',
+  'Schengen Visa',
+  'UK Visa',
+  'Japan e‑Visa',
+  'Travel Insurance',
+  'Trusted Traveler Programs',
+  'I‑94 Stay Limits',
+  'Europe Travel Tips',
+  'USA Travel Tips',
+  'Apostille',
+  'Attestation',
+  'Document Checklist',
+  'Appointment Booking',
+  'Biometrics',
+  'Photo Requirements',
+  'Processing Time',
+  'Fees & Payments',
+  'Consulate Guidelines',
+]
+
 

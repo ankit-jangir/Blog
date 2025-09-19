@@ -5,11 +5,11 @@ import Header from './commons/Header'
 import Footer from './commons/Footer'
 import BackToTop from './commons/BackToTop'
 import RightSidebar from './commons/RightSidebar'
-import { CATEGORIES as SIDEBAR_CATEGORIES, FEATURED as SIDEBAR_FEATURED, TOP_WEEK as SIDEBAR_TOP_WEEK } from './data/rightSidebar'
+import { CATEGORIES as SIDEBAR_CATEGORIES, FEATURED as SIDEBAR_FEATURED, TOP_WEEK as SIDEBAR_TOP_WEEK, TAGS as SIDEBAR_TAGS } from './data/rightSidebar'
 
 const Author = () => {
-  const { name, id } = useParams()
-  const authorName = name || 'Author'
+  const { slug } = useParams()
+  const authorName = (slug || 'author').split('-')[0]
   const authors = [
     {
       id: '29',
@@ -45,13 +45,14 @@ const Author = () => {
     },
   ]
   
-  const currentAuthor = authors.find((a) => a.name.toLowerCase() === (authorName || '').toLowerCase() && a.id === id) || authors[0]
+  const currentAuthor = authors.find((a) => a.name.toLowerCase() === (authorName || '').toLowerCase()) || authors[0]
   const posts = [
     {
       slug: 'europes-best-kept-beaches',
       title: `Sun, Sand, and Serenity: Europe’s Best‑Kept Beaches`,
       category: 'Europe Visa Travel Tips and Tricks',
       readTime: '5 MIN READ',
+      excerpt: 'Discover quiet coves and crystal waters across Europe with planning tips to make your beach escape effortless.',
       image:
         'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop',
     },
@@ -60,6 +61,7 @@ const Author = () => {
       title: `Essential Guide to Travel Insurance for Your Next Trip Abroad: Don’t Skip This!`,
       category: 'USA Visa Travel Tips and Tricks',
       readTime: '6 MIN READ',
+      excerpt: 'What to look for in a policy, claim tips, and coverage essentials for stress‑free travel.',
       image:
         'https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1600&auto=format&fit=crop',
     },
@@ -68,6 +70,7 @@ const Author = () => {
       title: 'Your Guide to Indian Passport Renewal Abroad:',
       category: 'Passport Services',
       readTime: '4 MIN READ',
+      excerpt: 'Step‑by‑step renewal process, documents, timelines, and practical do’s and don’ts while abroad.',
       image: 'https://images.unsplash.com/photo-1529078155058-5d716f45d604?q=80&w=1600&auto=format&fit=crop',
     },
     {
@@ -75,6 +78,7 @@ const Author = () => {
       title: 'India’s e‑Passport: Everything You Need to Know',
       category: 'Passport Services',
       readTime: '4 MIN READ',
+      excerpt: 'Learn what an e‑Passport is, eligibility, benefits, and how to get one quickly.',
       image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop',
     },
     {
@@ -82,6 +86,7 @@ const Author = () => {
       title: 'New OCI Portal: What Applicants Need to Know',
       category: 'OCI Card Services',
       readTime: '3 MIN READ',
+      excerpt: 'A concise walkthrough of the new portal flow, uploads, and common pitfalls to avoid.',
       image: 'https://images.unsplash.com/photo-1530521954074-e64f6810b32d?q=80&w=1600&auto=format&fit=crop',
     },
     {
@@ -89,6 +94,7 @@ const Author = () => {
       title: 'Business E‑Visa For India: A Complete Guide by Documitra',
       category: 'Indian Visa Travel Tips and Tricks',
       readTime: '5 MIN READ',
+      excerpt: 'Eligibility, documents, and entry rules for business travelers heading to India.',
       image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=1600&auto=format&fit=crop',
     },
     {
@@ -96,6 +102,7 @@ const Author = () => {
       title: 'New Opportunities for Skilled Workers: Germany’s “Opportunity Card”',
       category: 'Passport Services',
       readTime: '5 MIN READ',
+      excerpt: 'Who qualifies, how it helps job seekers, and key documents you need.',
       image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1600&auto=format&fit=crop',
     },
     {
@@ -103,6 +110,7 @@ const Author = () => {
       title: 'Understanding US‑Green Cards and Family‑Based Green Cards Application Process',
       category: 'Passport Services',
       readTime: '6 MIN READ',
+      excerpt: 'A friendly primer on categories, sponsorship basics, and forms involved.',
       image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1600&auto=format&fit=crop',
     },
     {
@@ -110,6 +118,7 @@ const Author = () => {
       title: 'Understanding the Indian Passport Renewal Process for Lost or Damaged Passports',
       category: 'Passport Services',
       readTime: '3 MIN READ',
+      excerpt: 'Immediate steps, FIR vs affidavit, and how to expedite replacements safely.',
       image: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1600&auto=format&fit=crop',
     },
     {
@@ -117,6 +126,7 @@ const Author = () => {
       title: 'Minor US Passport Renewals: A Case Study from Documitra',
       category: 'Passport Services',
       readTime: '3 MIN READ',
+      excerpt: 'Real‑world timeline, DS‑11 tips, and consent nuances to keep in mind.',
       image: 'https://images.unsplash.com/photo-1529336953121-a5c62d0f9f6e?q=80&w=1600&auto=format&fit=crop',
     },
   ]
@@ -128,7 +138,7 @@ const Author = () => {
     if (visibleCount >= posts.length) return
     setLoadingMore(true)
     setTimeout(() => {
-      setVisibleCount((c) => Math.min(c + 1, posts.length))
+      setVisibleCount((c) => Math.min(c + 4, posts.length))
       setLoadingMore(false)
     }, 500)
   }
@@ -178,24 +188,27 @@ const Author = () => {
             </div>
 
             {/* Author posts list */}
-            <div className="mt-6 space-y-6">
+            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-1 lg:grid-cols-1">
               {posts.slice(0, visibleCount).map((p) => (
                 <article
                   key={p.slug}
-                  className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-lg hover:shadow-emerald-100"
+                  className="h-full overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-lg hover:shadow-emerald-100"
                 >
-                  <Link to={`/blog/${p.slug}`} className="group flex flex-col gap-0 md:flex-row md:gap-6">
+                  <Link to={`/blog/${p.slug}`} className="group flex h-full flex-col gap-0 lg:flex-row lg:gap-6">
                     <img
                       src={p.image}
                       alt={p.title}
-                      className="h-56 w-full object-cover md:h-64 md:w-1/2"
+                      className="h-56 w-full object-cover md:h-48 lg:h-64 lg:w-1/2"
                       loading="lazy"
                     />
-                    <div className="flex flex-1 flex-col p-5 md:p-7">
+                    <div className="flex flex-1 flex-col p-5 md:p-6 lg:p-7">
                       <span className="text-[11px] tracking-wide text-blue-700/80">{p.category}</span>
-                      <h2 className="mt-2 text-2xl font-extrabold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-emerald-600">
+                      <h2 className="mt-2 text-2xl font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-emerald-600">
                         {p.title}
                       </h2>
+                      <p className="mt-3 text-[14px] text-slate-600 line-clamp-3">
+                        {p.excerpt}
+                      </p>
                       <div className="relative mt-auto border-t pt-4">
                         <span className="text-sm text-slate-500 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
                           {p.readTime}
@@ -220,6 +233,8 @@ const Author = () => {
             topWeek={SIDEBAR_TOP_WEEK}
             stickyTopMd={100}
             stickyTopLg={150}
+            showTags={true}
+            tags={SIDEBAR_TAGS}
           />
         </div>
       </main>

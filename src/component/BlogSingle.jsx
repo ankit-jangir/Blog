@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import Header from './commons/Header'
 import Footer from './commons/Footer'
 import BackToTop from './commons/BackToTop'
-import LeftRail from './commons/LeftRail'
 import RightSidebar from './commons/RightSidebar'
 import { Link } from 'react-router-dom'
 import { Facebook as FbIcon, Twitter as XIcon, MessageCircle, Copy } from 'lucide-react'
-import { FEATURED as SIDEBAR_FEATURED, TOP_WEEK as SIDEBAR_TOP_WEEK, CATEGORIES as SIDEBAR_CATEGORIES } from './data/rightSidebar'
+import { FEATURED as SIDEBAR_FEATURED, TOP_WEEK as SIDEBAR_TOP_WEEK, CATEGORIES as SIDEBAR_CATEGORIES, TAGS as SIDEBAR_TAGS } from './data/rightSidebar'
 
 function deriveCategoryFromSlug(slug) {
   if (!slug) return 'Travel Tips'
@@ -47,20 +46,22 @@ function getCoverFromSlug(slug) {
 
 const BlogSingle = () => {
   const { slug } = useParams()
-  const categoryTitle = deriveCategoryFromSlug(slug)
-  const words = categoryTitle
-    .split(' ')
-    .filter(Boolean)
-    .map((w) => w.toUpperCase())
-  const lines = []
-  for (let i = 0; i < words.length; i += 2) {
-    lines.push(words.slice(i, i + 2).join(' '))
-  }
-  const badgeInitial = lines[0]?.charAt(0) || 'E'
+  const location = useLocation()
+  // Left rail removed per request
   const postTitle = toTitle(slug || 'Blog Post')
   const cover = getCoverFromSlug(slug)
   const shareUrl = typeof window !== 'undefined' ? window.location.href : `https://documitra.com/blog/${slug || ''}`
   const [copied, setCopied] = React.useState(false)
+  const meta = React.useMemo(() => {
+    const all = [...SIDEBAR_FEATURED, ...SIDEBAR_TOP_WEEK]
+    const found = all.find((it) => (it.to || '').split('/').filter(Boolean).pop() === slug)
+    const stateAuthor = location.state && location.state.author
+    const stateDate = location.state && location.state.date
+    const author = stateAuthor || found?.author || 'Anvit'
+    const date = stateDate || found?.date || 'July 28, 2025'
+    const authorSlug = author.toLowerCase()
+    return { author, date, authorSlug }
+  }, [slug, location.state])
   function handleCopy() {
     try {
       navigator.clipboard.writeText(shareUrl)
@@ -79,17 +80,14 @@ const BlogSingle = () => {
     <div className="w-full">
       <Header />
       <main className="mx-auto max-w-7xl px-1 py-10 sm:px-6 lg:px-1">
-        {/* Left rail + content + right black section */}
-        <div className="grid items-start gap-8 md:grid-cols-[minmax(0,1fr)_320px] lg:grid-cols-[160px_minmax(0,1fr)_360px]">
-          <div className="hidden lg:block">
-            <LeftRail stickyTop={100} sticky={true} titleLines={lines} readTime="6 MIN READ" badgeInitial={badgeInitial} />
-          </div>
+        {/* Content + right sidebar (left rail removed) */}
+        <div className="grid items-start gap-8 md:grid-cols-[minmax(0,1fr)_320px] lg:grid-cols-[minmax(0,1fr)_360px]">
           <article className="bg-white">
             <div className="pt-0 px-0">
               <h1 className="text-slate-900 font-bold leading-tight tracking-tight text-[40px] md:text-[50px]">{postTitle}</h1>
               <div className="mt-1 flex items-center gap-3 text-slate-500">
-                <Link to="/author/anvit" className="font-semibold text-slate-700 hover:text-emerald-500 transition-colors">Anvit</Link>
-                <span className="text-sm">July 28, 2025</span>
+                <Link to={`/author/${meta.authorSlug}`} className="font-semibold text-slate-700 hover:text-emerald-500 transition-colors">{meta.author}</Link>
+                <span className="text-sm">{meta.date}</span>
               </div>
             </div>
             <img src={cover} alt={postTitle} className="mt-4 h-auto w-full rounded-2xl object-cover" loading="lazy" />
@@ -360,6 +358,12 @@ const BlogSingle = () => {
             topWeek={SIDEBAR_TOP_WEEK}
             stickyTopMd={100}
             stickyTopLg={150}
+            showCategories={true}
+            showFeatured={true}
+            showTopWeek={true}
+            showSocial={true}
+            showTags={true}
+            tags={SIDEBAR_TAGS}
           />
         </div>
 

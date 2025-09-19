@@ -9,9 +9,9 @@ const TagPage = () => {
   const { slug } = useParams()
   return (
     <div className="w-full bg-slate-50">
-      <Header />
+      {/* <Header /> */}
       <Blog filter={{ tag: slug }} />
-      <Footer />
+      {/* <Footer /> */}
       <BackToTop />
     </div>
   )
