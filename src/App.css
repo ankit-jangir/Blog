@@ -22,6 +22,26 @@ html, body {
   line-height: 1.6;
 }
 
+/* Admin global typography and theming */
+.admin-theme {
+  font-family: var(--font-sans);
+}
+
+@media (max-width: 640px) {
+  .admin-theme h1 { font-size: 1.25rem; }
+  .admin-theme h2 { font-size: 1.125rem; }
+  .admin-theme h3 { font-size: 1rem; }
+  .admin-theme .text-xl { font-size: 1.125rem; }
+  .admin-theme .text-lg { font-size: 1rem; }
+  .admin-theme .text-base { font-size: 0.95rem; }
+}
+
+/* Subtle card polish */
+.admin-theme .card-polish {
+  border-radius: 1rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 8px 24px -12px rgba(16,24,40,.16);
+}
+
 /* Headings use secondary font */
 h1, h2, h3, .heading {
   font-family: var(--font-heading);

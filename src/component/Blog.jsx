@@ -8,7 +8,7 @@ import { CATEGORIES as SIDEBAR_CATEGORIES, FEATURED as SIDEBAR_FEATURED, TOP_WEE
 import { Plus, Loader2, Facebook as FbIcon, Twitter as XIcon, Instagram, Linkedin, MessageCircle } from 'lucide-react'
 
 // Dummy posts (static) – replace with real API later
-const DUMMY_POSTS = [
+export const DUMMY_POSTS = [
   {
     id: 1,
     slug: 'europes-best-kept-beaches',
@@ -808,7 +808,7 @@ const Blog = ({ filter, sidebarShowCategoryList = false, showCategoryHeader = fa
       </main>
       <Footer />
       <BackToTop />
-    </div>
+        </div>
   )
 }
 

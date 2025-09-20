@@ -318,7 +318,7 @@ export default function Header() {
 
               <SheetFooter className="border-t px-4 py-3">
                 <div className="flex w-full items-center justify-between gap-2">
-                  <Link to="/signin" className="w-1/2">
+                  <Link to="/admin/signin" className="w-1/2">
                     <Button
                       variant="outline"
                       size="lg"
@@ -407,7 +407,7 @@ export default function Header() {
         {/* Desktop actions */}
         <div className="hidden lg:flex items-center gap-6">
           <NavLink
-            to="/signin"
+            to="/admin/signin"
             className="text-[17px] font-semibold text-gray-700 hover:text-blue-800"
           >
             SignIn
@@ -430,7 +430,7 @@ export default function Header() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-44">
               <DropdownMenuItem asChild>
-                <Link to="/signin" className="text-[16px]">Sign In</Link>
+                <Link to="/admin/signin" className="text-[16px]">Sign In</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link to="/signup" className="text-[16px]">Sign Up</Link>
