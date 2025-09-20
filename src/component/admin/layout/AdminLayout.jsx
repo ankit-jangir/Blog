@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
-import AppSidebar from './sidebar'
+import AppSidebar from './sidebar.jsx'
 import Header from '../Header/Header'
 
 export default function AdminLayout({ children }) {
