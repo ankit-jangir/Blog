@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { LogOut, Moon, Sun, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useLocation, useNavigate } from "react-router-dom";
+import { DUMMY_POSTS } from "@/component/Blog";
 import { showSuccessToast } from "@/components/ui/global-toast";
 
 const Header = () => {
@@ -16,8 +17,24 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const blogContext = useMemo(() => {
+    const path = location.pathname || "";
+    if (!path.startsWith("/admin/blogs/")) return null;
+    const slug = path.split("/admin/blogs/")[1] || "";
+    const stateItem = location.state && location.state.item ? location.state.item : null;
+    if (stateItem && (stateItem.slug === slug || !slug)) return stateItem;
+    try {
+      const stored = JSON.parse(localStorage.getItem("admin_new_blogs") || "[]");
+      const found = stored.find((b) => (b.slug === slug));
+      if (found) return found;
+    } catch {}
+    const fallback = (DUMMY_POSTS || []).find((b) => b.slug === slug);
+    return fallback || null;
+  }, [location.pathname, location.state]);
+
   const getActiveTabName = () => {
     const path = location.pathname;
+    if (path.startsWith("/admin/blogs/") && blogContext) return blogContext.title || "Blog";
     if (path.startsWith("/admin/dashboard")) return "Dashboard";
     if (path.startsWith("/admin/posts")) return "Posts";
     if (path.startsWith("/admin/tags")) return "Tags";
@@ -56,9 +73,11 @@ const Header = () => {
       <header className="flex sticky top-0 shrink-0 gap-2 border-b z-[50] h-16 bg-white dark:bg-gray-900 shadow-md items-center px-6">
         <SidebarTrigger className="-ml-1" />
         <div className="flex w-full items-center justify-between">
-          <h1 className="text-2xl ps-9 font-semibold text-blue-700 dark:text-white">
-            {getActiveTabName()}
-          </h1>
+          <div className="ps-9">
+            <h1 className="text-2xl font-semibold text-blue-700 dark:text-white">
+              {getActiveTabName()}
+            </h1>
+          </div>
 
           <div className="flex items-center space-x-4">
               <button

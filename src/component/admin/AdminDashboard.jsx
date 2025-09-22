@@ -1,6 +1,8 @@
 import React from 'react'
 import AdminLayout from './layout/AdminLayout'
-import { ArrowUpRight, FileText, Eye, MessageSquare, DollarSign } from 'lucide-react'
+import { BookOpenText, FileText, Tag as TagIcon, Folder } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Button } from '@/components/ui/button'
 import { DUMMY_POSTS } from '@/component/Blog'
 import { CATEGORIES as SIDEBAR_CATEGORIES, TAGS as SIDEBAR_TAGS } from '@/component/data/rightSidebar'
 
@@ -10,10 +12,10 @@ export default function AdminDashboard() {
     try { return JSON.parse(localStorage.getItem('admin_new_blogs') || '[]') } catch { return [] }
   }, [])
   const posts = React.useMemo(() => ([...(injected || []), ...(DUMMY_POSTS || [])]), [injected])
-  const totals = { posts: posts.length, views: 102402, comments: 12403, earning: 143.1 }
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug']
-  const monthlyViews = [3800,2600,3400,3700,4137,3200,4600,1200]
-  const devices = { mobile: 3152, desktop: 996 }
+  const totalBlogs = posts.length
+  const totalPublishedPosts = posts.filter((p) => (p.status ? p.status === 'Published' : true)).length
+  const totalTags = SIDEBAR_TAGS.length
+  const totalCategories = SIDEBAR_CATEGORIES.length
   const recentBlogs = React.useMemo(() => {
     const normalized = posts.map((p, i) => ({
       title: p.title,
@@ -32,66 +34,69 @@ export default function AdminDashboard() {
     <AdminLayout>
       <div className="p-4 md:p-6">
         {/* KPI row */}
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-black/5 dark:bg-gray-900 dark:ring-gray-800">
-            <div className="flex items-center justify-between"><div className="text-xs text-slate-500">Post</div><FileText className="h-4 w-4 text-slate-400" /></div>
-            <div className="mt-1 text-2xl font-extrabold text-slate-900 dark:text-slate-100">{totals.posts}</div>
-          </div>
-          <div className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-black/5 dark:bg-gray-900 dark:ring-gray-800">
-            <div className="flex items-center justify-between"><div className="text-xs text-slate-500">View</div><Eye className="h-4 w-4 text-amber-500" /></div>
-            <div className="mt-1 text-2xl font-extrabold text-amber-600">{totals.views.toLocaleString()}</div>
-          </div>
-          <div className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-black/5 dark:bg-gray-900 dark:ring-gray-800">
-            <div className="flex items-center justify-between"><div className="text-xs text-slate-500">Comment</div><MessageSquare className="h-4 w-4 text-rose-500" /></div>
-            <div className="mt-1 text-2xl font-extrabold text-rose-600">{totals.comments.toLocaleString()}</div>
-          </div>
-          <div className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-black/5 dark:bg-gray-900 dark:ring-gray-800">
-            <div className="flex items-center justify-between"><div className="text-xs text-slate-500">Earning</div><DollarSign className="h-4 w-4 text-emerald-600" /></div>
-            <div className="mt-1 text-2xl font-extrabold text-emerald-600">${totals.earning}</div>
-          </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Total Blogs */}
+          <Link to="/admin/Blogs" className="relative block h-28 overflow-hidden rounded-2xl p-5 shadow-sm ring-1 ring-black/5 bg-gradient-to-br from-blue-50 to-blue-100 transition hover:shadow-md dark:from-blue-950/40 dark:to-blue-900/30">
+            <div className="flex h-full items-start justify-between">
+              <div>
+                <div className="text-xs font-medium text-blue-700/80 dark:text-blue-300/80">Total Blogs</div>
+                <div className="mt-1 text-3xl font-extrabold text-blue-900 dark:text-blue-200">{totalBlogs}</div>
+              </div>
+              <div className="rounded-xl bg-white/80 p-3 shadow-sm ring-1 ring-white/60 dark:bg-white/10 dark:ring-white/10">
+                <BookOpenText className="h-6 w-6 text-blue-600 dark:text-blue-300" />
+              </div>
+            </div>
+          </Link>
+
+          {/* Total Posts */}
+          <Link to="/admin/Blogs" className="relative block h-28 overflow-hidden rounded-2xl p-5 shadow-sm ring-1 ring-black/5 bg-gradient-to-br from-indigo-50 to-indigo-100 transition hover:shadow-md dark:from-indigo-950/40 dark:to-indigo-900/30">
+            <div className="flex h-full items-start justify-between">
+              <div>
+                <div className="text-xs font-medium text-indigo-700/80 dark:text-indigo-300/80">Total Posts</div>
+                <div className="mt-1 text-3xl font-extrabold text-indigo-900 dark:text-indigo-200">{totalPublishedPosts}</div>
+              </div>
+              <div className="rounded-xl bg-white/80 p-3 shadow-sm ring-1 ring-white/60 dark:bg-white/10 dark:ring-white/10">
+                <FileText className="h-6 w-6 text-indigo-600 dark:text-indigo-300" />
+              </div>
+            </div>
+          </Link>
+
+          {/* Total Tags */}
+          <Link to="/admin/tags" className="relative block h-28 overflow-hidden rounded-2xl p-5 shadow-sm ring-1 ring-black/5 bg-gradient-to-br from-fuchsia-50 to-pink-100 transition hover:shadow-md dark:from-fuchsia-950/40 dark:to-pink-900/30">
+            <div className="flex h-full items-start justify-between">
+              <div>
+                <div className="text-xs font-medium text-fuchsia-700/80 dark:text-pink-300/80">Total Tags</div>
+                <div className="mt-1 text-3xl font-extrabold text-fuchsia-900 dark:text-pink-200">{totalTags}</div>
+              </div>
+              <div className="rounded-xl bg-white/80 p-3 shadow-sm ring-1 ring-white/60 dark:bg-white/10 dark:ring-white/10">
+                <TagIcon className="h-6 w-6 text-fuchsia-600 dark:text-pink-300" />
+              </div>
+            </div>
+          </Link>
+
+          {/* Total Categories */}
+          <Link to="/admin/categories" className="relative block h-28 overflow-hidden rounded-2xl p-5 shadow-sm ring-1 ring-black/5 bg-gradient-to-br from-emerald-50 to-emerald-100 transition hover:shadow-md dark:from-emerald-950/40 dark:to-emerald-900/30">
+            <div className="flex h-full items-start justify-between">
+              <div>
+                <div className="text-xs font-medium text-emerald-700/80 dark:text-emerald-300/80">Total Categories</div>
+                <div className="mt-1 text-3xl font-extrabold text-emerald-900 dark:text-emerald-200">{totalCategories}</div>
+              </div>
+              <div className="rounded-xl bg-white/80 p-3 shadow-sm ring-1 ring-white/60 dark:bg-white/10 dark:ring-white/10">
+                <Folder className="h-6 w-6 text-emerald-600 dark:text-emerald-300" />
+              </div>
+            </div>
+          </Link>
         </div>
 
-        {/* Report + right column */}
-        <div className="mt-6 grid gap-4 lg:grid-cols-3">
-          <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5 dark:bg-gray-900 dark:ring-gray-800 lg:col-span-2">
-            <div className="mb-3 flex items-center justify-between"><div className="text-lg font-semibold text-slate-800 dark:text-slate-100">Report View</div><div className="text-xs rounded-md border px-2 py-1 text-slate-500">Monthly</div></div>
-            <div className="relative h-56 w-full sm:h-64">
-              <svg viewBox="0 0 100 60" className="absolute inset-0 h-full w-full">
-                {monthlyViews.map((v,i)=>{
-                  const x = (i*(100/months.length))+4
-                  const h = (v/4800)*45+5
-                  const y = 55 - h
-                  const isPeak = i===4
-                  return <rect key={i} x={x} y={y} width="6" height={h} rx="1" fill={isPeak? '#3b82f6':'#d1d5db'} />
-                })}
-              </svg>
-              <div className="absolute inset-x-0 bottom-0 flex justify-between px-4 text-[10px] text-slate-500">{months.map((m)=> <span key={m}>{m}</span>)}</div>
-            </div>
-          </div>
-          <div className="space-y-4">
-            <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5 dark:bg-gray-900 dark:ring-gray-800">
-              <div className="mb-3 text-sm font-semibold text-slate-600 dark:text-slate-300">Recent Activity</div>
-              <ul className="space-y-3 text-sm">
-                <li><span className="font-semibold">You</span> published <span className="font-medium">{posts[0]?.title || 'a new post'}</span></li>
-                <li><span className="font-semibold">Earning</span> this week <span className="text-emerald-600">$143.10</span> added</li>
-                <li><span className="font-semibold">Congratulations!</span> Your post reached 1K views</li>
-              </ul>
-            </div>
-            <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5 dark:bg-gray-900 dark:ring-gray-800">
-              <div className="mb-3 text-sm font-semibold text-slate-600 dark:text-slate-300">User Devices</div>
-              <div className="relative mx-auto h-40 w-40">
-                <svg viewBox="0 0 36 36" className="h-full w-full"><defs><linearGradient id="dm" x1="0" x2="1"><stop offset="0%" stopColor="#10b981" /><stop offset="100%" stopColor="#34d399" /></linearGradient></defs><circle cx="18" cy="18" r="15.915" fill="none" stroke="#e5e7eb" strokeWidth="3" /><circle cx="18" cy="18" r="15.915" fill="none" stroke="url(#dm)" strokeWidth="3" strokeDasharray={`${(devices.mobile/(devices.mobile+devices.desktop))*100}, 100`} transform="rotate(-90 18 18)" /></svg>
-                <div className="absolute inset-0 flex items-center justify-center text-xl font-bold">{Math.round((devices.mobile/(devices.mobile+devices.desktop))*100)}%</div>
-              </div>
-              <ul className="mt-3 space-y-1 text-xs text-slate-600 dark:text-slate-300"><li>Mobile – (76% – {devices.mobile.toLocaleString()})</li><li>Desktop – (24% – {devices.desktop.toLocaleString()})</li></ul>
-            </div>
-          </div>
-        </div>
+        
 
         {/* Recent Blogs + Tags + Categories */}
         <div className="mt-6 grid gap-4 lg:grid-cols-3">
           <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5 dark:bg-gray-900 dark:ring-gray-800 lg:col-span-2">
-            <div className="mb-3 text-lg font-semibold text-slate-800 dark:text-slate-100">Recent Blogs</div>
+            <div className="mb-3 flex items-center justify-between">
+              <div className="text-lg font-semibold text-slate-800 dark:text-slate-100">Recent Blogs</div>
+              <Link to="/admin/Blogs"><Button variant="outline" size="sm">More</Button></Link>
+            </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
                 <thead><tr className="border-b text-slate-500 dark:text-slate-400"><th className="py-2 pr-2">Title</th><th className="py-2 pr-2">Post Date</th><th className="py-2 pr-2">Category</th><th className="py-2 pr-2">Status</th></tr></thead>
@@ -110,13 +115,19 @@ export default function AdminDashboard() {
           </div>
           <div className="space-y-4">
             <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5 dark:bg-gray-900 dark:ring-gray-800">
-              <div className="mb-3 text-sm font-semibold text-slate-600 dark:text-slate-300">Tags</div>
+              <div className="mb-3 flex items-center justify-between">
+                <div className="text-sm font-semibold text-slate-600 dark:text-slate-300">Tags</div>
+                <Link to="/admin/tags"><Button variant="outline" size="sm">More</Button></Link>
+              </div>
               <div className="grid grid-cols-2 gap-2">
                 {tags.map((t)=> (<span key={t} className="truncate rounded-full bg-slate-50 px-3 py-1 text-xs ring-1 ring-slate-200 dark:bg-gray-800 dark:ring-gray-700" title={t}>{t}</span>))}
               </div>
             </div>
             <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-black/5 dark:bg-gray-900 dark:ring-gray-800">
-              <div className="mb-3 text-sm font-semibold text-slate-600 dark:text-slate-300">Categories</div>
+              <div className="mb-3 flex items-center justify-between">
+                <div className="text-sm font-semibold text-slate-600 dark:text-slate-300">Categories</div>
+                <Link to="/admin/categories"><Button variant="outline" size="sm">More</Button></Link>
+              </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm">
                   <thead><tr className="border-b text-slate-500 dark:text-slate-400"><th className="py-2 pr-2">Category</th><th className="py-2 pr-2">Posts</th></tr></thead>

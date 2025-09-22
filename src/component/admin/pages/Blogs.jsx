@@ -163,7 +163,7 @@ export default function Blogs() {
                 <DropdownMenuItem
                   onSelect={() => {
                     const slug = slugify(item.slug || item.title || '')
-                    if (slug) navigate(`/admin/blogs/${slug}`)
+                    if (slug) navigate(`/admin/blogs/${slug}`, { state: { item } })
                   }}
                 >
                   View
@@ -183,6 +183,31 @@ export default function Blogs() {
                       status: item.status || 'Published',
                       coverFile: null,
                       image: item.image || '',
+                      subtitle: item.subtitle || '',
+                      keyPoints: Array.isArray(item.keyPoints) ? item.keyPoints.join('\n') : '',
+                      sections: Array.isArray(item.sections)
+                        ? item.sections.map((s) => ({
+                            heading: s.heading || '',
+                            intro: s.intro || '',
+                            bullets: Array.isArray(s.bullets) ? s.bullets.join('\n') : '',
+                            items: Array.isArray(s.items)
+                              ? s.items.map((it) => ({ subtitle: it.subtitle || '', description: it.description || '' }))
+                              : [{ subtitle: '', description: '' }],
+                            table: s.table
+                              ? {
+                                  title: s.table.title || '',
+                                  columns: Array.isArray(s.table.columns) ? s.table.columns.map((c) => String(c || '')) : [],
+                                  rows: Array.isArray(s.table.rows) ? s.table.rows.map((r) => (Array.isArray(r) ? r.map((v) => String(v || '')) : [])) : [],
+                                }
+                              : { columns: [], rows: [] },
+                          }) )
+                        : [{ heading: '', intro: '', bullets: '', items: [{ subtitle: '', description: '' }], table: { columns: [], rows: [] } }],
+                      steps: Array.isArray(item.steps) ? item.steps.join('\n') : '',
+                      feesRows: Array.isArray(item.fees)
+                        ? item.fees.map((r) => ({
+                            type: r.type || '', pages: r.pages || '', validity: r.validity || '', feeNormal: r.feeNormal || '', feeTatkal: r.feeTatkal || ''
+                          }))
+                        : [{ type: '', pages: '', validity: '', feeNormal: '', feeTatkal: '' }],
                     })
                     setOpenEdit(true)
                   }}
@@ -372,6 +397,155 @@ export default function Blogs() {
                     )}
                   </div>
                 </div>
+
+                {/* Additional fields */}
+                <div className="md:col-span-2">
+                  <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Subtitle</div>
+                  <Input value={editForm.subtitle} onChange={(e) => setEditForm({ ...editForm, subtitle: e.target.value })} placeholder="Short subtitle" />
+                </div>
+                <div className="md:col-span-2">
+                  <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Key points (one per line)</div>
+                  <textarea className="border-input min-h-[120px] w-full rounded-md border bg-transparent p-3 text-sm shadow-xs" value={editForm.keyPoints} onChange={(e) => setEditForm({ ...editForm, keyPoints: e.target.value })} />
+                </div>
+                <div className="md:col-span-2">
+                  <div className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-200">Middle Sections</div>
+                  <div className="space-y-3">
+                    {editForm.sections?.map((sec, i) => (
+                      <div key={i} className="rounded-lg border p-3">
+                        <div className="mb-1 text-xs text-slate-500">Section {i + 1} Heading</div>
+                        <Input value={sec.heading} onChange={(e) => { const next = [...editForm.sections]; next[i] = { ...next[i], heading: e.target.value }; setEditForm({ ...editForm, sections: next }) }} />
+                        <div className="mt-3 mb-1 text-xs text-slate-500">Intro paragraph</div>
+                        <textarea className="border-input min-h-[90px] w-full rounded-md border bg-transparent p-3 text-sm shadow-xs" value={sec.intro || ''} onChange={(e) => { const next = [...editForm.sections]; next[i] = { ...next[i], intro: e.target.value }; setEditForm({ ...editForm, sections: next }) }} />
+                        <div className="mt-3 mb-1 text-xs text-slate-500">Bullets (one per line)</div>
+                        <textarea className="border-input min-h-[80px] w-full rounded-md border bg-transparent p-3 text-sm shadow-xs" value={sec.bullets || ''} onChange={(e) => { const next = [...editForm.sections]; next[i] = { ...next[i], bullets: e.target.value }; setEditForm({ ...editForm, sections: next }) }} />
+                        {/* Table builder */}
+                        <div className="mt-3 rounded-md border p-3">
+                          <div className="mb-2 text-xs font-semibold text-slate-700 dark:text-slate-200">Section Table</div>
+                          <Input className="mb-2" placeholder="Table Title (optional)" value={sec.table?.title || ''} onChange={(e) => {
+                            const next = [...editForm.sections]
+                            const table = next[i].table || { columns: [], rows: [] }
+                            table.title = e.target.value
+                            next[i] = { ...next[i], table }
+                            setEditForm({ ...editForm, sections: next })
+                          }} />
+                          <div className="mb-2 flex flex-wrap items-center gap-2">
+                            {(sec.table?.columns || []).map((col, ci) => (
+                              <div key={ci} className="flex items-center gap-2">
+                                <Input className="w-40" placeholder={`Column ${ci+1}`} value={col} onChange={(e) => {
+                                  const next = [...editForm.sections]
+                                  const table = next[i].table || { columns: [], rows: [] }
+                                  const columns = [...(table.columns || [])]
+                                  columns[ci] = e.target.value
+                                  table.columns = columns
+                                  next[i] = { ...next[i], table }
+                                  setEditForm({ ...editForm, sections: next })
+                                }} />
+                                <Button type="button" variant="outline" onClick={() => {
+                                  const next = [...editForm.sections]
+                                  const table = next[i].table || { columns: [], rows: [] }
+                                  const cols = [...(table.columns || [])]
+                                  const colCount = cols.length
+                                  cols.splice(ci, 1)
+                                  table.columns = cols
+                                  table.rows = (table.rows || []).map((r) => {
+                                    const row = Array.isArray(r) ? [...r] : []
+                                    if (row.length === colCount) row.splice(ci, 1)
+                                    return row
+                                  })
+                                  next[i] = { ...next[i], table }
+                                  setEditForm({ ...editForm, sections: next })
+                                }}>Remove</Button>
+                              </div>
+                            ))}
+                            <Button type="button" variant="outline" onClick={() => {
+                              const next = [...editForm.sections]
+                              const table = next[i].table || { columns: [], rows: [] }
+                              table.columns = [...(table.columns || []), '']
+                              next[i] = { ...next[i], table }
+                              setEditForm({ ...editForm, sections: next })
+                            }}>Add Column</Button>
+                          </div>
+                          <div className="space-y-2">
+                            {(sec.table?.rows || []).map((row, ri) => (
+                              <div key={ri} className="grid gap-2" style={{ gridTemplateColumns: `repeat(${sec.table?.columns?.length || 1}, minmax(0,1fr))` }}>
+                                {(sec.table?.columns || []).map((_, ci) => (
+                                  <Input key={ci} placeholder={`R${ri+1}C${ci+1}`} value={row?.[ci] || ''} onChange={(e) => {
+                                    const next = [...editForm.sections]
+                                    const table = next[i].table || { columns: [], rows: [] }
+                                    const rows = [...(table.rows || [])]
+                                    const current = Array.isArray(rows[ri]) ? [...rows[ri]] : []
+                                    current[ci] = e.target.value
+                                    rows[ri] = current
+                                    table.rows = rows
+                                    next[i] = { ...next[i], table }
+                                    setEditForm({ ...editForm, sections: next })
+                                  }} />
+                                ))}
+                                <div className="flex items-center gap-2">
+                                  <Button type="button" variant="outline" onClick={() => {
+                                    const next = [...editForm.sections]
+                                    const table = next[i].table || { columns: [], rows: [] }
+                                    table.rows = (table.rows || []).filter((_, idx) => idx !== ri)
+                                    next[i] = { ...next[i], table }
+                                    setEditForm({ ...editForm, sections: next })
+                                  }}>Remove</Button>
+                                </div>
+                              </div>
+                            ))}
+                            <Button type="button" variant="outline" onClick={() => {
+                              const next = [...editForm.sections]
+                              const table = next[i].table || { columns: [], rows: [] }
+                              const numCols = (table.columns || []).length || 1
+                              table.rows = [...(table.rows || []), new Array(numCols).fill('')]
+                              next[i] = { ...next[i], table }
+                              setEditForm({ ...editForm, sections: next })
+                            }}>Add Row</Button>
+                          </div>
+                        </div>
+                        <div className="mt-3 space-y-3">
+                          {(sec.items || []).map((it, j) => (
+                            <div key={j} className="rounded-md border p-3">
+                              <div className="mb-1 text-xs text-slate-500">Subtitle</div>
+                              <Input value={it.subtitle} onChange={(e) => {
+                                const next = [...editForm.sections]
+                                const items = [...(next[i].items || [])]
+                                items[j] = { ...items[j], subtitle: e.target.value }
+                                next[i] = { ...next[i], items }
+                                setEditForm({ ...editForm, sections: next })
+                              }} />
+                              <div className="mt-2 mb-1 text-xs text-slate-500">Description</div>
+                              <textarea className="border-input min-h-[100px] w-full rounded-md border bg-transparent p-3 text-sm shadow-xs" value={it.description} onChange={(e) => {
+                                const next = [...editForm.sections]
+                                const items = [...(next[i].items || [])]
+                                items[j] = { ...items[j], description: e.target.value }
+                                next[i] = { ...next[i], items }
+                                setEditForm({ ...editForm, sections: next })
+                              }} />
+                              <div className="mt-2 flex justify-end gap-2">
+                                <Button type="button" variant="outline" onClick={() => {
+                                  const next = [...editForm.sections]
+                                  const items = (next[i].items || []).filter((_, idx) => idx !== j)
+                                  next[i] = { ...next[i], items }
+                                  setEditForm({ ...editForm, sections: next })
+                                }}>Remove</Button>
+                              </div>
+                            </div>
+                          ))}
+                          <Button type="button" variant="outline" onClick={() => {
+                            const next = [...editForm.sections]
+                            const items = [...(next[i].items || []), { subtitle: '', description: '' }]
+                            next[i] = { ...next[i], items }
+                            setEditForm({ ...editForm, sections: next })
+                          }}>Add Item</Button>
+                        </div>
+                        <div className="mt-3 flex justify-end gap-2">
+                          <Button type="button" variant="outline" onClick={() => { const next = editForm.sections.filter((_, idx) => idx !== i); setEditForm({ ...editForm, sections: next }) }}>Remove</Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-2"><Button type="button" variant="outline" onClick={() => setEditForm({ ...editForm, sections: [...(editForm.sections || []), { heading: '', intro: '', bullets: '', items: [{ subtitle: '', description: '' }], table: { columns: [], rows: [] } }] })}>Add Section</Button></div>
+                </div>
               </div>
               <DialogFooter>
                 <Button variant="outline" onClick={() => setOpenEdit(false)}>Cancel</Button>
@@ -384,10 +558,21 @@ export default function Blogs() {
                     updated.image = fileDataUrl
                   }
                   updated.slug = slugify(updated.slug || updated.title)
-                  setRows((prev) => prev.map((r) => (r.slug === activeItem.slug ? { ...r, ...updated } : r)))
+                  const nextRow = {
+                    ...activeItem,
+                    ...updated,
+                    keyPoints: String(updated.keyPoints || '').split('\n').map((s) => s.trim()).filter(Boolean),
+                    sections: (updated.sections || []).map((s) => ({
+                      heading: String(s.heading || '').trim(),
+                      intro: String(s.intro || '').trim(),
+                      bullets: String(s.bullets || '').split('\n').map((b) => b.replace(/^[-*•]\s*/, '').trim()).filter(Boolean),
+                      items: (s.items || []).map((it) => ({ subtitle: String(it.subtitle || '').trim(), description: String(it.description || '').trim() })).filter((it) => it.subtitle || it.description),
+                    })),
+                  }
+                  setRows((prev) => prev.map((r) => (r.slug === updated.slug ? nextRow : (r.id === activeItem.id ? nextRow : r))))
                   try {
                     const stored = JSON.parse(localStorage.getItem('admin_new_blogs') || '[]')
-                    localStorage.setItem('admin_new_blogs', JSON.stringify(stored.map((r) => (r.slug === activeItem.slug ? { ...r, ...updated } : r))))
+                    localStorage.setItem('admin_new_blogs', JSON.stringify(stored.map((r) => (r.slug === activeItem.slug ? nextRow : r))))
                   } catch {}
                   setOpenEdit(false)
                 }}>Save</Button>

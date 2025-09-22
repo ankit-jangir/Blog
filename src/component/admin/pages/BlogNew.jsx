@@ -18,6 +18,15 @@ export default function BlogNew() {
     date: new Date().toISOString().slice(0, 10),
     excerpt: '',
     content: '',
+    subtitle: '',
+    keyPoints: '',
+    sections: [
+      { heading: '', intro: '', bullets: '', items: [{ subtitle: '', description: '' }], table: { columns: [], rows: [] } },
+    ],
+    steps: '',
+    feesRows: [
+      { type: '', pages: '', validity: '', feeNormal: '', feeTatkal: '' },
+    ],
   })
   const [slugLocked, setSlugLocked] = React.useState(false)
 
@@ -41,7 +50,7 @@ export default function BlogNew() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    const { title, slug, category, author, readTime, date, excerpt, content, tags } = form
+    const { title, slug, category, author, readTime, date, excerpt, content, tags, subtitle, keyPoints, sections, steps, feesRows } = form
     if (!title || !slug || !category || !author || !readTime || !date || !form.coverFile || !excerpt || !content || !tags) {
       showErrorToast('Please fill all required fields')
       return
@@ -68,6 +77,43 @@ export default function BlogNew() {
         tag: tags,
         tags: [tags],
         image: fileDataUrl,
+        subtitle,
+        keyPoints: String(keyPoints || '')
+          .split('\n')
+          .map((s) => s.trim())
+          .filter(Boolean),
+        sections: (sections || []).map((s) => ({
+          heading: String(s.heading || '').trim(),
+          intro: String(s.intro || '').trim(),
+          bullets: String(s.bullets || '')
+            .split('\n')
+            .map((b) => b.replace(/^[-*•]\s*/, '').trim())
+            .filter(Boolean),
+          items: (Array.isArray(s.items) ? s.items : [])
+            .map((it) => ({
+              subtitle: String(it.subtitle || '').trim(),
+              description: String(it.description || '').trim(),
+            }))
+            .filter((it) => it.subtitle || it.description),
+          table: s.table && Array.isArray(s.table.columns) && s.table.columns.length
+            ? {
+                title: String(s.table.title || '').trim(),
+                columns: s.table.columns.map((c) => String(c || '').trim()),
+                rows: (s.table.rows || []).map((r) => (Array.isArray(r) ? r.map((v) => String(v || '').trim()) : [])),
+              }
+            : undefined,
+        })).filter((s) => s.heading || s.intro || (s.bullets && s.bullets.length) || (s.items && s.items.length)),
+        steps: String(steps || '')
+          .split('\n')
+          .map((s) => s.replace(/^\d+[).]\s*/, '').trim())
+          .filter(Boolean),
+        fees: (feesRows || []).filter((r) => r.type || r.pages || r.validity || r.feeNormal || r.feeTatkal).map((r) => ({
+          type: String(r.type || '').trim(),
+          pages: String(r.pages || '').trim(),
+          validity: String(r.validity || '').trim(),
+          feeNormal: String(r.feeNormal || '').trim(),
+          feeTatkal: String(r.feeTatkal || '').trim(),
+        })),
       }
       try {
         const prev = JSON.parse(localStorage.getItem('admin_new_blogs') || '[]')
@@ -173,6 +219,191 @@ export default function BlogNew() {
               onChange={(e) => handleChange('content', e.target.value)}
               placeholder="Full blog content (optional for now)"
             />
+          </div>
+        </div>
+        {/* Additional middle-section fields */}
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          <div className="md:col-span-2">
+            <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Subtitle</div>
+            <Input value={form.subtitle} onChange={(e) => handleChange('subtitle', e.target.value)} placeholder="Short subtitle under the title" />
+          </div>
+          <div className="md:col-span-2">
+            <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Key points (one per line)</div>
+            <textarea
+              className="border-input min-h-[120px] w-full rounded-md border bg-transparent p-3 text-sm shadow-xs focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
+              value={form.keyPoints}
+              onChange={(e) => handleChange('keyPoints', e.target.value)}
+              placeholder={"Example:\n• Step-by-step process\n• Required documents\n• Fees and timeline"}
+            />
+          </div>
+          {/* Dynamic Sections: Heading → Intro/Bullets → Items (Subtitle + Description) */}
+          <div className="md:col-span-2">
+            <div className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-200">Middle Sections</div>
+            <div className="space-y-4">
+              {form.sections.map((sec, i) => (
+                <div key={i} className="rounded-lg border p-3">
+                  <div className="mb-1 text-xs text-slate-500">Section {i + 1} Heading</div>
+                  <Input value={sec.heading} onChange={(e) => {
+                    const next = [...form.sections]; next[i] = { ...next[i], heading: e.target.value }; handleChange('sections', next)
+                  }} placeholder="e.g., United Kingdom" />
+                  <div className="mt-3 mb-1 text-xs text-slate-500">Intro paragraph</div>
+                  <textarea className="border-input min-h-[100px] w-full rounded-md border bg-transparent p-3 text-sm shadow-xs" value={sec.intro || ''} onChange={(e) => { const next = [...form.sections]; next[i] = { ...next[i], intro: e.target.value }; handleChange('sections', next) }} placeholder="Intro description for the section" />
+                  <div className="mt-3 mb-1 text-xs text-slate-500">Bullets (one per line)</div>
+                  <textarea className="border-input min-h-[80px] w-full rounded-md border bg-transparent p-3 text-sm shadow-xs" value={sec.bullets || ''} onChange={(e) => { const next = [...form.sections]; next[i] = { ...next[i], bullets: e.target.value }; handleChange('sections', next) }} placeholder={"• Personal information\n• Digitally signed photograph"} />
+                  <div className="mt-3 space-y-3">
+                    {(sec.items || []).map((it, j) => (
+                      <div key={j} className="rounded-md border p-3">
+                        <div className="mb-1 text-xs text-slate-500">Subtitle</div>
+                        <Input value={it.subtitle} onChange={(e) => {
+                          const next = [...form.sections]
+                          const items = [...(next[i].items || [])]
+                          items[j] = { ...items[j], subtitle: e.target.value }
+                          next[i] = { ...next[i], items }
+                          handleChange('sections', next)
+                        }} placeholder="e.g., West Beach, Scotland" />
+                        <div className="mt-2 mb-1 text-xs text-slate-500">Description</div>
+                        <textarea className="border-input min-h-[120px] w-full rounded-md border bg-transparent p-3 text-sm shadow-xs" value={it.description} onChange={(e) => {
+                          const next = [...form.sections]
+                          const items = [...(next[i].items || [])]
+                          items[j] = { ...items[j], description: e.target.value }
+                          next[i] = { ...next[i], items }
+                          handleChange('sections', next)
+                        }} placeholder="Paragraph details" />
+                        <div className="mt-2 flex justify-end gap-2">
+                          <Button type="button" variant="outline" onClick={() => {
+                            const next = [...form.sections]
+                            const items = (next[i].items || []).filter((_, idx) => idx !== j)
+                            next[i] = { ...next[i], items }
+                            handleChange('sections', next)
+                          }}>Remove</Button>
+                        </div>
+                      </div>
+                    ))}
+                    <Button type="button" variant="outline" onClick={() => {
+                      const next = [...form.sections]
+                      const items = [...(next[i].items || []), { subtitle: '', description: '' }]
+                      next[i] = { ...next[i], items }
+                      handleChange('sections', next)
+                    }}>Add Item</Button>
+                  </div>
+                  {/* Table builder */}
+                  <div className="mt-4 rounded-md border p-3">
+                    <div className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-200">Section Table</div>
+                    <Input className="mb-2" placeholder="Table Title (optional)" value={sec.table?.title || ''} onChange={(e) => {
+                      const next = [...form.sections]
+                      const table = next[i].table || { columns: [], rows: [] }
+                      table.title = e.target.value
+                      next[i] = { ...next[i], table }
+                      handleChange('sections', next)
+                    }} />
+                    <div className="mb-2 flex flex-wrap items-center gap-2">
+                      {(sec.table?.columns || []).map((col, ci) => (
+                        <div key={ci} className="flex items-center gap-2">
+                          <Input className="w-40" placeholder={`Column ${ci+1}`} value={col} onChange={(e) => {
+                            const next = [...form.sections]
+                            const columns = [...(next[i].table?.columns || [])]
+                            const table = next[i].table || { columns: [], rows: [] }
+                            columns[ci] = e.target.value
+                            table.columns = columns
+                            next[i] = { ...next[i], table }
+                            handleChange('sections', next)
+                          }} />
+                          <Button type="button" variant="outline" onClick={() => {
+                            const next = [...form.sections]
+                            const table = next[i].table || { columns: [], rows: [] }
+                            const cols = [...(table.columns || [])]
+                            const colCount = cols.length
+                            cols.splice(ci, 1)
+                            table.columns = cols
+                            // also remove that column from all rows
+                            table.rows = (table.rows || []).map((r) => {
+                              const row = Array.isArray(r) ? [...r] : []
+                              if (row.length === colCount) row.splice(ci, 1)
+                              return row
+                            })
+                            next[i] = { ...next[i], table }
+                            handleChange('sections', next)
+                          }}>Remove</Button>
+                        </div>
+                      ))}
+                      <Button type="button" variant="outline" onClick={() => {
+                        const next = [...form.sections]
+                        const table = next[i].table || { columns: [], rows: [] }
+                        table.columns = [...(table.columns || []), '']
+                        next[i] = { ...next[i], table }
+                        handleChange('sections', next)
+                      }}>Add Column</Button>
+                    </div>
+                    <div className="space-y-2">
+                      {(sec.table?.rows || []).map((row, ri) => (
+                        <div key={ri} className="grid gap-2" style={{ gridTemplateColumns: `repeat(${sec.table?.columns?.length || 1}, minmax(0,1fr))` }}>
+                          {(sec.table?.columns || []).map((_, ci) => (
+                            <Input key={ci} placeholder={`R${ri+1}C${ci+1}`} value={row?.[ci] || ''} onChange={(e) => {
+                              const next = [...form.sections]
+                              const table = next[i].table || { columns: [], rows: [] }
+                              const rows = [...(table.rows || [])]
+                              const current = Array.isArray(rows[ri]) ? [...rows[ri]] : []
+                              current[ci] = e.target.value
+                              rows[ri] = current
+                              table.rows = rows
+                              next[i] = { ...next[i], table }
+                              handleChange('sections', next)
+                            }} />
+                          ))}
+                          <div className="flex items-center gap-2">
+                            <Button type="button" variant="outline" onClick={() => {
+                              const next = [...form.sections]
+                              const table = next[i].table || { columns: [], rows: [] }
+                              table.rows = (table.rows || []).filter((_, idx) => idx !== ri)
+                              next[i] = { ...next[i], table }
+                              handleChange('sections', next)
+                            }}>Remove</Button>
+                          </div>
+                        </div>
+                      ))}
+                      <Button type="button" variant="outline" onClick={() => {
+                        const next = [...form.sections]
+                        const table = next[i].table || { columns: [], rows: [] }
+                        const numCols = (table.columns || []).length || 1
+                        table.rows = [...(table.rows || []), new Array(numCols).fill('')]
+                        next[i] = { ...next[i], table }
+                        handleChange('sections', next)
+                      }}>Add Row</Button>
+                    </div>
+                  </div>
+                  <div className="mt-3 flex justify-end gap-2">
+                    <Button type="button" variant="outline" onClick={() => {
+                      const next = form.sections.filter((_, idx) => idx !== i); handleChange('sections', next)
+                    }}>Remove</Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3"><Button type="button" variant="outline" onClick={() => handleChange('sections', [...form.sections, { heading: '', intro: '', bullets: '', items: [{ subtitle: '', description: '' }] }])}>Add Section</Button></div>
+          </div>
+          {/* Steps list (numbered) */}
+          <div className="md:col-span-2">
+            <div className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-200">Steps (one per line)</div>
+            <textarea className="border-input min-h-[120px] w-full rounded-md border bg-transparent p-3 text-sm shadow-xs" value={form.steps} onChange={(e) => handleChange('steps', e.target.value)} placeholder={"1. Register Online\n2. Fill the Application\n3. Make Payment\n4. Book Appointment\n5. In-Person Visit\n6. Track Status"} />
+          </div>
+          {/* Fees table rows */}
+          <div className="md:col-span-2">
+            <div className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-200">Fees table</div>
+            <div className="space-y-3">
+              {form.feesRows.map((r, i) => (
+                <div key={i} className="grid gap-2 sm:grid-cols-5">
+                  <Input placeholder="Passport Type" value={r.type} onChange={(e) => { const next = [...form.feesRows]; next[i] = { ...next[i], type: e.target.value }; handleChange('feesRows', next) }} />
+                  <Input placeholder="Pages" value={r.pages} onChange={(e) => { const next = [...form.feesRows]; next[i] = { ...next[i], pages: e.target.value }; handleChange('feesRows', next) }} />
+                  <Input placeholder="Validity" value={r.validity} onChange={(e) => { const next = [...form.feesRows]; next[i] = { ...next[i], validity: e.target.value }; handleChange('feesRows', next) }} />
+                  <Input placeholder="Fee (Normal)" value={r.feeNormal} onChange={(e) => { const next = [...form.feesRows]; next[i] = { ...next[i], feeNormal: e.target.value }; handleChange('feesRows', next) }} />
+                  <div className="flex items-center gap-2">
+                    <Input className="flex-1" placeholder="Fee (Tatkal)" value={r.feeTatkal} onChange={(e) => { const next = [...form.feesRows]; next[i] = { ...next[i], feeTatkal: e.target.value }; handleChange('feesRows', next) }} />
+                    <Button type="button" variant="outline" onClick={() => { const next = form.feesRows.filter((_, idx) => idx !== i); handleChange('feesRows', next) }}>Remove</Button>
+                  </div>
+                </div>
+              ))}
+              <Button type="button" variant="outline" onClick={() => handleChange('feesRows', [...form.feesRows, { type: '', pages: '', validity: '', feeNormal: '', feeTatkal: '' }])}>Add Row</Button>
+            </div>
           </div>
         </div>
         <div className="mt-4 flex items-center justify-end gap-2">
