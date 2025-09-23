@@ -34,11 +34,15 @@ const Header = () => {
 
   const getActiveTabName = () => {
     const path = location.pathname;
+    if (path === "/admin/blogs/new") return "Add Blog";
     if (path.startsWith("/admin/blogs/") && blogContext) return blogContext.title || "Blog";
     if (path.startsWith("/admin/dashboard")) return "Dashboard";
     if (path.startsWith("/admin/posts")) return "Posts";
+    if (path === "/admin/tags/new") return "Add Tag";
     if (path.startsWith("/admin/tags")) return "Tags";
+    if (path === "/admin/categories/new") return "Add Category";
     if (path.startsWith("/admin/categories")) return "Categories";
+    if (path.startsWith("/admin/blogs")) return "Blogs";
     if (path.startsWith("/admin/Blogs")) return "Blogs";
     if (path.startsWith("/admin/settings")) return "Settings";
     return "";

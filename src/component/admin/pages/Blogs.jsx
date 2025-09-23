@@ -129,7 +129,7 @@ export default function Blogs() {
       ),
       cell: ({ row }) => {
         const title = String(row.getValue('title') ?? '')
-        return <div className="max-w-[420px] truncate" title={title}>{title}</div>
+        return <div className="max-w-[320px] truncate font-medium" title={title}>{title}{title.length > 36 ? <span className="ml-1 text-slate-400">…</span> : null}</div>
       },
     },
     { accessorKey: 'author', header: 'Author' },
@@ -638,7 +638,14 @@ export default function Blogs() {
               <DialogHeader>
                 <DialogTitle>Delete blog?</DialogTitle>
                 <DialogDescription>
-                  This action cannot be undone. {pendingDelete ? `Delete "${pendingDelete.title}"?` : ''}
+                  This action cannot be undone.
+                  {pendingDelete && (
+                    <>
+                      {" "}Delete "
+                      <span className="inline-block max-w-[260px] truncate align-bottom" title={pendingDelete.title}>{pendingDelete.title}</span>
+                      "?
+                    </>
+                  )}
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter>

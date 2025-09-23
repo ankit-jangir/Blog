@@ -8,14 +8,15 @@ import { Input } from '@/components/ui/input'
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { ChevronDown, ArrowUpDown, MoreHorizontal } from 'lucide-react'
+import { ChevronDown, ArrowUpDown, MoreHorizontal, Tag as TagIcon, User, CalendarDays, Hash } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { showSuccessToast } from '@/components/ui/global-toast'
 import { useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel, getFilteredRowModel, flexRender } from '@tanstack/react-table'
 
 export default function Tags() {
   const isOnline = useOnline()
 
-  const data = React.useMemo(() => ([
+  const base = React.useMemo(() => ([
     { id: 't-1', name: 'Passport', slug: 'passport', posts: 12, status: 'Active' },
     { id: 't-2', name: 'OCI', slug: 'oci', posts: 9, status: 'Active' },
     { id: 't-3', name: 'Indian Visa', slug: 'indian-visa', posts: 7, status: 'Active' },
@@ -29,6 +30,21 @@ export default function Tags() {
     { id: 't-11', name: 'Country', slug: 'country', posts: 11, status: 'Active' },
   ]), [])
 
+  const injected = React.useMemo(() => {
+    try { return JSON.parse(localStorage.getItem('admin_tags') || '[]') } catch { return [] }
+  }, [])
+
+  const data = React.useMemo(() => {
+    const map = new Map()
+    ;[...injected, ...base].forEach((t) => map.set(t.slug || t.id, t))
+    // newest injected first
+    return Array.from(map.values()).sort((a, b) => {
+      const ad = a.createdAt ? Date.parse(a.createdAt) : 0
+      const bd = b.createdAt ? Date.parse(b.createdAt) : 0
+      return bd - ad
+    })
+  }, [base, injected])
+
   const [rows, setRows] = React.useState(data)
   const [sorting, setSorting] = React.useState([])
   const [columnFilters, setColumnFilters] = React.useState([])
@@ -37,9 +53,10 @@ export default function Tags() {
   const [pagination, setPagination] = React.useState({ pageIndex: 0, pageSize: 10 })
   const [openDelete, setOpenDelete] = React.useState(false)
   const [openEdit, setOpenEdit] = React.useState(false)
+  const [openView, setOpenView] = React.useState(false)
   const [activeItem, setActiveItem] = React.useState(null)
   const [pendingDelete, setPendingDelete] = React.useState(null)
-  const [editForm, setEditForm] = React.useState({ name: '', slug: '', status: 'Active' })
+  const [editForm, setEditForm] = React.useState({ name: '', slug: '', status: 'Active', description: '', author: 'Admin', createdAt: '' })
 
   const columns = React.useMemo(() => ([
     {
@@ -71,11 +88,24 @@ export default function Tags() {
       ),
       cell: ({ row }) => {
         const name = String(row.getValue('name') ?? '')
-        return <div className="max-w-[420px] truncate" title={name}>{name}</div>
+        return (
+          <div className="max-w-[200px] truncate" title={name}>
+            <span className="font-medium">{name}</span>
+            {name.length > 24 && <span className="ml-1 text-slate-400">…</span>}
+          </div>
+        )
       },
     },
-    { accessorKey: 'slug', header: 'Slug' },
+    {
+      accessorKey: 'slug',
+      header: 'Slug',
+      cell: ({ row }) => {
+        const slug = String(row.getValue('slug') ?? '')
+        return <div className="max-w-[200px] truncate" title={slug}>{slug}</div>
+      },
+    },
     { accessorKey: 'posts', header: 'Posts' },
+    // hide author/created/description from table per request; shown in View dialog
     {
       accessorKey: 'status',
       header: 'Status',
@@ -101,7 +131,8 @@ export default function Tags() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuItem onSelect={() => { setActiveItem(item); setEditForm({ name: item.name, slug: item.slug, status: item.status || 'Active' }); setOpenEdit(true) }}>Edit</DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => { setActiveItem(item); setOpenView(true) }}>View</DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => { setActiveItem(item); setEditForm({ name: item.name, slug: item.slug, status: item.status || 'Active', description: item.description || '', author: item.author || 'Admin', createdAt: item.createdAt ? new Date(item.createdAt).toISOString().slice(0,16) : new Date().toISOString().slice(0,16) }); setOpenEdit(true) }}>Edit</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="text-destructive" onSelect={() => { setPendingDelete(item); setOpenDelete(true) }}>Delete</DropdownMenuItem>
               </DropdownMenuContent>
@@ -133,9 +164,9 @@ export default function Tags() {
       try {
         const w = window.innerWidth
         if (w < 768) {
-          setColumnVisibility({ select: false, name: true, slug: false, posts: false, actions: true })
+          setColumnVisibility({ select: true, name: true, slug: false, posts: false, actions: true })
         } else if (w < 1024) {
-          setColumnVisibility({ name: true, slug: false, posts: true, actions: true })
+          setColumnVisibility({ select: true, name: true, slug: false, posts: true, actions: true })
         } else {
           setColumnVisibility({})
         }
@@ -175,7 +206,7 @@ export default function Tags() {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button className="bg-blue-900 text-white hover:bg-blue-950">Add Tag</Button>
+          <Link to="/admin/tags/new"><Button className="bg-blue-900 text-white hover:bg-blue-950">Add Tag</Button></Link>
         </div>
       </div>
 
@@ -199,7 +230,7 @@ export default function Tags() {
               <TableBody>
                 {table.getRowModel().rows?.length ? (
                   table.getRowModel().rows.map((row) => (
-                    <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+                    <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'} className="hover:bg-slate-50 dark:hover:bg-gray-800/50">
                       {row.getVisibleCells().map((cell) => (
                         <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                       ))}
@@ -231,13 +262,60 @@ export default function Tags() {
               </Button>
             </div>
           </div>
+          <Dialog open={openView} onOpenChange={setOpenView}>
+            <DialogContent className="max-w-lg sm:max-w-xl md:max-w-3xl overflow-hidden">
+              <DialogHeader>
+                <DialogTitle className="flex items-center gap-2"><TagIcon size={16} /> Tag details</DialogTitle>
+                <DialogDescription className="text-slate-500">Full tag information</DialogDescription>
+              </DialogHeader>
+              {activeItem && (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 rounded-lg bg-gradient-to-r from-slate-50 to-white p-3 ring-1 ring-slate-200 dark:from-gray-800 dark:to-gray-900 dark:ring-gray-800">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-blue-700 ring-1 ring-blue-200 dark:bg-blue-900/30 dark:text-blue-200 dark:ring-blue-800">
+                      <TagIcon size={18} />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="w-full truncate text-lg font-semibold max-w-[200px]" title={activeItem.name}>{activeItem.name}</div>
+                      <div className="mt-1 flex flex-wrap items-center gap-2 text-[11px] overflow-hidden">
+                        <span className="inline-flex min-w-0 max-w-full flex-1 items-center gap-1 rounded-full bg-slate-50 px-2 py-0.5 text-slate-700 ring-1 ring-slate-200 dark:bg-gray-800 dark:text-slate-300 dark:ring-gray-700 overflow-hidden" title={`${activeItem.slug}`}>
+                          <Hash size={12} />
+                          <span className="truncate max-w-[200px] overflow-hidden text-ellipsis whitespace-nowrap" title={activeItem.slug}>{activeItem.slug}</span>
+                        </span>
+                        <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] ${activeItem.status === 'Active' ? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200' : 'bg-slate-50 text-slate-700 ring-1 ring-slate-200'}`}>{activeItem.status}</span>
+                        <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-0.5 text-blue-700 ring-1 ring-blue-200 dark:bg-blue-900/20 dark:text-blue-300 dark:ring-blue-800">{activeItem.posts} posts</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-4 text-xs text-slate-500">
+                    {activeItem.author && (
+                      <span className="inline-flex items-center gap-1"><User size={12} />By {activeItem.author}</span>
+                    )}
+                    {activeItem.createdAt && (
+                      <span className="inline-flex items-center gap-1"><CalendarDays size={12} />{new Date(activeItem.createdAt).toLocaleString()}</span>
+                    )}
+                  </div>
+                  {activeItem.description && (
+                    <div className="max-h-[50vh] overflow-y-auto overflow-x-hidden rounded-md bg-slate-50 p-3 text-sm text-slate-700 ring-1 ring-slate-200 dark:bg-gray-800 dark:text-slate-300 dark:ring-gray-800 whitespace-pre-wrap break-words"
+                         style={{ wordBreak: 'break-word' }}
+                         title={activeItem.description}
+                    >
+                      {activeItem.description}
+                    </div>
+                  )}
+                </div>
+              )}
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setOpenView(false)}>Close</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
           <Dialog open={openEdit} onOpenChange={setOpenEdit}>
-            <DialogContent>
+            <DialogContent className="max-w-lg sm:max-w-xl">
               <DialogHeader>
                 <DialogTitle>Edit tag</DialogTitle>
                 <DialogDescription>Change name or slug and save.</DialogDescription>
               </DialogHeader>
-              <div className="grid gap-3">
+              <div className="grid max-h-[70vh] gap-3 overflow-auto pr-1">
                 <div>
                   <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Name</div>
                   <Input value={editForm.name} onChange={(e) => setEditForm({ ...editForm, name: e.target.value })} placeholder="Tag name" />
@@ -245,6 +323,20 @@ export default function Tags() {
                 <div>
                   <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Slug</div>
                   <Input value={editForm.slug} onChange={(e) => setEditForm({ ...editForm, slug: e.target.value })} placeholder="slug-like-this" />
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div>
+                    <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Author</div>
+                    <Input value={editForm.author} onChange={(e) => setEditForm({ ...editForm, author: e.target.value })} placeholder="Author name" />
+                  </div>
+                  <div>
+                    <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Created at</div>
+                    <Input type="datetime-local" value={editForm.createdAt} onChange={(e) => setEditForm({ ...editForm, createdAt: e.target.value })} />
+                  </div>
+                </div>
+                <div>
+                  <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Description</div>
+                  <textarea className="border-input min-h-[120px] w-full rounded-md border bg-transparent p-3 text-sm shadow-xs" value={editForm.description} onChange={(e) => setEditForm({ ...editForm, description: e.target.value })} placeholder="Short description" />
                 </div>
                 <div>
                   <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Status</div>
@@ -266,7 +358,16 @@ export default function Tags() {
                     const nextName = String(editForm.name || '').trim()
                     const nextSlug = String(editForm.slug || '').trim()
                     const nextStatus = editForm.status === 'Inactive' ? 'Inactive' : 'Active'
-                    setRows((prev) => prev.map((r) => r.id === activeItem.id ? { ...r, name: nextName || r.name, slug: nextSlug || r.slug, status: nextStatus } : r))
+                    const nextDesc = String(editForm.description || '').trim()
+                    const nextAuthor = String(editForm.author || activeItem.author || 'Admin').trim()
+                    const nextCreated = editForm.createdAt ? new Date(editForm.createdAt).toISOString() : activeItem.createdAt
+                    const updatedRow = { ...activeItem, name: nextName || activeItem.name, slug: nextSlug || activeItem.slug, status: nextStatus, description: nextDesc, author: nextAuthor, createdAt: nextCreated }
+                    setRows((prev) => prev.map((r) => r.id === activeItem.id ? updatedRow : r))
+                    try {
+                      const stored = JSON.parse(localStorage.getItem('admin_tags') || '[]')
+                      const mapped = stored.map((t) => (t.id === activeItem.id || t.slug === activeItem.slug) ? { ...t, name: updatedRow.name, slug: updatedRow.slug, status: updatedRow.status, description: updatedRow.description, author: updatedRow.author, createdAt: updatedRow.createdAt } : t)
+                      localStorage.setItem('admin_tags', JSON.stringify(mapped))
+                    } catch {}
                     setOpenEdit(false)
                     setActiveItem(null)
                     showSuccessToast('Tag updated')
@@ -282,7 +383,14 @@ export default function Tags() {
               <DialogHeader>
                 <DialogTitle>Delete tag?</DialogTitle>
                 <DialogDescription>
-                  This action cannot be undone. {pendingDelete ? `Delete "${pendingDelete.name}"?` : ''}
+                  This action cannot be undone.
+                  {pendingDelete && (
+                    <>
+                      {" "}Delete "
+                      <span className="inline-block max-w-[240px] truncate align-bottom" title={pendingDelete.name}>{pendingDelete.name}</span>
+                      "?
+                    </>
+                  )}
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter>

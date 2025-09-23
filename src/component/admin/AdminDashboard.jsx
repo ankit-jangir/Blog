@@ -1,6 +1,6 @@
 import React from 'react'
 import AdminLayout from './layout/AdminLayout'
-import { BookOpenText, FileText, Tag as TagIcon, Folder } from 'lucide-react'
+import { BookOpenText, Tag as TagIcon, Folder } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { DUMMY_POSTS } from '@/component/Blog'
@@ -13,7 +13,6 @@ export default function AdminDashboard() {
   }, [])
   const posts = React.useMemo(() => ([...(injected || []), ...(DUMMY_POSTS || [])]), [injected])
   const totalBlogs = posts.length
-  const totalPublishedPosts = posts.filter((p) => (p.status ? p.status === 'Published' : true)).length
   const totalTags = SIDEBAR_TAGS.length
   const totalCategories = SIDEBAR_CATEGORIES.length
   const recentBlogs = React.useMemo(() => {
@@ -33,8 +32,7 @@ export default function AdminDashboard() {
   return (
     <AdminLayout>
       <div className="p-4 md:p-6">
-        {/* KPI row */}
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-3">
           {/* Total Blogs */}
           <Link to="/admin/Blogs" className="relative block h-28 overflow-hidden rounded-2xl p-5 shadow-sm ring-1 ring-black/5 bg-gradient-to-br from-blue-50 to-blue-100 transition hover:shadow-md dark:from-blue-950/40 dark:to-blue-900/30">
             <div className="flex h-full items-start justify-between">
@@ -44,19 +42,6 @@ export default function AdminDashboard() {
               </div>
               <div className="rounded-xl bg-white/80 p-3 shadow-sm ring-1 ring-white/60 dark:bg-white/10 dark:ring-white/10">
                 <BookOpenText className="h-6 w-6 text-blue-600 dark:text-blue-300" />
-              </div>
-            </div>
-          </Link>
-
-          {/* Total Posts */}
-          <Link to="/admin/Blogs" className="relative block h-28 overflow-hidden rounded-2xl p-5 shadow-sm ring-1 ring-black/5 bg-gradient-to-br from-indigo-50 to-indigo-100 transition hover:shadow-md dark:from-indigo-950/40 dark:to-indigo-900/30">
-            <div className="flex h-full items-start justify-between">
-              <div>
-                <div className="text-xs font-medium text-indigo-700/80 dark:text-indigo-300/80">Total Posts</div>
-                <div className="mt-1 text-3xl font-extrabold text-indigo-900 dark:text-indigo-200">{totalPublishedPosts}</div>
-              </div>
-              <div className="rounded-xl bg-white/80 p-3 shadow-sm ring-1 ring-white/60 dark:bg-white/10 dark:ring-white/10">
-                <FileText className="h-6 w-6 text-indigo-600 dark:text-indigo-300" />
               </div>
             </div>
           </Link>

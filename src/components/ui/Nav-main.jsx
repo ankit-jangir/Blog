@@ -18,7 +18,9 @@ export function NavMain({ items }) {
     <SidebarGroup>
       <SidebarMenu>
         {items.map((item) => {
-          const isActive = currentPath === item.url;
+          const currentLower = String(currentPath || '').toLowerCase().replace(/\/+$/, '');
+          const baseLower = String(item.url || '').toLowerCase().replace(/\/+$/, '');
+          const isActive = currentLower === baseLower || currentLower.startsWith(baseLower + '/');
 
           return (
             <SidebarMenuItem key={item.url}>

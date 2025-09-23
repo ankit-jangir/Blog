@@ -2,6 +2,8 @@ import React from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { ChevronDown } from 'lucide-react'
 import { showSuccessToast, showErrorToast } from '@/components/ui/global-toast'
 import { CATEGORIES as SIDEBAR_CATEGORIES, TAGS as SIDEBAR_TAGS } from '@/component/data/rightSidebar'
 
@@ -10,8 +12,8 @@ export default function BlogNew() {
   const [form, setForm] = React.useState({
     title: '',
     slug: '',
-    category: '',
-    tags: '',
+    categories: [],
+    tags: [],
     author: 'Admin',
     coverFile: null,
     readTime: '5 min read',
@@ -50,8 +52,8 @@ export default function BlogNew() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    const { title, slug, category, author, readTime, date, excerpt, content, tags, subtitle, keyPoints, sections, steps, feesRows } = form
-    if (!title || !slug || !category || !author || !readTime || !date || !form.coverFile || !excerpt || !content || !tags) {
+    const { title, slug, categories, author, readTime, date, excerpt, content, tags, subtitle, keyPoints, sections, steps, feesRows } = form
+    if (!title || !slug || !Array.isArray(categories) || categories.length === 0 || !author || !readTime || !date || !form.coverFile || !excerpt || !content || !Array.isArray(tags) || tags.length === 0) {
       showErrorToast('Please fill all required fields')
       return
     }
@@ -68,14 +70,15 @@ export default function BlogNew() {
         title: form.title,
         slug: slugify(form.slug || form.title),
         author,
-        category,
+        category: Array.isArray(categories) && categories.length ? categories[0] : '',
+        categories: Array.isArray(categories) ? categories : [],
         status: 'Published',
         date,
         readTime,
         excerpt,
         content,
-        tag: tags,
-        tags: [tags],
+        tag: Array.isArray(tags) && tags.length ? tags[0] : '',
+        tags: Array.isArray(tags) ? tags : [],
         image: fileDataUrl,
         subtitle,
         keyPoints: String(keyPoints || '')
@@ -147,52 +150,107 @@ export default function BlogNew() {
               placeholder="slug-like-this"
             />
           </div>
-          <div>
-            <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Category *</div>
-            <select
-              className="border-input h-9 w-full rounded-md border bg-transparent px-3 text-sm shadow-xs focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
-              value={form.category}
-              onChange={(e) => handleChange('category', e.target.value)}
-            >
-              <option value="">Select category</option>
-              {SIDEBAR_CATEGORIES.map((c) => (
-                <option key={c.title} value={c.title}>{c.title}</option>
-              ))}
-            </select>
+          <div className="min-w-0">
+            <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Categories *</div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button type="button" variant="outline" className="mt-1 w-full min-h-9 h-auto px-2 py-1.5 justify-between gap-2">
+                  <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1">
+                    {form.categories.length ? (
+                      form.categories.map((c) => (
+                        <span key={c} className="inline-flex items-center rounded-full bg-blue-50 px-2 py-0.5 text-xs text-blue-700 ring-1 ring-blue-200 dark:bg-blue-900/30 dark:text-blue-200 dark:ring-blue-800">{c}</span>
+                      ))
+                    ) : (
+                      <span className="text-muted-foreground text-sm">Select categories</span>
+                    )}
+                  </div>
+                  <ChevronDown size={16} className="shrink-0 opacity-70" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-[min(22rem,90vw)] sm:w-64">
+                {SIDEBAR_CATEGORIES.map((c) => (
+                  <DropdownMenuCheckboxItem
+                    key={c.title}
+                    checked={form.categories.includes(c.title)}
+                    onCheckedChange={(checked) => {
+                      const next = checked
+                        ? [...form.categories, c.title]
+                        : form.categories.filter((x) => x !== c.title)
+                      handleChange('categories', next)
+                    }}
+                  >
+                    {c.title}
+                  </DropdownMenuCheckboxItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
           <div>
             <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Author</div>
             <Input value={form.author} onChange={(e) => handleChange('author', e.target.value)} placeholder="Author name" />
           </div>
-          <div>
-            <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Tag *</div>
-            <select
-              className="border-input h-9 w-full rounded-md border bg-transparent px-3 text-sm shadow-xs focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]"
-              value={form.tags}
-              onChange={(e) => handleChange('tags', e.target.value)}
-            >
-              <option value="">Select tag</option>
-              {SIDEBAR_TAGS.map((t) => (
-                <option key={t} value={t}>{t}</option>
-              ))}
-            </select>
+          <div className="min-w-0">
+            <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Tags *</div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button type="button" variant="outline" className="mt-1 w-full min-h-9 h-auto px-2 py-1.5 justify-between gap-2">
+                  <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1">
+                    {form.tags.length ? (
+                      form.tags.map((t) => (
+                        <span key={t} className="inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 text-xs text-emerald-700 ring-1 ring-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-200 dark:ring-emerald-800">{t}</span>
+                      ))
+                    ) : (
+                      <span className="text-muted-foreground text-sm">Select tags</span>
+                    )}
+                  </div>
+                  <ChevronDown size={16} className="shrink-0 opacity-70" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-[min(22rem,90vw)] sm:w-64">
+                {SIDEBAR_TAGS.map((t) => (
+                  <DropdownMenuCheckboxItem
+                    key={t}
+                    checked={form.tags.includes(t)}
+                    onCheckedChange={(checked) => {
+                      const next = checked
+                        ? [...form.tags, t]
+                        : form.tags.filter((x) => x !== t)
+                      handleChange('tags', next)
+                    }}
+                  >
+                    {t}
+                  </DropdownMenuCheckboxItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
           <div className="md:col-span-2">
             <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Cover Image *</div>
-            <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed border-slate-300 p-4 text-center hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-800/40">
-              <span className="text-xs text-slate-500">Click to select an image (JPG/PNG)</span>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleChange('coverFile', e.target.files?.[0] || null)}
-                className="hidden"
-              />
-            </label>
-            {form.coverFile && (
-              <div className="mt-3 overflow-hidden rounded-md border">
-                <img src={URL.createObjectURL(form.coverFile)} alt="preview" className="h-48 w-full object-cover" />
-              </div>
-            )}
+            <div className="grid gap-2 sm:grid-cols-[1fr_auto]">
+              <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed border-slate-300 p-4 text-center hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-800/40">
+                <span className="text-xs text-slate-500">Click to select an image (JPG/PNG)</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleChange('coverFile', e.target.files?.[0] || null)}
+                  className="hidden"
+                />
+              </label>
+              {(form.coverFile) && (
+                <div className="relative overflow-hidden rounded-md border">
+                  <img src={URL.createObjectURL(form.coverFile)} alt="preview" className="h-24 w-32 object-cover" />
+                  <button
+                    type="button"
+                    className="absolute right-1 top-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-100 dark:bg-gray-900 dark:text-slate-200 dark:ring-gray-700"
+                    onClick={() => handleChange('coverFile', null)}
+                    title="Remove image"
+                    aria-label="Remove image"
+                  >
+                    ×
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
           <div>
             <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Read time</div>
@@ -384,7 +442,7 @@ export default function BlogNew() {
           {/* Steps list (numbered) */}
           <div className="md:col-span-2">
             <div className="mb-2 text-sm font-semibold text-slate-700 dark:text-slate-200">Steps (one per line)</div>
-            <textarea className="border-input min-h-[120px] w-full rounded-md border bg-transparent p-3 text-sm shadow-xs" value={form.steps} onChange={(e) => handleChange('steps', e.target.value)} placeholder={"1. Register Online\n2. Fill the Application\n3. Make Payment\n4. Book Appointment\n5. In-Person Visit\n6. Track Status"} />
+            <textarea className="border-input min-h-[120px] w-full rounded-md border bg-transparent p-3 text-sm shadow-xs" value={form.steps} onChange={(e) => handleChange('steps', e.target.value)} placeholder={"1. Register Online\n2. Fill the Application\n3. Make Payment"} />
           </div>
           {/* Fees table rows */}
           <div className="md:col-span-2">

@@ -10,7 +10,9 @@ const AdminSignin = lazy(() => import('./component/admin/AdminSignin'))
 const AdminDashboard = lazy(() => import('./component/admin/AdminDashboard'))
 const AdminLayout = lazy(() => import('./component/admin/layout/AdminLayout'))
 const Tags = lazy(() => import('./component/admin/pages/Tags'))
+const TagNew = lazy(() => import('./component/admin/pages/TagNew'))
 const Categories = lazy(() => import('./component/admin/pages/Categories'))
+const CategoryNew = lazy(() => import('./component/admin/pages/CategoryNew'))
 const CategoryDetail = lazy(() => import('./component/admin/pages/CategoryDetail'))
 const Settings = lazy(() => import('./component/admin/pages/Settings'))
 import { Toaster } from './components/ui/sonner'
@@ -25,7 +27,7 @@ const App = () => {
     <>
    
     <Suspense fallback={null}>
-      <Routes>
+    <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogSingle />} />
@@ -35,14 +37,16 @@ const App = () => {
         <Route path="/admin/signin" element={<AdminSignin />} />
         <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
         <Route path="/admin/tags" element={<ProtectedRoute><AdminLayout><Tags /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/tags/new" element={<ProtectedRoute><AdminLayout><TagNew /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/categories" element={<ProtectedRoute><AdminLayout><Categories /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/categories/new" element={<ProtectedRoute><AdminLayout><CategoryNew /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/categories/:slug" element={<ProtectedRoute><AdminLayout><CategoryDetail /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/Blogs" element={<ProtectedRoute><AdminLayout><Blogs /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/blogs/new" element={<ProtectedRoute><AdminLayout><BlogNew /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/settings" element={<ProtectedRoute><AdminLayout><Settings /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/blogs/:slug" element={<ProtectedRoute><AdminLayout><AdminPostDetail /></AdminLayout></ProtectedRoute>} />
         <Route path="*" element={<NotFound />} />
-      </Routes>
+    </Routes>
     </Suspense>
     <Toaster position="top-right" richColors />
     </>

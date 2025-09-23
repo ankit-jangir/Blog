@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import useOnline from '@/hooks/use-online'
 import Offline from '@/components/ui/animations/Offline'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { showSuccessToast, showErrorToast } from '@/components/ui/global-toast'
-import { Eye, EyeOff, MapPin, Shield, Phone, Calendar, Clock, Mail, AtSign, Settings as SettingsIcon } from 'lucide-react'
+import { Eye, EyeOff, MapPin, Shield, Phone, Calendar, Clock, Mail, AtSign, Settings as SettingsIcon, BookOpenText, Tag as TagIcon, Folder } from 'lucide-react'
+import { DUMMY_POSTS } from '@/component/Blog'
+import { CATEGORIES as SIDEBAR_CATEGORIES, TAGS as SIDEBAR_TAGS } from '@/component/data/rightSidebar'
 import { Link } from 'react-router-dom'
 import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
@@ -30,6 +32,14 @@ export default function Settings() {
   const [tagCount, setTagCount] = useState(0)
   const [BlogCount, setBlogCount] = useState(0)
   const [categoryCount, setCategoryCount] = useState(0)
+
+  // Live counts from data (original sources)
+  const injectedBlogs = useMemo(() => {
+    try { return JSON.parse(localStorage.getItem('admin_new_blogs') || '[]') } catch { return [] }
+  }, [])
+  const totalBlogs = useMemo(() => (injectedBlogs.length + ((DUMMY_POSTS || []).length)), [injectedBlogs])
+  const totalTags = SIDEBAR_TAGS.length
+  const totalCategories = SIDEBAR_CATEGORIES.length
 
   useEffect(() => {
     try {
@@ -138,23 +148,39 @@ export default function Settings() {
               {location && <span className="inline-flex max-w-[220px] items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-emerald-700 ring-1 ring-emerald-200" title={`${location} (${(location||'').length} chars)`}><MapPin className="h-3.5 w-3.5" /> <span className="truncate">{location}</span></span>}
               {phone && <span className="inline-flex max-w-[220px] items-center gap-1 rounded-full bg-slate-50 px-2.5 py-1 text-slate-700 ring-1 ring-slate-200" title={`${phone} (${(phone||'').length} chars)`}><Phone className="h-3.5 w-3.5" /> <span className="truncate">{phone}</span></span>}
             </div>
-            {/* Stats 2x2 grid on all screens */}
-            <div className="mt-4 grid grid-cols-2 gap-3 text-center">
-              <Link to="/admin/Blogs" className="rounded-xl bg-slate-50 p-4 ring-1 ring-transparent transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-50 hover:ring-blue-200 motion-reduce:transition-none dark:bg-slate-800 dark:hover:bg-slate-800/80 dark:hover:ring-slate-700">
-                <div className="text-xs text-slate-500">Blog</div>
-                <div className="text-2xl font-extrabold text-slate-900 dark:text-slate-100">{BlogCount}</div>
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <Link to="/admin/Blogs" className="relative block h-24 overflow-hidden rounded-xl p-4 shadow-sm ring-1 ring-black/5 bg-gradient-to-br from-blue-50 to-blue-100 transition hover:shadow-md dark:from-blue-950/40 dark:to-blue-900/30">
+                <div className="flex h-full items-start justify-between">
+                  <div>
+                    <div className="text-[11px] font-medium text-blue-700/80 dark:text-blue-300/80">Blogs</div>
+                    <div className="mt-1 text-2xl font-extrabold text-blue-900 dark:text-blue-200">{totalBlogs}</div>
+                  </div>
+                  <div className="rounded-lg bg-white/80 p-2 shadow-sm ring-1 ring-white/60 dark:bg-white/10 dark:ring-white/10">
+                    <BookOpenText className="h-5 w-5 text-blue-600 dark:text-blue-300" />
+                  </div>
+                </div>
               </Link>
-              <Link to="/admin/tags" className="rounded-xl bg-slate-50 p-4 ring-1 ring-transparent transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-50 hover:ring-blue-200 motion-reduce:transition-none dark:bg-slate-800 dark:hover:bg-slate-800/80 dark:hover:ring-slate-700">
-                <div className="text-xs text-slate-500">Tags</div>
-                <div className="text-2xl font-extrabold text-slate-900 dark:text-slate-100">{tagCount}</div>
+              <Link to="/admin/tags" className="relative block h-24 overflow-hidden rounded-xl p-4 shadow-sm ring-1 ring-black/5 bg-gradient-to-br from-fuchsia-50 to-pink-100 transition hover:shadow-md dark:from-fuchsia-950/40 dark:to-pink-900/30">
+                <div className="flex h-full items-start justify-between">
+                  <div>
+                    <div className="text-[11px] font-medium text-fuchsia-700/80 dark:text-pink-300/80">Tags</div>
+                    <div className="mt-1 text-2xl font-extrabold text-fuchsia-900 dark:text-pink-200">{totalTags}</div>
+                  </div>
+                  <div className="rounded-lg bg-white/80 p-2 shadow-sm ring-1 ring-white/60 dark:bg-white/10 dark:ring-white/10">
+                    <TagIcon className="h-5 w-5 text-fuchsia-600 dark:text-pink-300" />
+                  </div>
+                </div>
               </Link>
-              <Link to="/admin/categories" className="rounded-xl bg-slate-50 p-4 ring-1 ring-transparent transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-50 hover:ring-blue-200 motion-reduce:transition-none dark:bg-slate-800 dark:hover:bg-slate-800/80 dark:hover:ring-slate-700">
-                <div className="text-xs text-slate-500">Categories</div>
-                <div className="text-2xl font-extrabold text-slate-900 dark:text-slate-100">{categoryCount}</div>
-              </Link>
-              <Link to="/admin/posts" className="rounded-xl bg-slate-50 p-4 ring-1 ring-transparent transition-all duration-200 hover:-translate-y-0.5 hover:bg-blue-50 hover:ring-blue-200 motion-reduce:transition-none dark:bg-slate-800 dark:hover:bg-slate-800/80 dark:hover:ring-slate-700">
-                <div className="text-xs text-slate-500">Posts</div>
-                <div className="flex items-center justify-center gap-1 text-2xl font-extrabold text-slate-900 dark:text-slate-100">{postCount}</div>
+              <Link to="/admin/categories" className="relative block h-24 overflow-hidden rounded-xl p-4 shadow-sm ring-1 ring-black/5 bg-gradient-to-br from-emerald-50 to-emerald-100 transition hover:shadow-md dark:from-emerald-950/40 dark:to-emerald-900/30">
+                <div className="flex h-full items-start justify-between">
+                  <div>
+                    <div className="text-[11px] font-medium text-emerald-700/80 dark:text-emerald-300/80">Categories</div>
+                    <div className="mt-1 text-2xl font-extrabold text-emerald-900 dark:text-emerald-200">{totalCategories}</div>
+                  </div>
+                  <div className="rounded-lg bg-white/80 p-2 shadow-sm ring-1 ring-white/60 dark:bg-white/10 dark:ring-white/10">
+                    <Folder className="h-5 w-5 text-emerald-600 dark:text-emerald-300" />
+                  </div>
+                </div>
               </Link>
             </div>
             <div className="mt-4 grid grid-cols-1 gap-3 text-xs sm:grid-cols-2">

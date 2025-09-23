@@ -11,13 +11,13 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { ChevronDown, MoreHorizontal, ArrowUpDown } from 'lucide-react'
 import { useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel, getFilteredRowModel, flexRender } from '@tanstack/react-table'
 import { showSuccessToast } from '@/components/ui/global-toast'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 export default function Categories() {
   const isOnline = useOnline()
   const navigate = useNavigate()
 
-  const data = React.useMemo(() => ([
+  const base = React.useMemo(() => ([
     { id: 'cat-1', name: 'Europe Visa Travel Tips and Tricks', slug: 'europe-visa-travel-tips-and-tricks', posts: 12, status: 'Active' },
     { id: 'cat-2', name: 'Indian Visa Travel Tips and Tricks', slug: 'indian-visa-travel-tips-and-tricks', posts: 9, status: 'Active' },
     { id: 'cat-3', name: 'Apostille and Attestation', slug: 'apostille-and-attestation', posts: 7, status: 'Active' },
@@ -45,6 +45,16 @@ export default function Categories() {
     { id: 'cat-25', name: 'Travel Safety', slug: 'travel-safety', posts: 3, status: 'Active' },
   ]), [])
 
+  const injected = React.useMemo(() => {
+    try { return JSON.parse(localStorage.getItem('admin_categories') || '[]') } catch { return [] }
+  }, [])
+
+  const data = React.useMemo(() => {
+    const map = new Map()
+    ;[...injected, ...base].forEach((c) => map.set(c.slug || c.id, c))
+    return Array.from(map.values())
+  }, [base, injected])
+
   const [rows, setRows] = React.useState(data)
   const [sorting, setSorting] = React.useState([])
   const [columnFilters, setColumnFilters] = React.useState([])
@@ -55,7 +65,7 @@ export default function Categories() {
   const [openEdit, setOpenEdit] = React.useState(false)
   const [activeItem, setActiveItem] = React.useState(null)
   const [pendingDelete, setPendingDelete] = React.useState(null)
-  const [editForm, setEditForm] = React.useState({ name: '', slug: '', status: 'Active' })
+  const [editForm, setEditForm] = React.useState({ name: '', slug: '', status: 'Active', author: 'Admin', createdAt: new Date().toISOString().slice(0,16), description: '', coverFile: null, image: '' })
 
   const columns = React.useMemo(() => ([
     {
@@ -78,6 +88,21 @@ export default function Categories() {
       enableHiding: false,
     },
     {
+      id: 'image',
+      header: 'Image',
+      cell: ({ row }) => {
+        const item = row.original
+        const seed = encodeURIComponent(item.slug || item.name || String(row.id))
+        const src = item.image || `https://picsum.photos/seed/${seed}/64`
+        return (
+          <div className="flex items-center">
+            <img src={src} alt={item.name} className="h-9 w-9 rounded-full object-cover ring-1 ring-black/5" />
+          </div>
+        )
+      },
+      enableSorting: false,
+    },
+    {
       accessorKey: 'name',
       header: ({ column }) => (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
@@ -87,10 +112,17 @@ export default function Categories() {
       ),
       cell: ({ row }) => {
         const name = String(row.getValue('name') ?? '')
-        return <div className="max-w-[420px] truncate" title={name}>{name}</div>
+        return <div className="max-w-[200px] truncate font-medium" title={name}>{name}{name.length > 28 ? <span className="ml-1 text-slate-400">…</span> : null}</div>
       },
     },
-    { accessorKey: 'slug', header: 'Slug' },
+    {
+      accessorKey: 'slug',
+      header: 'Slug',
+      cell: ({ row }) => {
+        const slug = String(row.getValue('slug') ?? '')
+        return <div className="max-w-[200px] truncate text-slate-600 dark:text-slate-300" title={slug}>{slug}</div>
+      },
+    },
     { accessorKey: 'posts', header: 'Posts' },
     {
       accessorKey: 'status',
@@ -117,8 +149,21 @@ export default function Categories() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                <DropdownMenuItem onSelect={() => { navigate(`/admin/categories/${item.slug}`) }}>View</DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => { setActiveItem(item); setEditForm({ name: item.name, slug: item.slug, status: item.status }); setOpenEdit(true) }}>Edit</DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => { navigate(`/admin/categories/${item.slug}` , { state: { item } }) }}>View</DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => {
+                  setActiveItem(item);
+                  setEditForm({
+                    name: item.name || '',
+                    slug: item.slug || '',
+                    status: item.status || 'Active',
+                    author: item.author || 'Admin',
+                    createdAt: item.createdAt ? new Date(item.createdAt).toISOString().slice(0,16) : new Date().toISOString().slice(0,16),
+                    description: item.description || '',
+                    image: item.image || '',
+                    coverFile: null,
+                  });
+                  setOpenEdit(true)
+                }}>Edit</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="text-destructive" onSelect={() => { setPendingDelete(item); setOpenDelete(true) }}>Delete</DropdownMenuItem>
               </DropdownMenuContent>
@@ -150,9 +195,9 @@ export default function Categories() {
       try {
         const w = window.innerWidth
         if (w < 768) {
-          setColumnVisibility({ select: false, name: true, slug: false, posts: false, status: true, actions: true })
+          setColumnVisibility({ select: false, image: true, name: true, slug: false, posts: false, status: true, actions: true })
         } else if (w < 1024) {
-          setColumnVisibility({ name: true, slug: false, posts: true, status: true, actions: true })
+          setColumnVisibility({ image: true, name: true, slug: false, posts: true, status: true, actions: true })
         } else {
           setColumnVisibility({})
         }
@@ -191,7 +236,7 @@ export default function Categories() {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button className="bg-blue-900 text-white hover:bg-blue-950">Add Category</Button>
+          <Link to="/admin/categories/new"><Button className="bg-blue-900 text-white hover:bg-blue-950">Add Category</Button></Link>
         </div>
       </div>
 
@@ -249,12 +294,12 @@ export default function Categories() {
           </div>
           {/* View now navigates to a dedicated page */}
           <Dialog open={openEdit} onOpenChange={setOpenEdit}>
-            <DialogContent>
+            <DialogContent className="max-w-2xl">
               <DialogHeader>
-                <DialogTitle>Edit category</DialogTitle>
+                <DialogTitle>Edit Category</DialogTitle>
                 <DialogDescription>Change name, slug, or status and save.</DialogDescription>
               </DialogHeader>
-              <div className="grid gap-3">
+              <div className="grid gap-3 md:grid-cols-2 max-h-[70vh] overflow-auto pr-1">
                 <div>
                   <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Name</div>
                   <Input value={editForm.name} onChange={(e) => setEditForm({ ...editForm, name: e.target.value })} placeholder="Category name" />
@@ -262,6 +307,14 @@ export default function Categories() {
                 <div>
                   <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Slug</div>
                   <Input value={editForm.slug} onChange={(e) => setEditForm({ ...editForm, slug: e.target.value })} placeholder="slug-like-this" />
+                </div>
+                <div>
+                  <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Author</div>
+                  <Input value={editForm.author} onChange={(e) => setEditForm({ ...editForm, author: e.target.value })} placeholder="Author name" />
+                </div>
+                <div>
+                  <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Created at</div>
+                  <Input type="datetime-local" value={editForm.createdAt} onChange={(e) => setEditForm({ ...editForm, createdAt: e.target.value })} />
                 </div>
                 <div>
                   <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Status</div>
@@ -274,6 +327,30 @@ export default function Categories() {
                     <option value="Inactive">Inactive</option>
                   </select>
                 </div>
+                <div className="md:col-span-2">
+                  <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Cover Image</div>
+                  <div className="grid gap-2 sm:grid-cols-[1fr_auto]">
+                    <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed border-slate-300 p-4 text-center hover:bg-slate-50 dark:border-slate-700 dark:hover:bg-slate-800/40">
+                      <span className="text-xs text-slate-500">Click to select an image (optional)</span>
+                      <input type="file" accept="image/*" onChange={(e) => setEditForm({ ...editForm, coverFile: e.target.files?.[0] || null })} className="hidden" />
+                    </label>
+                    <div className="overflow-hidden rounded-md border">
+                      <img
+                        src={
+                          editForm.coverFile
+                            ? URL.createObjectURL(editForm.coverFile)
+                            : (editForm.image || `https://picsum.photos/seed/${encodeURIComponent(editForm.slug || editForm.name || (activeItem && (activeItem.slug || activeItem.name)) || 'category')}/128`)
+                        }
+                        alt="preview"
+                        className="h-24 w-32 object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="md:col-span-2">
+                  <div className="mb-1 text-sm text-slate-600 dark:text-slate-300">Description</div>
+                  <textarea className="border-input min-h-[100px] w-full rounded-md border bg-transparent p-3 text-sm shadow-xs" value={editForm.description} onChange={(e) => setEditForm({ ...editForm, description: e.target.value })} placeholder="Short description" />
+                </div>
               </div>
               <DialogFooter>
                 <Button variant="outline" onClick={() => setOpenEdit(false)}>Cancel</Button>
@@ -283,10 +360,29 @@ export default function Categories() {
                     const nextName = String(editForm.name || '').trim()
                     const nextSlug = String(editForm.slug || '').trim()
                     const nextStatus = editForm.status === 'Inactive' ? 'Inactive' : 'Active'
-                    setRows((prev) => prev.map((r) => r.id === activeItem.id ? { ...r, name: nextName || r.name, slug: nextSlug || r.slug, status: nextStatus } : r))
-                    setOpenEdit(false)
-                    setActiveItem(null)
-                    showSuccessToast('Category updated')
+                    const updated = { ...activeItem, name: nextName || activeItem.name, slug: nextSlug || activeItem.slug, status: nextStatus, author: editForm.author, createdAt: editForm.createdAt ? new Date(editForm.createdAt).toISOString() : activeItem.createdAt, description: editForm.description }
+                    if (editForm.coverFile) {
+                      // read file
+                      const reader = new FileReader()
+                      reader.onload = () => {
+                        const img = reader.result
+                        persistAndSet({ ...updated, image: img })
+                      }
+                      reader.readAsDataURL(editForm.coverFile)
+                    } else {
+                      persistAndSet({ ...updated, image: editForm.image })
+                    }
+                    function persistAndSet(finalRow) {
+                      setRows((prev) => prev.map((r) => r.id === activeItem.id ? finalRow : r))
+                      try {
+                        const stored = JSON.parse(localStorage.getItem('admin_categories') || '[]')
+                        const mapped = stored.map((c) => (c.id === activeItem.id || c.slug === activeItem.slug) ? { ...c, ...finalRow } : c)
+                        localStorage.setItem('admin_categories', JSON.stringify(mapped))
+                      } catch {}
+                      setOpenEdit(false)
+                      setActiveItem(null)
+                      showSuccessToast('Category updated')
+                    }
                   }}
                 >
                   Save
@@ -297,9 +393,21 @@ export default function Categories() {
           <Dialog open={openDelete} onOpenChange={setOpenDelete}>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Delete category?</DialogTitle>
+                <DialogTitle>Delete Category?</DialogTitle>
                 <DialogDescription>
-                  This action cannot be undone. {pendingDelete ? `Delete "${pendingDelete.name}"?` : ''}
+                  This action cannot be undone.
+                  {pendingDelete && (
+                    <>
+                      {' '}Delete "
+                      <span
+                        className="inline-block max-w-[220px] align-bottom truncate"
+                        title={pendingDelete.name}
+                      >
+                        {pendingDelete.name}
+                      </span>
+                      "?
+                    </>
+                  )}
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter>
