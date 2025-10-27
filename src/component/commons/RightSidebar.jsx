@@ -83,7 +83,7 @@ function CategoryList({ items }) {
             onMouseLeave={() => setHovered(-1)}
             className="group flex items-center justify-between px-4 py-4 hover:bg-slate-50 cursor-pointer"
           >
-            <Link to={it.to} className="text-[15px] font-semibold text-slate-900 group-hover:text-emerald-600">
+            <Link to={it.to} className="text-[15px] font-semibold text-slate-900 group-hover:text-emerald-600 transition-colors">
               {it.title}
             </Link>
             <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-slate-700 text-white text-[13px] font-semibold">
@@ -123,7 +123,7 @@ function TopOnTheWeek({ items }) {
                   {idx + 1}
                 </span>
               </div>
-              <Link to={it.to} state={{ author: it.author, date: it.date }} className="block text-[15px] font-semibold leading-snug text-slate-900 hover:text-emerald-600 break-words">
+              <Link to={it.to} state={{ author: it.author, date: it.date }} className="block text-[15px] font-semibold leading-snug text-slate-900 hover:text-emerald-600 break-words transition-colors">
                 {it.title}
               </Link>
             </li>
@@ -176,7 +176,7 @@ function TagsSection({ tags = [] }) {
             <Link
               key={t}
               to={`/tag/${toSlug(t)}`}
-              className="inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-1 text-[13px] font-medium text-slate-700 hover:bg-slate-50 hover:text-emerald-600"
+              className="inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-1 text-[13px] font-medium text-slate-700 hover:bg-slate-50 hover:text-emerald-600 transition-colors"
             >
               {t}
             </Link>

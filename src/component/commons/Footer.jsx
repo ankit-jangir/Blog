@@ -13,29 +13,29 @@ import {
 } from 'lucide-react'
 
 const SERVICES = [
-  { label: 'OCI', to: '/services/oci' },
-  { label: 'Visa', to: '/services/visa' },
-  { label: 'Passport', to: '/services/passport' },
-  { label: 'Surrender of Indian Passport', to: '/services/surrender-passport' },
-  { label: 'PAN Card', to: '/services/pan-card' },
-  { label: 'Visa Extension', to: '/services/visa-extension' },
-  { label: 'Indian Consular Services', to: '/services/indian-consular' },
-  { label: 'EAD Card', to: '/services/ead-card' },
-  { label: 'Green Card', to: '/services/green-card' },
-  { label: 'US Citizenship', to: '/services/us-citizenship' },
-  { label: 'NRI Services', to: '/services/nri' },
-  { label: 'Forms and Formats', to: '/services/forms' },
-  { label: 'Apostille of Documents', to: '/services/apostille' },
-  { label: 'Global Entry Program GEP', to: '/services/gep' },
+  { label: 'Nutrition Counseling', to: '/services/nutrition-counseling' },
+  { label: 'Fitness Training', to: '/services/fitness-training' },
+  { label: 'Mental Health Therapy', to: '/services/mental-health-therapy' },
+  { label: 'Wellness Coaching', to: '/services/wellness-coaching' },
+  { label: 'Yoga & Meditation Classes', to: '/services/yoga-meditation' },
+  { label: 'Weight Management', to: '/services/weight-management' },
+  { label: 'Preventive Health Screening', to: '/services/preventive-screening' },
+  { label: 'Stress Management', to: '/services/stress-management' },
+  { label: 'Sleep Consultation', to: '/services/sleep-consultation' },
+  { label: 'Corporate Wellness Programs', to: '/services/corporate-wellness' },
+  { label: 'Online Health Coaching', to: '/services/online-coaching' },
+  { label: 'Health Assessment', to: '/services/health-assessment' },
+  { label: 'Chronic Disease Management', to: '/services/chronic-disease' },
+  { label: 'Holistic Health Services', to: '/services/holistic-health' },
 ]
 
-const DOCUMITRA = [
+const WELLNESSHUB = [
   { label: 'About Us', to: '/about' },
   { label: 'Blog', to: '/blog' },
   { label: 'FAQ', to: '/faqs' },
   { label: 'Contact Us', to: '/contact' },
-  { label: 'Refer a Friend', to: '/refer' },
-  { label: 'Request Refund', to: '/refund' },
+  { label: 'Health Resources', to: '/resources' },
+  { label: 'Book Appointment', to: '/book-appointment' },
 ]
 
 function SocialIcon({ href, children, label }) {
@@ -66,28 +66,29 @@ function LinkRow({ href = '#', icon, children }) {
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0b4091] text-white">
-      <div className="px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24 2xl:px-36 py-10 lg:py-14">
+    <footer className="bg-gradient-to-br from-slate-800 via-emerald-900 to-green-900 text-white relative overflow-hidden">
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNnoiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLW9wYWNpdHk9Ii4wNSIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9nPjwvc3ZnPg==')] opacity-10" />
+      <div className="relative px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24 2xl:px-36 py-12 lg:py-16">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-12">
           {/* Left intro column (visible on all screens) */}
           <div className="col-span-2 md:col-span-12 lg:col-span-3">
-            <div className="flex items-center gap-4">
-              <span className="flex h-14 w-14 items-center justify-center rounded-lg bg-white/95 shadow">
-                <img src="/logo.jpeg" alt="Documitra" className="h-10 w-auto object-contain" />
-              </span>
+            <div className="flex items-center gap-4 mb-6">
+              {/* <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-white to-emerald-50 shadow-xl">
+                <img src="/logo.jpeg" alt="WellnessHub" className="h-12 w-auto object-contain" />
+              </span> */}
               <div>
-                <h3 className="text-xl font-semibold">Documitra</h3>
-                <div className="mt-1 text-sm leading-6 text-white/90">
-                  <div>info@documitra.com</div>
-                  <div>+1(877)-291-1311</div>
+                <h3 className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-white to-lime-200">WellnessHub</h3>
+                <div className="mt-1 text-sm leading-6 text-lime-100">
+                  <div className="font-semibold">info@wellnesshub.com</div>
+                  <div className="font-semibold">+1(800)WELLNESS</div>
                 </div>
               </div>
             </div>
             <p className="mt-5 max-w-lg text-sm leading-6 text-white/85">
-              Established in 2020 with a community-focused vision, we have hand-held over
-              15,000+ applications to a high approval rate. Our mission is to provide a
-              hassle-free visa, consular and NRI solution, ensuring transparency and
-              peace of mind throughout your application journey.
+              Established in 2020 with a health-first vision, we have helped over
+              15,000+ individuals achieve their wellness goals. Our mission is to provide
+              comprehensive health and wellness solutions, ensuring a holistic approach to
+              physical, mental, and emotional wellbeing throughout your health journey.
             </p>
           </div>
 
@@ -97,7 +98,7 @@ const Footer = () => {
             <ul className="mt-4 space-y-2 text-[15px]">
               {SERVICES.map((s) => (
                 <li key={s.to}>
-                  <Link to={s.to} className="underline underline-offset-4 text-white/90 hover:text-white">
+                  <Link to={s.to} className="text-sm font-medium hover:text-lime-200 transition-colors duration-300">
                     {s.label}
                   </Link>
                 </li>
@@ -105,13 +106,13 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Documitra */}
+          {/* WellnessHub */}
           <div className="col-span-1 md:col-span-6 lg:col-span-2 lg:max-w-[280px]">
-            <h4 className="text-lg font-semibold">Documitra</h4>
+            <h4 className="text-lg font-semibold">WellnessHub</h4>
             <ul className="mt-4 space-y-2 text-[15px]">
-              {DOCUMITRA.map((l) => (
+              {WELLNESSHUB.map((l) => (
                 <li key={l.to}>
-                  <Link to={l.to} className="underline underline-offset-4 text-white/90 hover:text-white">
+                  <Link to={l.to} className="text-sm font-medium hover:text-lime-200 transition-colors duration-300">
                     {l.label}
                   </Link>
                 </li>
@@ -149,36 +150,34 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Badges column (right) */}
+          {/* Certifications column (right) */}
           <div className="col-span-2 md:col-span-12 lg:col-span-2 lg:max-w-[420px]">
+            <h4 className="text-lg font-semibold mb-4">Certifications & Trust</h4>
             <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-1 gap-4">
               <div className="w-full rounded-lg bg-white shadow flex items-center justify-center md:justify-start px-4 h-14 md:h-18 lg:h-20">
-                <img src="/ssl.png" alt="Secure SSL" className="h-10 md:h-12 lg:h-16 w-auto object-contain" />
+                <img src="/ssl.png" alt="HIPAA Compliant" className="h-10 md:h-12 lg:h-16 w-auto object-contain" />
               </div>
               <div className="w-full rounded-lg bg-white shadow flex items-center justify-center md:justify-start px-4 h-14 md:h-18 lg:h-20">
-                <img src="/cards.jpg" alt="Cards Supported" className="h-10 md:h-12 lg:h-16 w-auto object-contain" />
+                <img src="/cards.jpg" alt="Secure Payments" className="h-10 md:h-12 lg:h-16 w-auto object-contain" />
               </div>
               <div className="w-full rounded-lg bg-white shadow flex items-center justify-center md:justify-start px-4 h-14 md:h-18 lg:h-20">
-                <img src="/payments.png" alt="Paytm / PhonePe" className="h-10 md:h-12 lg:h-16 w-auto object-contain" />
+                <img src="/payments.png" alt="Insurance Accepted" className="h-10 md:h-12 lg:h-16 w-auto object-contain" />
               </div>
               <div className="w-full rounded-lg bg-white shadow flex items-center justify-center md:justify-start px-4 h-14 md:h-18 lg:h-20">
-                <img src="/upi.png" alt="UPI Supported" className="h-10 md:h-12 lg:h-16 w-auto object-contain" />
-              </div>
-              <div className="w-full rounded-lg bg-white shadow flex items-center justify-center md:justify-start px-4 h-14 md:h-18 lg:h-20">
-                <img src="/trustpilot.png" alt="Trustpilot" className="h-10 md:h-12 lg:h-16 w-auto object-contain" />
+                <img src="/trustpilot.png" alt="Trusted Reviews" className="h-10 md:h-12 lg:h-16 w-auto object-contain" />
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-10 border-t border-white/15 pt-6 text-sm text-white/80">
+        <div className="mt-12 border-t border-white/20 pt-8 text-sm text-white/90">
           <div className="flex flex-col-reverse gap-4 md:flex-row md:items-center md:justify-between">
-            <div>© 2020–2026. All rights reserved</div>
+            <div className="font-semibold">© 2020–2026 WellnessHub. All rights reserved • Empowering Health 🌿</div>
             <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
-              <li><Link to="#" className="underline underline-offset-4">Privacy Policy and Cookies</Link></li>
-              <li><Link to="#" className="underline underline-offset-4">Terms of Use</Link></li>
-              <li><Link to="#" className="underline underline-offset-4">Refund Policy</Link></li>
-              <li><Link to="#" className="underline underline-offset-4">Sitemap</Link></li>
+              <li><Link to="#" className="font-medium hover:text-teal-200 transition-colors duration-300">Privacy Policy (HIPAA Compliant)</Link></li>
+              <li><Link to="#" className="font-medium hover:text-teal-200 transition-colors duration-300">Terms of Use</Link></li>
+              <li><Link to="#" className="font-medium hover:text-teal-200 transition-colors duration-300">Cancellation Policy</Link></li>
+              <li><Link to="#" className="font-medium hover:text-teal-200 transition-colors duration-300">Sitemap</Link></li>
             </ul>
           </div>
         </div>

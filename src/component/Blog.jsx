@@ -7,225 +7,223 @@ import RightSidebar from './commons/RightSidebar'
 import { CATEGORIES as SIDEBAR_CATEGORIES, FEATURED as SIDEBAR_FEATURED, TOP_WEEK as SIDEBAR_TOP_WEEK, TAGS as SIDEBAR_TAGS } from './data/rightSidebar'
 import { Plus, Loader2, Facebook as FbIcon, Twitter as XIcon, Instagram, Linkedin, MessageCircle } from 'lucide-react'
 
-// Dummy posts (static) – replace with real API later
+// Health & Wellness Blog Posts
 export const DUMMY_POSTS = [
   {
     id: 1,
-    slug: 'europes-best-kept-beaches',
+    slug: 'mediterranean-diet-guide',
     coverImage:
-      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop',
-    title: "Sun, Sand, and Serenity: Europe's Best‑Kept Beaches",
+      'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1600&auto=format&fit=crop',
+    title: 'The Complete Mediterranean Diet Guide: Transform Your Health Naturally',
     excerpt:
-      'Planning a European escape? Discover quiet coves, crystal waters, and stress‑free tips to make your coastal trip unforgettable.',
-    category: 'Europe Visa Travel Tips and Tricks',
-    publishedAt: '2024-06-11',
-    readTime: '5 min read',
-  },
-  {
-    id: 2,
-    slug: 'passport-services',
-    coverImage:
-      'https://mlvrpw5wpdmq.i.optimole.com/w:1160/h:680/q:mauto/rt:fill/g:ce/ig:avif/https://documitra.com/blog/wp-content/uploads/2025/07/How-to-Expedite-Your-Indian-Passport-Renewal-in-the-USA-A-Comprehensive-Guide.webp',
-    title: 'Your Guide to Indian Passport Renewal Abroad',
-    excerpt:
-      'From paperwork to timelines, here’s a clear, no‑stress guide to renewing your Indian passport when you are outside India.',
-    category: 'Passport Services',
-    publishedAt: '2024-05-29',
-    readTime: '7 min read',
-  },
-  {
-    id: 3,
-    slug: 'oci-basics',
-    coverImage:
-      'https://images.unsplash.com/photo-1530521954074-e64f6810b32d?q=80&w=1600&auto=format&fit=crop',
-    title: 'OCI Card: Everything You Need to Know',
-    excerpt:
-      'A concise explainer covering eligibility, documents, common errors, and processing timelines for OCI applicants.',
-    category: 'OCI Card Services',
-    publishedAt: '2024-04-19',
-    readTime: '6 min read',
-  },
-  {
-    id: 4,
-    slug: 'legal-finance-nri',
-    coverImage:
-      'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1600&auto=format&fit=crop',
-    title: 'Legal & Financial Insights for NRIs: 2025 Edition',
-    excerpt:
-      'Important compliances, investment options, and best practices for NRIs to stay compliant and grow wealth.',
-    category: 'Legal & Financial Insights for NRI',
-    publishedAt: '2024-12-15',
+      'Discover the science-backed benefits of the Mediterranean diet, meal plans, recipes, and practical tips for sustainable healthy eating.',
+    category: 'Nutrition & Diet',
+    publishedAt: '2025-01-15',
     readTime: '8 min read',
   },
   {
-    id: 5,
-    slug: 'apostille-101',
+    id: 2,
+    slug: 'mental-health-mindfulness',
     coverImage:
-      'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1200&auto=format&fit=crop',
-    title: 'Apostille & Attestation: Simple Checklist',
+      'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1600&auto=format&fit=crop',
+    title: 'Mindfulness and Mental Health: A Beginner\'s Guide to Inner Peace',
     excerpt:
-      'Understand the difference, when you need which, and the documents required—without the jargon.',
-    category: 'Apostille and Attestation',
-    publishedAt: '2024-03-10',
-    readTime: '4 min read',
-  },
-  {
-    id: 6,
-    slug: 'travel-insurance',
-    coverImage:
-      'https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1600&auto=format&fit=crop',
-    title: 'Essential Guide to Travel Insurance for Your Next Trip Abroad',
-    excerpt:
-      'What to look for in a policy, travel hacks, and how to claim when plans change unexpectedly.',
-    category: 'Travel Tips',
-    publishedAt: '2024-02-08',
-    readTime: '5 min read',
-  },
-  {
-    id: 7,
-    slug: 'india-e-passport-guide',
-    coverImage:
-      'https://images.unsplash.com/photo-1529078155058-5d716f45d604?q=80&w=1600&auto=format&fit=crop',
-    title: 'India’s e‑Passport: Everything You Need to Know',
-    excerpt:
-      'A quick primer on the new e‑passport: features, eligibility, rollout, and how to apply safely.',
-    category: 'Passport Services',
-    publishedAt: '2024-01-20',
-    readTime: '4 min read',
-  },
-  {
-    id: 8,
-    slug: 'new-oci-portal',
-    coverImage:
-      'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop',
-    title: 'New OCI Portal: What Applicants Need to Know',
-    excerpt:
-      'We summarized the new portal flow with screenshots, common errors, and submission tips.',
-    category: 'OCI Card Services',
-    publishedAt: '2024-01-12',
+      'Learn evidence-based mindfulness techniques to reduce stress, anxiety, and improve your overall mental wellbeing.',
+    category: 'Mental Health',
+    publishedAt: '2025-01-12',
     readTime: '6 min read',
   },
   {
-    id: 9,
-    slug: 'trusted-traveler-programs-2025',
+    id: 3,
+    slug: 'hiit-workout-beginners',
     coverImage:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbDTcXWZrsLuQNDPFiRLcIh10oIR5PMSHZgA&s',
-    title: 'Trusted Traveler Programs (TTP) Updates in 2025',
+      'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=1600&auto=format&fit=crop',
+    title: 'HIIT Workouts for Beginners: Maximum Results in Minimum Time',
     excerpt:
-      'Global Entry, NEXUS, SENTRI—what changed this year and which program is best for you?',
-    category: 'Travel Tips',
-    publishedAt: '2024-01-05',
+      'High-Intensity Interval Training explained: workout plans, safety tips, and how to get started even if you\'re new to exercise.',
+    category: 'Fitness & Exercise',
+    publishedAt: '2025-01-10',
     readTime: '7 min read',
   },
   {
-    id: 10,
-    slug: 'i94-expiration-stay-limits',
+    id: 4,
+    slug: 'sleep-hygiene-better-rest',
     coverImage:
-      'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1600&auto=format&fit=crop',
-    title:
-      'I‑94 Expiration: What Every Visa Holder Needs to Know About Stay Limits, Passport Validity, and Compliance',
+      'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?q=80&w=1600&auto=format&fit=crop',
+    title: 'Sleep Hygiene 101: Science-Backed Tips for Better Rest',
     excerpt:
-      'Understand I‑94 vs visa validity, how to check records, and avoid overstay pitfalls.',
-    category: 'Legal & Financial Insights for NRI',
-    publishedAt: '2023-12-16',
+      'Struggling with sleep? Discover proven strategies to improve sleep quality, establish healthy routines, and wake up refreshed.',
+    category: 'Wellness & Lifestyle',
+    publishedAt: '2025-01-08',
+    readTime: '6 min read',
+  },
+  {
+    id: 5,
+    slug: 'heart-health-prevention',
+    coverImage:
+      'https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?q=80&w=1600&auto=format&fit=crop',
+    title: 'Heart Health: Prevention Strategies That Actually Work',
+    excerpt:
+      'Protect your heart with lifestyle changes, nutrition tips, exercise recommendations, and early warning signs to watch for.',
+    category: 'Preventive Health',
+    publishedAt: '2025-01-05',
+    readTime: '9 min read',
+  },
+  {
+    id: 6,
+    slug: 'plant-based-nutrition',
+    coverImage:
+      'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1600&auto=format&fit=crop',
+    title: 'Plant-Based Nutrition: Complete Guide to Healthy Vegan Living',
+    excerpt:
+      'Everything you need to know about plant-based eating: protein sources, meal plans, supplements, and nutritional balance.',
+    category: 'Nutrition & Diet',
+    publishedAt: '2025-01-03',
+    readTime: '10 min read',
+  },
+  {
+    id: 7,
+    slug: 'yoga-flexibility-strength',
+    coverImage:
+      'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1600&auto=format&fit=crop',
+    title: 'Yoga for Flexibility and Strength: 30-Day Beginner Program',
+    excerpt:
+      'Transform your body and mind with this comprehensive yoga guide. Poses, sequences, and modifications for all levels.',
+    category: 'Fitness & Exercise',
+    publishedAt: '2025-01-01',
+    readTime: '8 min read',
+  },
+  {
+    id: 8,
+    slug: 'managing-stress-naturally',
+    coverImage:
+      'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?q=80&w=1600&auto=format&fit=crop',
+    title: 'Managing Stress Naturally: Holistic Approaches That Work',
+    excerpt:
+      'Combat chronic stress with natural remedies, breathing techniques, lifestyle adjustments, and proven relaxation methods.',
+    category: 'Mental Health',
+    publishedAt: '2024-12-28',
+    readTime: '7 min read',
+  },
+  {
+    id: 9,
+    slug: 'immune-system-boost',
+    coverImage:
+      'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?q=80&w=1600&auto=format&fit=crop',
+    title: 'Boost Your Immune System: Natural Ways to Stay Healthy Year-Round',
+    excerpt:
+      'Strengthen your immunity with nutrition, supplements, sleep, exercise, and lifestyle habits backed by science.',
+    category: 'Preventive Health',
+    publishedAt: '2024-12-25',
+    readTime: '8 min read',
+  },
+  {
+    id: 10,
+    slug: 'gut-health-microbiome',
+    coverImage:
+      'https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=1600&auto=format&fit=crop',
+    title: 'Gut Health and the Microbiome: Your Complete Guide to Digestive Wellness',
+    excerpt:
+      'Understand the gut-brain connection, probiotics, prebiotics, and how to optimize your digestive health naturally.',
+    category: 'Nutrition & Diet',
+    publishedAt: '2024-12-22',
     readTime: '9 min read',
   },
   {
     id: 11,
-    slug: 'schengen-travel-hacks',
+    slug: 'weight-training-women',
     coverImage:
-      'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=1600&auto=format&fit=crop',
-    title: 'Travel Hacks and Tidbits You Should Know Before Visiting the Schengen States',
+      'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1600&auto=format&fit=crop',
+    title: 'Weight Training for Women: Building Strength Without Bulk',
     excerpt:
-      'Insurance proof, itinerary tips, and border control nuances most travelers miss.',
-    category: 'Europe Visa Travel Tips and Tricks',
-    publishedAt: '2023-11-28',
-    readTime: '5 min read',
+      'Debunk myths and discover how strength training transforms your body, boosts metabolism, and improves overall health.',
+    category: 'Fitness & Exercise',
+    publishedAt: '2024-12-20',
+    readTime: '7 min read',
   },
   {
     id: 12,
-    slug: 'common-oci-application-issues',
+    slug: 'anxiety-coping-strategies',
     coverImage:
-      'https://mlvrpw5wpdmq.i.optimole.com/w:1160/h:680/q:mauto/rt:fill/g:ce/ig:avif/https://documitra.com/blog/wp-content/uploads/2025/05/Common-OCI-Application-Issues-Answered-A-Practical-Guide.webp',
-    title: 'Common OCI Application Issues Answered: A Practical Guide',
+      'https://images.unsplash.com/photo-1494252713559-f26074f7babe?q=80&w=1600&auto=format&fit=crop',
+    title: 'Anxiety Relief: Practical Coping Strategies for Daily Life',
     excerpt:
-      'Photo/signature rejections, address proofs, and document order—real fixes that work.',
-    category: 'OCI Card Services',
-    publishedAt: '2023-11-10',
+      'Evidence-based techniques to manage anxiety, from cognitive behavioral strategies to grounding exercises and breathing methods.',
+    category: 'Mental Health',
+    publishedAt: '2024-12-18',
     readTime: '6 min read',
   },
   {
     id: 13,
-    slug: 'evisa-vs-paper-visa',
+    slug: 'diabetes-prevention-guide',
     coverImage:
-      'https://images.unsplash.com/photo-1461696114087-397271a7aedc?q=80&w=1600&auto=format&fit=crop',
-    title:
-      'Indian e‑Visa vs. Paper Visa: Which One Should You Choose for Your Next Trip?',
+      'https://images.unsplash.com/photo-1505576399279-565b52d4ac71?q=80&w=1600&auto=format&fit=crop',
+    title: 'Type 2 Diabetes Prevention: Your Action Plan for Healthy Blood Sugar',
     excerpt:
-      'Speed, costs, permitted entries, and practical pros/cons—choose confidently.',
-    category: 'Indian Visa Travel Tips and Tricks',
-    publishedAt: '2023-10-18',
-    readTime: '5 min read',
+      'Prevent or reverse prediabetes with diet, exercise, stress management, and lifestyle modifications that work.',
+    category: 'Preventive Health',
+    publishedAt: '2024-12-15',
+    readTime: '10 min read',
   },
   {
     id: 14,
-    slug: 'passport-photo-requirements',
+    slug: 'intermittent-fasting-guide',
     coverImage:
-      'https://passport-photo-software.com/img/content/canadian-passport-photo-requirements-example1.jpg',
-    title: 'Passport Photo Requirements: Do’s and Don’ts',
+      'https://images.unsplash.com/photo-1490818387583-1baba5e638af?q=80&w=1600&auto=format&fit=crop',
+    title: 'Intermittent Fasting: Complete Guide to Safe and Effective Fasting',
     excerpt:
-      'Avoid rejections with correct size, background, glasses policy, and digital vs. print tips.',
-    category: 'Passport Services',
-    publishedAt: '2024-03-22',
-    readTime: '4 min read',
+      'Explore different fasting methods, health benefits, potential risks, and how to start intermittent fasting safely.',
+    category: 'Nutrition & Diet',
+    publishedAt: '2024-12-12',
+    readTime: '8 min read',
   },
   {
     id: 15,
-    slug: 'oci-renewal-tips',
+    slug: 'hydration-health-benefits',
     coverImage:
-      'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1600&auto=format&fit=crop',
-    title: 'OCI Renewal Tips: Documents and Timelines',
+      'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?q=80&w=1600&auto=format&fit=crop',
+    title: 'The Power of Hydration: How Water Transforms Your Health',
     excerpt:
-      'When to renew, what to upload, and common mistakes applicants make while renewing OCI.',
-    category: 'OCI Card Services',
-    publishedAt: '2024-03-02',
-    readTime: '6 min read',
-  },
-  {
-    id: 16,
-    slug: 'packing-checklist-international',
-    coverImage:
-      'https://images.unsplash.com/photo-1502920514313-52581002a659?q=80&w=1600&auto=format&fit=crop',
-    title: 'International Travel Packing Checklist',
-    excerpt:
-      'Smart packing templates, medication rules, power adapters, and security-friendly bags.',
-    category: 'Travel Tips',
-    publishedAt: '2024-02-18',
+      'Learn how proper hydration affects energy, skin, digestion, and cognition. Plus tips to drink more water daily.',
+    category: 'Wellness & Lifestyle',
+    publishedAt: '2024-12-10',
     readTime: '5 min read',
   },
   {
-    id: 17,
-    slug: 'indian-visa-appointment-guide',
+    id: 16,
+    slug: 'running-for-beginners',
     coverImage:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQah54MViq3NNX1qiScUJHWJt5VJZdJPbqUjQ&s',
-    title: 'Booking Your Indian Visa Appointment: Step‑by‑Step',
+      'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=1600&auto=format&fit=crop',
+    title: 'Running for Beginners: Couch to 5K Training Plan',
     excerpt:
-      'How to pick centers, upload documents, and avoid last‑minute rescheduling issues.',
-    category: 'Indian Visa Travel Tips and Tricks',
-    publishedAt: '2024-01-28',
+      'Start your running journey right with proper form, training schedules, injury prevention, and motivation strategies.',
+    category: 'Fitness & Exercise',
+    publishedAt: '2024-12-08',
     readTime: '7 min read',
   },
   {
-    id: 18,
-    slug: 'nri-tax-basics',
+    id: 17,
+    slug: 'depression-understanding-support',
     coverImage:
-      'https://images.unsplash.com/photo-1454165205744-3b78555e5572?q=80&w=1600&auto=format&fit=crop',
-    title: 'NRI Tax Basics: Residency, Accounts, and Reporting',
+      'https://images.unsplash.com/photo-1516302752625-fcc3c50ae61f?q=80&w=1600&auto=format&fit=crop',
+    title: 'Understanding Depression: Signs, Support, and Path to Recovery',
     excerpt:
-      'Understand residential status, NRE/NRO accounts, and compliance essentials for NRIs.',
-    category: 'Legal & Financial Insights for NRI',
-    publishedAt: '2023-12-05',
-    readTime: '6 min read',
+      'Recognize symptoms of depression, find professional help, and discover coping strategies for mental health recovery.',
+    category: 'Mental Health',
+    publishedAt: '2024-12-05',
+    readTime: '9 min read',
+  },
+  {
+    id: 18,
+    slug: 'bone-health-osteoporosis',
+    coverImage:
+      'https://images.unsplash.com/photo-1591382696684-38c427c7547f?q=80&w=1600&auto=format&fit=crop',
+    title: 'Bone Health and Osteoporosis Prevention: Build Strong Bones for Life',
+    excerpt:
+      'Protect your bones with calcium-rich foods, vitamin D, weight-bearing exercises, and lifestyle choices that matter.',
+    category: 'Preventive Health',
+    publishedAt: '2024-12-03',
+    readTime: '8 min read',
   },
 ]
 
@@ -285,30 +283,59 @@ const DEFAULT_CATEGORY_IMAGE =
 function PostHero({ post }) {
   const href = post?.slug ? `/blog/${post.slug}` : post?.url || '#'
   return (
-    <article className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-lg hover:shadow-emerald-100">
-      <Link to={href} className="group flex flex-col gap-0 lg:flex-row lg:gap-6">
+    <article className="group relative overflow-hidden rounded-[32px] bg-white shadow-2xl border-2 border-emerald-100/60 transition-all duration-500 hover:shadow-[0_20px_60px_-15px_rgba(16,185,129,0.3)] hover:-translate-y-1 hover:border-emerald-200">
+      <Link to={href} className="block">
+        <div className="relative h-[420px] lg:h-[480px] overflow-hidden">
         <img
           src={post?.coverImage || DEFAULT_POST_IMAGE}
           alt={post?.title}
-          className="h-56 w-full object-cover lg:h-auto lg:w-1/2"
+            className="h-full w-full object-cover transition-all duration-700 group-hover:scale-110"
           loading="lazy"
         />
-        <div className="flex flex-1 flex-col p-5 lg:p-7">
-          <span className="text-[12px] tracking-wide text-blue-700/80">
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent" />
+          
+          {/* Floating health badge */}
+          <div className="absolute top-8 left-8">
+            <div className="relative">
+              <div className="absolute inset-0 bg-emerald-500 blur-xl opacity-60 animate-pulse"></div>
+              <span className="relative inline-flex items-center gap-2.5 text-[11px] font-black tracking-widest text-white uppercase bg-gradient-to-r from-emerald-500 to-lime-500 px-5 py-3 rounded-2xl shadow-2xl">
+                <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
             {post?.category || ''}
           </span>
-          <h2 className="mt-2 text-2xl font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-emerald-600 hover:text-emerald-600">
+            </div>
+          </div>
+
+          {/* Content overlay */}
+          <div className="absolute inset-x-0 bottom-0 p-8 lg:p-12">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-center gap-2 text-sm font-semibold text-white/90 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full">
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                {post?.readTime || '5 min read'}
+              </div>
+              <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></div>
+              <span className="text-sm font-medium text-white/80">Featured Article</span>
+            </div>
+            
+            <h2 className="text-3xl lg:text-5xl font-black leading-tight text-white mb-4 drop-shadow-2xl group-hover:text-lime-300 transition-colors duration-300">
             {post?.title}
           </h2>
-          <p className="mt-3 line-clamp-3 text-[15px] text-slate-600">{post?.excerpt}</p>
-          <div className="relative mt-auto h-8 border-t border-slate-200">
-            <span className="absolute right-0 top-4 text-md text-slate-500 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
-              {post?.readTime || '5 min read'}
+            
+            <p className="text-[17px] leading-relaxed text-white/90 line-clamp-2 mb-6 drop-shadow-lg max-w-3xl">
+              {post?.excerpt}
+            </p>
+            
+            <div className="flex items-center justify-between">
+              <span className="inline-flex items-center gap-3 text-base font-bold uppercase tracking-wider text-lime-300 group-hover:gap-4 transition-all duration-300">
+                Read Full Article
+                <svg className="h-6 w-6 transition-transform duration-300 group-hover:translate-x-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
             </span>
-            <span className="absolute right-0 top-4 text-sm font-semibold uppercase tracking-wide text-emerald-600 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">
-              Read more
-            </span>
-            <span className="absolute top-0 right-0 h-0.5 w-0 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full" />
+            </div>
           </div>
         </div>
       </Link>
@@ -319,30 +346,65 @@ function PostHero({ post }) {
 function PostCard({ post }) {
   const href = post?.slug ? `/blog/${post.slug}` : post?.url || '#'
   return (
-    <article className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-lg hover:shadow-emerald-100">
-      <Link to={href} className="group flex min-h-[260px] flex-col gap-0 lg:min-h-[300px] lg:flex-row lg:gap-6">
+    <article className="group relative overflow-hidden rounded-3xl bg-white shadow-xl border border-emerald-100/50 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-200/40 hover:-translate-y-2 hover:border-emerald-300">
+      <Link to={href} className="block">
+        {/* Image Section */}
+        <div className="relative h-64 overflow-hidden">
         <img
           src={post?.coverImage || DEFAULT_POST_IMAGE}
           alt={post?.title}
-          className="h-56 w-full object-cover transition-all duration-300 ease-out lg:h-auto lg:w-1/2 lg:min-h-[300px] group-hover:scale-[1.02] group-hover:brightness-105 group-hover:saturate-150"
+            className="h-full w-full object-cover transition-all duration-700 group-hover:scale-110"
           loading="lazy"
         />
-        <div className="flex flex-1 flex-col p-5 lg:p-7">
-          <span className="text-[12px] tracking-wide text-blue-700/80">
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
+          
+          {/* Category badge */}
+          <div className="absolute top-5 left-5">
+            <span className="inline-flex items-center gap-2 text-[10px] font-extrabold tracking-widest text-white uppercase bg-gradient-to-r from-emerald-500 to-lime-500 px-4 py-2 rounded-xl shadow-lg">
+              <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
             {post?.category || ''}
           </span>
-          <h3 className="mt-2 text-xl lg:text-2xl font-bold leading-snug text-slate-900 transition-colors duration-200 group-hover:text-emerald-600 hover:text-emerald-600">
+          </div>
+
+          {/* Read time badge */}
+          <div className="absolute bottom-5 right-5">
+            <div className="flex items-center gap-2 text-xs font-bold text-white bg-white/20 backdrop-blur-md px-3 py-2 rounded-full">
+              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              {post?.readTime || '5 min'}
+            </div>
+          </div>
+        </div>
+
+        {/* Content Section */}
+        <div className="p-7">
+          <h3 className="text-xl lg:text-2xl font-extrabold leading-tight text-slate-800 transition-colors duration-300 group-hover:text-emerald-600 line-clamp-2 mb-4">
             {post?.title}
           </h3>
-          <p className="mt-3 line-clamp-3 text-[15px] text-slate-600">{post?.excerpt}</p>
-          <div className="relative mt-auto h-8 border-t border-slate-200">
-            <span className="absolute right-0 top-4 text-md text-slate-500 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
-              {post?.readTime || '5 min read'}
+          
+          <p className="text-[15px] leading-relaxed text-slate-600 line-clamp-3 mb-6">
+            {post?.excerpt}
+          </p>
+          
+          <div className="flex items-center justify-between pt-5 border-t border-slate-100">
+            <div className="flex items-center gap-2">
+              <div className="h-10 w-10 rounded-full bg-gradient-to-br from-emerald-400 to-lime-500 flex items-center justify-center">
+                <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <span className="text-sm font-semibold text-slate-700">Health Expert</span>
+            </div>
+            
+            <span className="inline-flex items-center gap-2 text-sm font-bold text-emerald-600 group-hover:gap-3 transition-all duration-300">
+              Read More
+              <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
             </span>
-            <span className="absolute right-0 top-4 text-sm font-semibold uppercase tracking-wide text-emerald-600 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">
-              Read more
-            </span>
-            <span className="absolute top-0 right-0 h-0.5 w-0 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-full" />
           </div>
         </div>
       </Link>
@@ -353,36 +415,64 @@ function PostCard({ post }) {
 function PostFullCard({ post }) {
   const href = post?.slug ? `/blog/${post.slug}` : post?.url || '#'
   return (
-    <article className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-lg hover:shadow-emerald-100">
-      <Link to={href} className="group">
-        <div className="px-5 pt-5">
-          <span className="text-[11px] tracking-wide text-blue-700/80">
+    <article className="group relative overflow-hidden rounded-[32px] bg-gradient-to-br from-white via-emerald-50/20 to-lime-50/10 shadow-2xl border-2 border-emerald-100 transition-all duration-500 hover:shadow-[0_25px_60px_-15px_rgba(16,185,129,0.35)] hover:-translate-y-2 hover:border-emerald-300">
+      <Link to={href} className="block">
+        {/* Header Section */}
+        <div className="p-8 pb-0">
+          <div className="flex items-center justify-between mb-5">
+            <span className="inline-flex items-center gap-2.5 text-[11px] font-black tracking-widest text-white uppercase bg-gradient-to-r from-emerald-500 to-lime-500 px-5 py-2.5 rounded-xl shadow-lg">
+              <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
             {post?.category || ''}
           </span>
-          <h3 className="mt-2 text-2xl lg:text-3xl font-bold leading-snug text-slate-900 transition-colors duration-200 hover:text-emerald-600">
+            
+            <div className="flex items-center gap-2.5 text-sm font-bold text-emerald-600 bg-emerald-50 px-4 py-2 rounded-full">
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              {post?.readTime || '3 min read'}
+            </div>
+          </div>
+          
+          <h3 className="text-3xl lg:text-4xl font-black leading-tight text-slate-900 transition-colors duration-300 group-hover:text-emerald-600 mb-5">
             {post?.title}
           </h3>
-          <div className="mt-1 text-xs text-slate-500">
-            {post?.author || 'Nikita'}
-            <span className="mx-2">{post?.publishedAt ? formatDate(post.publishedAt) : ''}</span>
+          
+          <div className="flex items-center gap-4 mb-6">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 to-lime-500 blur-md opacity-60"></div>
+              <div className="relative h-12 w-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-lime-500 flex items-center justify-center shadow-lg">
+                <span className="text-white font-black text-lg">{(post?.author || 'Dr')[0]}</span>
           </div>
         </div>
+            <div>
+              <p className="font-bold text-slate-800">{post?.author || 'Dr. Health Expert'}</p>
+              <p className="text-sm text-slate-500">{post?.publishedAt ? formatDate(post.publishedAt) : 'Health Specialist'}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Image Section */}
+        <div className="relative mx-8 mb-8 overflow-hidden rounded-3xl shadow-2xl">
         <img
           src={post?.coverImage || DEFAULT_POST_IMAGE}
           alt={post?.title}
-          className="mt-4 h-64 md:h-80 lg:h-[420px] w-full rounded-2xl object-cover px-5"
+            className="h-96 lg:h-[500px] w-full object-cover transition-all duration-700 group-hover:scale-110"
           loading="lazy"
         />
-        <div className="relative border-t border-slate-200 px-5 pt-5 pb-9">
-          <span className="absolute right-5 top-5 text-md text-slate-500 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
-            {post?.readTime || '3 min read'}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-emerald-500/10" />
+          
+          {/* Overlay CTA */}
+          <div className="absolute bottom-6 right-6">
+            <span className="inline-flex items-center gap-3 text-sm font-black uppercase tracking-wider text-white bg-emerald-500/90 backdrop-blur-sm px-6 py-3 rounded-xl shadow-2xl group-hover:bg-lime-500 transition-all duration-300">
+              Explore Now
+              <svg className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
           </span>
-          <span className="absolute right-5 top-5 text-sm font-semibold uppercase tracking-wide text-emerald-600 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">
-            Read more
-          </span>
-          <span className="absolute bottom-0 right-5 h-0.5 w-0 rounded-full bg-emerald-500 transition-all duration-300 group-hover:w-[calc(100%-2.5rem)]" />
         </div>
-
+        </div>
       </Link>
     </article>
   )
@@ -391,33 +481,44 @@ function PostFullCard({ post }) {
 function PostOverlayCard({ post }) {
   const href = post?.slug ? `/blog/${post.slug}` : post?.url || '#'
   return (
-    <article className="relative overflow-hidden rounded-2xl bg-slate-900 shadow-sm ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-lg hover:shadow-emerald-100">
-      <Link to={href} className="group block">
+    <article className="group relative overflow-hidden rounded-3xl shadow-xl ring-1 ring-emerald-100/40 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-300/50 hover:-translate-y-2">
+      <Link to={href} className="block">
+        <div className="relative h-96 lg:h-[440px] overflow-hidden bg-gradient-to-br from-emerald-100 to-lime-100">
         <img
           src={post?.coverImage || DEFAULT_POST_IMAGE}
           alt={post?.title}
-          className="h-72 w-full object-cover transition-transform duration-300 group-hover:scale-[1.02] lg:h-80"
+            className="h-full w-full object-cover transition-all duration-700 group-hover:scale-105 opacity-90"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-x-0 bottom-0 p-5 lg:p-7 text-white">
-          <span className="text-[11px] tracking-wide text-white/80">
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/10 to-lime-600/10" />
+        </div>
+        <div className="absolute inset-x-0 bottom-0 p-7 lg:p-9 text-white">
+          <div className="mb-3 inline-flex items-center gap-2 text-[10px] font-extrabold tracking-widest uppercase bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full text-emerald-700 shadow-lg">
+            <svg className="h-2.5 w-2.5" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
+            </svg>
             {post?.category || ''}
-          </span>
-          <h3 className="mt-2 text-2xl font-extrabold leading-snug drop-shadow lg:text-3xl transition-colors duration-200 hover:text-emerald-300">
+          </div>
+          <h3 className="text-2xl lg:text-3xl font-extrabold leading-tight drop-shadow-lg transition-all duration-300 group-hover:text-lime-300 mb-3">
             {post?.title}
           </h3>
-          <p className="mt-2 line-clamp-2 text-sm text-white/80 drop-shadow">
+          <p className="text-sm lg:text-base text-white/90 drop-shadow line-clamp-2 mb-5">
             {post?.excerpt}
           </p>
-          <div className="relative mt-9 border-t border-white/20 pt-4">
-            <span className=" absolute text-md top-2 right-0 text-white/80 transition-all duration-300 group-hover:opacity-0 group-hover:-translate-y-1">
+          <div className="flex items-center justify-between pt-4 border-t border-white/20">
+            <div className="flex items-center gap-2 text-sm text-white/90">
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
               {post?.readTime || '3 min read'}
+            </div>
+            <span className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-lime-300 transition-all duration-300 group-hover:gap-3">
+              Read Now
+              <svg className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
             </span>
-            <span className="absolute right-0 top-4 text-sm font-semibold uppercase tracking-wide text-emerald-300 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:-translate-y-1">
-              Read more
-            </span>
-            <span className="absolute top-0 right-0 h-0.5 w-0 rounded-full bg-emerald-300 transition-all duration-300 group-hover:w-full" />
           </div>
         </div>
       </Link>
@@ -427,27 +528,31 @@ function PostOverlayCard({ post }) {
 
 function LoadMoreButton({ onClick, disabled, loading }) {
   return (
+    <div className="text-center py-8">
     <button
       type="button"
       onClick={onClick}
       disabled={disabled || loading}
-      className={`mx-auto flex items-center gap-3 disabled:opacity-50 ${loading ? 'cursor-wait' : 'cursor-pointer'}`}
+        className={`group relative inline-flex items-center gap-4 px-12 py-5 rounded-2xl bg-gradient-to-r from-emerald-500 to-lime-500 text-white font-black text-base uppercase tracking-wider shadow-2xl transition-all duration-300 hover:shadow-[0_15px_40px_-10px_rgba(16,185,129,0.5)] hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${loading ? 'cursor-wait' : 'cursor-pointer'}`}
       aria-busy={loading ? 'true' : 'false'}
     >
-      <span className={loading ? "text-emerald-300 text-sm font-semibold tracking-wide" : "text-emerald-600 hover:text-emerald-700 text-sm font-semibold tracking-wide"}>Load More</span>
+        <span className="relative">
+          {loading ? 'Loading More Articles...' : 'Load More Health Articles'}
+        </span>
       {loading ? (
-        <span className="relative inline-flex h-9 w-9 items-center justify-center">
-          <span className="absolute inset-0 rounded-full bg-emerald-500 shadow" />
-          <span className="absolute inset-0 rounded-full ring-2 ring-emerald-300 animate-pulse" />
-          <span className="absolute inset-1.5 rounded-full border-2 border-white/80" />
-          <span className="absolute inset-3 rounded-full bg-emerald-400" />
+          <span className="relative inline-flex h-6 w-6">
+            <span className="absolute inset-0 rounded-full border-3 border-white/30 border-t-white animate-spin" />
         </span>
       ) : (
-        <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border-2 border-emerald-300">
-          <Plus className="h-4 w-4 text-emerald-600" />
-        </span>
-      )}
+          <svg className="h-6 w-6 transition-transform duration-300 group-hover:translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        )}
+        
+        {/* Glow effect */}
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-400 to-lime-400 blur-xl opacity-50 group-hover:opacity-70 transition-opacity -z-10"></div>
     </button>
+    </div>
   )
 }
 
@@ -464,47 +569,47 @@ function LoadingSkeleton() {
   )
 }
 
-// Sidebar category tiles (dummy)
+// Sidebar category tiles (Health categories)
 const DUMMY_CATEGORIES = [
   {
-    key: 'passport',
-    title: 'Passport Services',
-    count: 12,
-    image:
-      'https://images.unsplash.com/photo-1543007630-9710e4a00a20?q=80&w=1200&auto=format&fit=crop',
-    to: '/blog/passport',
-  },
-  {
-    key: 'oci',
-    title: 'OCI Card Services',
-    count: 8,
-    image:
-      'https://mlvrpw5wpdmq.i.optimole.com/w:768/h:558/q:mauto/ig:avif/https://documitra.com/blog/wp-content/uploads/2025/08/OCI-2.1-1.png',
-    to: '/blog/oci',
-  },
-  {
-    key: 'nri-legal',
-    title: 'Legal & Financial Insights for NRI',
+    key: 'nutrition',
+    title: 'Nutrition & Diet',
     count: 6,
     image:
-      'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop',
-    to: '/blog/legal',
+      'https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=1200&auto=format&fit=crop',
+    to: '/category/nutrition-diet',
   },
   {
-    key: 'indian-visa',
-    title: 'Indian Visa Travel Tips and Tricks',
-    count: 16,
+    key: 'fitness',
+    title: 'Fitness & Exercise',
+    count: 5,
     image:
-      'https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1200&auto=format&fit=crop',
-    to: '/blog/indian-visa',
+      'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=1200&auto=format&fit=crop',
+    to: '/category/fitness-exercise',
   },
   {
-    key: 'apostille',
-    title: 'Apostille and Attestation',
+    key: 'mental-health',
+    title: 'Mental Health',
+    count: 4,
+    image:
+      'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1200&auto=format&fit=crop',
+    to: '/category/mental-health',
+  },
+  {
+    key: 'preventive',
+    title: 'Preventive Health',
+    count: 4,
+    image:
+      'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?q=80&w=1200&auto=format&fit=crop',
+    to: '/category/preventive-health',
+  },
+  {
+    key: 'wellness',
+    title: 'Wellness & Lifestyle',
     count: 3,
     image:
-      'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=1200&auto=format&fit=crop',
-    to: '/blog/apostille',
+      'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1200&auto=format&fit=crop',
+    to: '/category/wellness-lifestyle',
   },
 ]
 
@@ -539,37 +644,37 @@ function CategoryCard({ item }) {
   )
 }
 
-// Featured posts (dummy)
+// Featured posts (Health topics)
 const DUMMY_FEATURED = [
   {
-    title: "Sun, Sand, and Serenity: Europe's Best‑Kept Beaches",
-    author: 'Anvit',
-    date: '2025-07-28',
-    to: '/blog/europes-best-kept-beaches',
+    title: 'The Complete Mediterranean Diet Guide: Transform Your Health Naturally',
+    author: 'Dr. Sarah Johnson',
+    date: 'January 15, 2025',
+    to: '/blog/mediterranean-diet-guide',
   },
   {
-    title: 'Essential Guide to Travel Insurance for Your Next Trip Abroad: Don’t Skip This!',
-    author: 'Anvit',
-    date: '2025-07-17',
-    to: '/blog/travel-insurance-guide',
+    title: 'Mindfulness and Mental Health: A Beginner\'s Guide to Inner Peace',
+    author: 'Dr. Michael Chen',
+    date: 'January 12, 2025',
+    to: '/blog/mental-health-mindfulness',
   },
   {
-    title: 'Your Guide to Indian Passport Renewal Abroad:',
-    author: 'Anvit',
-    date: '2025-07-01',
-    to: '/blog/guide-indian-passport-renewal',
+    title: 'HIIT Workouts for Beginners: Maximum Results in Minimum Time',
+    author: 'Coach Emma Williams',
+    date: 'January 10, 2025',
+    to: '/blog/hiit-workout-beginners',
   },
   {
-    title: 'India’s e‑Passport: Everything You Need to Know',
-    author: 'Nikita',
-    date: '2025-06-24',
-    to: '/blog/india-e-passport',
+    title: 'Sleep Hygiene 101: Science-Backed Tips for Better Rest',
+    author: 'Dr. Lisa Martinez',
+    date: 'January 8, 2025',
+    to: '/blog/sleep-hygiene-better-rest',
   },
   {
-    title: 'New OCI Portal: What Applicants Need to Know',
-    author: 'Nikita',
-    date: '2025-06-20',
-    to: '/blog/new-oci-portal',
+    title: 'Heart Health: Prevention Strategies That Actually Work',
+    author: 'Dr. James Thompson',
+    date: 'January 5, 2025',
+    to: '/blog/heart-health-prevention',
   },
 ]
 
@@ -670,13 +775,13 @@ const Blog = ({ filter, sidebarShowCategoryList = false, showCategoryHeader = fa
   const [posts, setPosts] = useState(DUMMY_POSTS)
 
   // Ensure the initial left section order matches the desired layout:
-  // 1) Beaches (hero), 2) Travel Insurance, 3) Indian Passport Renewal
+  // 1) Mediterranean Diet (hero), 2) Mindfulness, 3) HIIT Workouts
   const START_ORDER = [
-    'europes-best-kept-beaches',
-    'travel-insurance',
-    'passport-services',
-    'common-oci-application-issues',
-    'evisa-vs-paper-visa',
+    'mediterranean-diet-guide',
+    'mental-health-mindfulness',
+    'hiit-workout-beginners',
+    'sleep-hygiene-better-rest',
+    'heart-health-prevention',
   ]
   const orderedPosts = useMemo(() => {
     const rank = (p) => {
@@ -740,10 +845,30 @@ const Blog = ({ filter, sidebarShowCategoryList = false, showCategoryHeader = fa
   }, [filter?.category, filter?.tag])
 
   return (
-    <div className="w-full bg-slate-50">
+    <div className="w-full bg-gradient-to-br from-white via-emerald-50/30 to-lime-50/20">
       <Header />
       <main className="min-h-screen w-full">
-        <div className="mx-auto max-w-[1400px] px-3 py-6 sm:px-4 lg:px-6">
+        {/* Hero Section */}
+        <div className="bg-gradient-to-br from-emerald-600 via-green-500 to-lime-500 text-white py-16 lg:py-20">
+          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl">
+              <div className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
+                <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
+                </svg>
+                Health & Wellness Blog
+              </div>
+              <h1 className="text-4xl lg:text-6xl font-black leading-tight mb-6 drop-shadow-lg">
+                Discover Your Path to <span className="text-lime-300">Better Health</span>
+              </h1>
+              <p className="text-xl lg:text-2xl text-white/90 leading-relaxed drop-shadow">
+                Expert insights, evidence-based advice, and inspiring stories to help you live your healthiest life.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="mx-auto max-w-[1400px] px-4 py-12 sm:px-6 lg:px-8">
           {loading && <LoadingSkeleton />}
           {!loading && error && (
             <div className="rounded-lg bg-red-50 p-4 text-sm text-red-700">{error}</div>

@@ -37,36 +37,36 @@ import {
 import { Button } from "@/components/ui/button";
 
 /* ------------------------------------------------
-   Data (match your screenshot structure)
+   Health & Wellness Navigation Data
 -------------------------------------------------*/
 const SERVICES = [
-  { label: "OCI", to: "/services/oci" },
-  { label: "Visa", to: "/services/visa" },
-  { label: "Passport", to: "/services/passport" },
-  { label: "Surrender of Indian Passport", to: "/services/surrender-passport" },
-  { label: "PAN Card", to: "/services/pan-card" },
-  { label: "Visa Extension", to: "/services/visa-extension" },
-  { label: "Indian Consular Services", to: "/services/indian-consular" },
-  { label: "EAD Card", to: "/services/ead-card" },
-  { label: "Green Card", to: "/services/green-card" },
-  { label: "US Citizenship", to: "/services/us-citizenship" },
-  { label: "NRI Services", to: "/services/nri" },
-  { label: "Forms and Formats", to: "/services/forms" },
-  { label: "Apostille of Documents", to: "/services/apostille" },
-  { label: "Global Entry Program GEP", to: "/services/gep" },
+  { label: "Nutrition Counseling", to: "/services/nutrition-counseling" },
+  { label: "Fitness Training", to: "/services/fitness-training" },
+  { label: "Mental Health Therapy", to: "/services/mental-health-therapy" },
+  { label: "Wellness Coaching", to: "/services/wellness-coaching" },
+  { label: "Yoga & Meditation Classes", to: "/services/yoga-meditation" },
+  { label: "Weight Management", to: "/services/weight-management" },
+  { label: "Preventive Health Screening", to: "/services/preventive-screening" },
+  { label: "Stress Management", to: "/services/stress-management" },
+  { label: "Sleep Consultation", to: "/services/sleep-consultation" },
+  { label: "Corporate Wellness Programs", to: "/services/corporate-wellness" },
+  { label: "Online Health Coaching", to: "/services/online-coaching" },
+  { label: "Health Assessment", to: "/services/health-assessment" },
+  { label: "Chronic Disease Management", to: "/services/chronic-disease" },
+  { label: "Holistic Health Services", to: "/services/holistic-health" },
 ];
 
 const BLOG = [
-  { label: "Passport Services", to: "/category/passport-services" },
-  { label: "OCI Card Services", to: "/category/oci-card-services" },
-  { label: "Indian Visa Travel Tips and Tricks", to: "/category/indian-visa-travel-tips-and-tricks" },
-  { label: "Europe Visa Travel Tips and Tricks", to: "/category/europe-visa-travel-tips-and-tricks" },
-  { label: "North America Visa Travel Tips and Tricks", to: "/category/north-america-visa-travel-tips-and-tricks" },
-  { label: "Asia Pacific Visa Travel Tips and Tricks", to: "/category/asia-pacific-visa-travel-tips-and-tricks" },
-  { label: "Apostille and Attestation", to: "/category/apostille-and-attestation" },
-  { label: "Legal & Financial Insights for NRI", to: "/category/legal-financial-insights-for-nri" },
-  { label: "News & Updates by Documitra", to: "/category/news-updates" },
-  { label: "Other Travel Tips and Tricks", to: "/category/other-travel-tips-and-tricks" },
+  { label: "Nutrition & Diet", to: "/category/nutrition-diet" },
+  { label: "Fitness & Exercise", to: "/category/fitness-exercise" },
+  { label: "Mental Health", to: "/category/mental-health" },
+  { label: "Preventive Health", to: "/category/preventive-health" },
+  { label: "Wellness & Lifestyle", to: "/category/wellness-lifestyle" },
+  { label: "Weight Loss Tips", to: "/category/weight-loss-tips" },
+  { label: "Heart Health", to: "/category/heart-health" },
+  { label: "Women's Health", to: "/category/womens-health" },
+  { label: "Men's Health", to: "/category/mens-health" },
+  { label: "Healthy Recipes", to: "/category/healthy-recipes" },
 ];
 
 /* ------------------------------------------------
@@ -76,12 +76,12 @@ function cn(...args) {
   return args.filter(Boolean).join(" ");
 }
 
-// tiny blue underline bar like screenshot
+// tiny teal underline bar for health theme
 function Underline({ active }) {
   return (
     <span
       className={cn(
-        "block h-1 rounded bg-blue-800 transition-all duration-200",
+        "block h-1 rounded bg-teal-600 transition-all duration-200",
         active ? "w-12 mt-1" : "w-0"
       )}
     />
@@ -98,7 +98,7 @@ function DesktopNavLink({ to, children }) {
         to={to}
         className={({ isActive }) =>
           cn(
-            "text-[17px] font-semibold text-gray-700 hover:text-blue-800",
+            "text-[17px] font-semibold text-gray-700 hover:text-teal-600",
             (isActive || active) && "text-black"
           )
         }
@@ -110,7 +110,7 @@ function DesktopNavLink({ to, children }) {
   );
 }
 
-// Used inside dropdowns so child items get light-blue active bg
+// Used inside dropdowns so child items get light-teal active bg
 function ChildMenuLink({ to, label }) {
   return (
     <NavLink
@@ -118,8 +118,8 @@ function ChildMenuLink({ to, label }) {
       className={({ isActive }) =>
         cn(
           "block w-full rounded px-2 py-2 text-[15px] text-gray-800",
-          "hover:bg-blue-50 hover:text-blue-800",
-          isActive && "bg-blue-50 text-blue-800"
+          "hover:bg-teal-50 hover:text-teal-700",
+          isActive && "bg-teal-50 text-teal-700"
         )
       }
     >
@@ -140,13 +140,13 @@ export default function Header() {
   const onBlog = location.pathname.startsWith("/blog");
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white">
-      {/* Top blue strip */}
-      <div className="w-full bg-blue-900 text-white">
-        <div className="flex w-full items-center justify-between px-2 sm:px-2 md:px-2 lg:px-16 xl:px-24 2xl:px-36 py-1 lg:py-2">
-          <div className="flex items-center gap-3 text-[15px] font-medium">
+    <header className="sticky top-0 z-50 w-full bg-white shadow-lg backdrop-blur-lg">
+      {/* Top health strip */}
+      <div className="w-full bg-gradient-to-r from-emerald-600 via-green-600 to-lime-600 text-white">
+        <div className="flex w-full items-center justify-between px-2 sm:px-2 md:px-2 lg:px-16 xl:px-24 2xl:px-36 py-2">
+          <div className="flex items-center gap-3 text-[14px] font-semibold">
             <Phone className="h-4 w-4" />
-            <span className="tracking-wide">Toll Free - +1(877)291-1311</span>
+            <span className="tracking-wide">🌿 24/7 Health Helpline - +1(800)WELLNESS</span>
           </div>
 
           <div className="hidden lg:flex items-center gap-4">
@@ -176,7 +176,7 @@ export default function Header() {
       </div>
 
       {/* Main bar */}
-      <div className="flex w-full items-center justify-between px-2 sm:px-2 md:px-2 lg:px-16 xl:px-24 2xl:px-36 py-3 lg:py-5 shadow-md border-b border-blue-100/60">
+      <div className="flex w-full items-center justify-between px-2 sm:px-2 md:px-2 lg:px-16 xl:px-24 2xl:px-36 py-5 lg:py-6 border-b border-slate-200 bg-white">
         {/* Logo */}
         {/* Mobile menu trigger (left of logo) */}
         <div className="lg:hidden mr-3">
@@ -187,24 +187,24 @@ export default function Header() {
             <SheetContent side="left" className="w-80 p-0">
               <SheetHeader className="border-b px-4 py-3">
                 <SheetTitle className="flex items-center gap-2">
-                  <img src="/logo1.jpg" alt="Documitra" className="block h-6 w-auto object-contain" />
-                  <span className="font-extrabold text-black">DOC<span className="text-blue-800">U</span>MITRA</span>
+                  {/* <img src="/logo1.jpg" alt="WellnessHub" className="block h-6 w-auto object-contain" /> */}
+                  <span className="font-extrabold text-black">Wellness<span className="text-emerald-600">Hub</span></span>
                 </SheetTitle>
               </SheetHeader>
 
               <div className="max-h-[calc(100vh-140px)] overflow-y-auto px-2 py-2">
                 <nav className="flex flex-col">
-                  <NavLink
-                    to="/"
-                    className={({ isActive }) =>
-                      cn(
-                        "rounded px-3 py-3 text-[15px] font-medium hover:bg-gray-50",
-                        isActive && "bg-blue-50 text-blue-800"
-                      )
-                    }
-                  >
-                    Home
-                  </NavLink>
+                    <NavLink
+                      to="/"
+                      className={({ isActive }) =>
+                        cn(
+                          "rounded px-3 py-3 text-[15px] font-medium hover:bg-gray-50",
+                          isActive && "bg-emerald-50 text-emerald-700"
+                        )
+                      }
+                    >
+                      Home
+                    </NavLink>
 
                   {/* Services accordion */}
                   <Accordion type="single" collapsible>
@@ -221,8 +221,8 @@ export default function Header() {
                               className={({ isActive }) =>
                                 cn(
                                   "rounded px-2 py-2 text-sm",
-                                  "hover:bg-blue-50 hover:text-blue-800",
-                                  isActive && "bg-blue-50 text-blue-800"
+                                  "hover:bg-emerald-50 hover:text-emerald-800",
+                                  isActive && "bg-emerald-50 text-emerald-800"
                                 )
                               }
                             >
@@ -233,18 +233,18 @@ export default function Header() {
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion>
-
+{/* 
                   <NavLink
-                    to="/photos"
+                    to="/resources"
                     className={({ isActive }) =>
                       cn(
                         "rounded px-3 py-3 text-[15px] font-medium hover:bg-gray-50",
-                        isActive && "bg-blue-50 text-blue-800"
+                        isActive && "bg-emerald-50 text-emerald-700"
                       )
                     }
                   >
-                    Photos
-                  </NavLink>
+                    Resources
+                  </NavLink> */}
 
                   {/* Blog accordion (parent label navigates to /blog) */}
                   <Accordion type="single" collapsible>
@@ -267,8 +267,8 @@ export default function Header() {
                               className={({ isActive }) =>
                                 cn(
                                   "rounded px-2 py-2 text-sm",
-                                  "hover:bg-blue-50 hover:text-blue-800",
-                                  isActive && "bg-blue-50 text-blue-800"
+                                  "hover:bg-emerald-50 hover:text-emerald-700",
+                                  isActive && "bg-emerald-50 text-emerald-700"
                                 )
                               }
                             >
@@ -285,7 +285,7 @@ export default function Header() {
                     className={({ isActive }) =>
                       cn(
                         "rounded px-3 py-3 text-[15px] font-medium hover:bg-gray-50",
-                        isActive && "bg-blue-50 text-blue-800"
+                        isActive && "bg-teal-50 text-teal-700"
                       )
                     }
                   >
@@ -296,7 +296,7 @@ export default function Header() {
                     className={({ isActive }) =>
                       cn(
                         "rounded px-3 py-3 text-[15px] font-medium hover:bg-gray-50",
-                        isActive && "bg-blue-50 text-blue-800"
+                        isActive && "bg-teal-50 text-teal-700"
                       )
                     }
                   >
@@ -307,7 +307,7 @@ export default function Header() {
                     className={({ isActive }) =>
                       cn(
                         "rounded px-3 py-3 text-[15px] font-medium hover:bg-gray-50",
-                        isActive && "bg-blue-50 text-blue-800"
+                        isActive && "bg-teal-50 text-teal-700"
                       )
                     }
                   >
@@ -328,7 +328,7 @@ export default function Header() {
                     </Button>
                   </Link>
                   <Link to="/signup" className="w-1/2">
-                    <Button size="lg" className="w-full rounded-md bg-blue-800 hover:bg-blue-900">
+                    <Button size="lg" className="w-full rounded-md bg-teal-600 hover:bg-teal-700">
                       Sign Up
                     </Button>
                   </Link>
@@ -337,10 +337,13 @@ export default function Header() {
             </SheetContent>
           </Sheet>
         </div>
-        <Link to="/" className="flex items-center gap-2">
-          <img src="/logo1.jpg" alt="Documitra" className="block h-8 md:h-9 lg:h-10 xl:h-12 w-auto object-contain" />
-          <span className="hidden">
-            DOC<span className="text-blue-800">U</span>MITRA
+        <Link to="/" className="flex items-center gap-3 group">
+          {/* <div className="relative">
+            <img src="/logo1.jpg" alt="Wellness Hub" className="block h-10 md:h-11 lg:h-12 xl:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/20 to-lime-400/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          </div> */}
+          <span className="text-xl md:text-2xl lg:text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-slate-800 via-emerald-600 to-lime-600">
+            Wellness<span className="text-emerald-600">Hub</span>
           </span>
         </Link>
 
@@ -355,7 +358,7 @@ export default function Header() {
             onMouseLeave={() => setServicesOpen(false)}
           >
             <DropdownMenu open={servicesOpen} onOpenChange={setServicesOpen}>
-              <DropdownMenuTrigger className="flex items-center gap-1 text-[17px] font-semibold text-gray-700 hover:text-blue-800 focus:outline-none">
+              <DropdownMenuTrigger className="flex items-center gap-1 text-[17px] font-semibold text-gray-700 hover:text-emerald-600 focus:outline-none transition-colors">
                 Services <ChevronDown className="h-4 w-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-80">
@@ -371,8 +374,8 @@ export default function Header() {
             <Underline active={onServices} />
           </div>
 
-          {/* Photos */}
-          <DesktopNavLink to="/photos">Photos</DesktopNavLink>
+          {/* Resources */}
+          {/* <DesktopNavLink to="/resources">Resources</DesktopNavLink> */}
 
           {/* Blog */}
           <div
@@ -382,7 +385,7 @@ export default function Header() {
           >
             <DropdownMenu open={blogOpen} onOpenChange={setBlogOpen}>
               <DropdownMenuTrigger asChild>
-                <NavLink to="/blog" className="flex items-center gap-1 text-[17px] font-semibold text-gray-700 hover:text-blue-800 focus:outline-none">
+                <NavLink to="/blog" className="flex items-center gap-1 text-[17px] font-semibold text-gray-700 hover:text-emerald-600 focus:outline-none transition-colors">
                 Blog <ChevronDown className="h-4 w-4" />
                 </NavLink>
               </DropdownMenuTrigger>
@@ -399,21 +402,21 @@ export default function Header() {
             <Underline active={onBlog} />
           </div>
 
-          <DesktopNavLink to="/faqs">FAQ&apos;s</DesktopNavLink>
+          {/* <DesktopNavLink to="/faqs">FAQ&apos;s</DesktopNavLink>
           <DesktopNavLink to="/contact">Contact</DesktopNavLink>
-          <DesktopNavLink to="/about">About Us</DesktopNavLink>
+          <DesktopNavLink to="/about">About Us</DesktopNavLink> */}
         </nav>
 
         {/* Desktop actions */}
         <div className="hidden lg:flex items-center gap-6">
           <NavLink
             to="/admin/signin"
-            className="text-[17px] font-semibold text-gray-700 hover:text-blue-800"
+            className="text-[17px] font-semibold text-gray-700 hover:text-emerald-600 transition-colors"
           >
             SignIn
           </NavLink>
           <Link to="/signup">
-            <Button size="lg" className="rounded-full bg-blue-800 text-white hover:bg-blue-900 h-11 w-[170px] text-[16px]">
+            <Button size="lg" className="rounded-full bg-gradient-to-r from-emerald-600 to-lime-600 text-white hover:from-emerald-700 hover:to-lime-700 shadow-lg hover:shadow-xl hover:shadow-emerald-300/40 transition-all duration-300 hover:scale-105 h-11 w-[170px] text-[16px] font-bold">
               Sign up
             </Button>
           </Link>
@@ -423,7 +426,7 @@ export default function Header() {
         <div className="flex items-center gap-3 lg:hidden">
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center gap-2 rounded-md px-2 py-1 hover:bg-gray-50 focus:outline-none">
-              <span className="rounded-full bg-blue-800 p-2 text-white">
+              <span className="rounded-full bg-emerald-600 p-2 text-white">
                 <User2 className="h-4 w-4" />
               </span>
               <span className="inline text-[14px] lg:text-[16px] font-medium text-gray-700">Account</span>
