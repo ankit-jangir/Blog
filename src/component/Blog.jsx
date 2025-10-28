@@ -298,7 +298,7 @@ function PostHero({ post }) {
           <div className="absolute top-8 left-8">
             <div className="relative">
               <div className="absolute inset-0 bg-emerald-500 blur-xl opacity-60 animate-pulse"></div>
-              <span className="relative inline-flex items-center gap-2.5 text-[11px] font-black tracking-widest text-white uppercase bg-gradient-to-r from-emerald-500 to-lime-500 px-5 py-3 rounded-2xl shadow-2xl">
+              <span className="relative inline-flex items-center gap-2.5 text-[11px] font-black tracking-widest text-white uppercase bg-gradient-to-r from-emerald-500 to-emerald-400 px-5 py-3 rounded-2xl shadow-2xl">
                 <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
@@ -320,7 +320,7 @@ function PostHero({ post }) {
               <span className="text-sm font-medium text-white/80">Featured Article</span>
             </div>
             
-            <h2 className="text-3xl lg:text-5xl font-black leading-tight text-white mb-4 drop-shadow-2xl group-hover:text-lime-300 transition-colors duration-300">
+            <h2 className="text-3xl lg:text-5xl font-black leading-tight text-white mb-4 drop-shadow-2xl group-hover:text-emerald-300 transition-colors duration-300">
             {post?.title}
           </h2>
             
@@ -329,7 +329,7 @@ function PostHero({ post }) {
             </p>
             
             <div className="flex items-center justify-between">
-              <span className="inline-flex items-center gap-3 text-base font-bold uppercase tracking-wider text-lime-300 group-hover:gap-4 transition-all duration-300">
+              <span className="inline-flex items-center gap-3 text-base font-bold uppercase tracking-wider text-emerald-300 group-hover:gap-4 transition-all duration-300">
                 Read Full Article
                 <svg className="h-6 w-6 transition-transform duration-300 group-hover:translate-x-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -360,7 +360,7 @@ function PostCard({ post }) {
           
           {/* Category badge */}
           <div className="absolute top-5 left-5">
-            <span className="inline-flex items-center gap-2 text-[10px] font-extrabold tracking-widest text-white uppercase bg-gradient-to-r from-emerald-500 to-lime-500 px-4 py-2 rounded-xl shadow-lg">
+            <span className="inline-flex items-center gap-2 text-[10px] font-extrabold tracking-widest text-white uppercase bg-gradient-to-r from-emerald-500 to-emerald-400 px-4 py-2 rounded-xl shadow-lg">
               <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
@@ -391,7 +391,7 @@ function PostCard({ post }) {
           
           <div className="flex items-center justify-between pt-5 border-t border-slate-100">
             <div className="flex items-center gap-2">
-              <div className="h-10 w-10 rounded-full bg-gradient-to-br from-emerald-400 to-lime-500 flex items-center justify-center">
+              <div className="h-10 w-10 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-500 flex items-center justify-center">
                 <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
                 </svg>
@@ -415,12 +415,12 @@ function PostCard({ post }) {
 function PostFullCard({ post }) {
   const href = post?.slug ? `/blog/${post.slug}` : post?.url || '#'
   return (
-    <article className="group relative overflow-hidden rounded-[32px] bg-gradient-to-br from-white via-emerald-50/20 to-lime-50/10 shadow-2xl border-2 border-emerald-100 transition-all duration-500 hover:shadow-[0_25px_60px_-15px_rgba(16,185,129,0.35)] hover:-translate-y-2 hover:border-emerald-300">
+    <article className="group relative overflow-hidden rounded-[32px] bg-gradient-to-br from-white via-emerald-50/20 to-emerald-50/10 shadow-2xl border-2 border-emerald-100 transition-all duration-500 hover:shadow-[0_25px_60px_-15px_rgba(16,185,129,0.35)] hover:-translate-y-2 hover:border-emerald-300">
       <Link to={href} className="block">
         {/* Header Section */}
         <div className="p-8 pb-0">
           <div className="flex items-center justify-between mb-5">
-            <span className="inline-flex items-center gap-2.5 text-[11px] font-black tracking-widest text-white uppercase bg-gradient-to-r from-emerald-500 to-lime-500 px-5 py-2.5 rounded-xl shadow-lg">
+            <span className="inline-flex items-center gap-2.5 text-[11px] font-black tracking-widest text-white uppercase bg-gradient-to-r from-emerald-500 to-emerald-400 px-5 py-2.5 rounded-xl shadow-lg">
               <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
@@ -441,8 +441,8 @@ function PostFullCard({ post }) {
           
           <div className="flex items-center gap-4 mb-6">
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 to-lime-500 blur-md opacity-60"></div>
-              <div className="relative h-12 w-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-lime-500 flex items-center justify-center shadow-lg">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 to-emerald-500 blur-md opacity-60"></div>
+              <div className="relative h-12 w-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-500 flex items-center justify-center shadow-lg">
                 <span className="text-white font-black text-lg">{(post?.author || 'Dr')[0]}</span>
           </div>
         </div>
@@ -465,7 +465,7 @@ function PostFullCard({ post }) {
           
           {/* Overlay CTA */}
           <div className="absolute bottom-6 right-6">
-            <span className="inline-flex items-center gap-3 text-sm font-black uppercase tracking-wider text-white bg-emerald-500/90 backdrop-blur-sm px-6 py-3 rounded-xl shadow-2xl group-hover:bg-lime-500 transition-all duration-300">
+            <span className="inline-flex items-center gap-3 text-sm font-black uppercase tracking-wider text-white bg-emerald-500/90 backdrop-blur-sm px-6 py-3 rounded-xl shadow-2xl group-hover:bg-emerald-500 transition-all duration-300">
               Explore Now
               <svg className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -483,7 +483,7 @@ function PostOverlayCard({ post }) {
   return (
     <article className="group relative overflow-hidden rounded-3xl shadow-xl ring-1 ring-emerald-100/40 transition-all duration-500 hover:shadow-2xl hover:shadow-emerald-300/50 hover:-translate-y-2">
       <Link to={href} className="block">
-        <div className="relative h-96 lg:h-[440px] overflow-hidden bg-gradient-to-br from-emerald-100 to-lime-100">
+        <div className="relative h-96 lg:h-[440px] overflow-hidden bg-gradient-to-br from-emerald-100 to-emerald-100">
         <img
           src={post?.coverImage || DEFAULT_POST_IMAGE}
           alt={post?.title}
@@ -491,7 +491,7 @@ function PostOverlayCard({ post }) {
           loading="lazy"
         />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/10 to-lime-600/10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/10 to-emerald-600/10" />
         </div>
         <div className="absolute inset-x-0 bottom-0 p-7 lg:p-9 text-white">
           <div className="mb-3 inline-flex items-center gap-2 text-[10px] font-extrabold tracking-widest uppercase bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full text-emerald-700 shadow-lg">
@@ -500,7 +500,7 @@ function PostOverlayCard({ post }) {
             </svg>
             {post?.category || ''}
           </div>
-          <h3 className="text-2xl lg:text-3xl font-extrabold leading-tight drop-shadow-lg transition-all duration-300 group-hover:text-lime-300 mb-3">
+          <h3 className="text-2xl lg:text-3xl font-extrabold leading-tight drop-shadow-lg transition-all duration-300 group-hover:text-emerald-300 mb-3">
             {post?.title}
           </h3>
           <p className="text-sm lg:text-base text-white/90 drop-shadow line-clamp-2 mb-5">
@@ -513,7 +513,7 @@ function PostOverlayCard({ post }) {
               </svg>
               {post?.readTime || '3 min read'}
             </div>
-            <span className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-lime-300 transition-all duration-300 group-hover:gap-3">
+            <span className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-emerald-300 transition-all duration-300 group-hover:gap-3">
               Read Now
               <svg className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -533,7 +533,7 @@ function LoadMoreButton({ onClick, disabled, loading }) {
       type="button"
       onClick={onClick}
       disabled={disabled || loading}
-        className={`group relative inline-flex items-center gap-4 px-12 py-5 rounded-2xl bg-gradient-to-r from-emerald-500 to-lime-500 text-white font-black text-base uppercase tracking-wider shadow-2xl transition-all duration-300 hover:shadow-[0_15px_40px_-10px_rgba(16,185,129,0.5)] hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${loading ? 'cursor-wait' : 'cursor-pointer'}`}
+        className={`group relative inline-flex items-center gap-4 px-12 py-5 rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-400 text-white font-black text-base uppercase tracking-wider shadow-2xl transition-all duration-300 hover:shadow-[0_15px_40px_-10px_rgba(16,185,129,0.5)] hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${loading ? 'cursor-wait' : 'cursor-pointer'}`}
       aria-busy={loading ? 'true' : 'false'}
     >
         <span className="relative">
@@ -550,7 +550,7 @@ function LoadMoreButton({ onClick, disabled, loading }) {
         )}
         
         {/* Glow effect */}
-        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-400 to-lime-400 blur-xl opacity-50 group-hover:opacity-70 transition-opacity -z-10"></div>
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-400 to-emerald-300 blur-xl opacity-50 group-hover:opacity-70 transition-opacity -z-10"></div>
     </button>
     </div>
   )
@@ -845,11 +845,11 @@ const Blog = ({ filter, sidebarShowCategoryList = false, showCategoryHeader = fa
   }, [filter?.category, filter?.tag])
 
   return (
-    <div className="w-full bg-gradient-to-br from-white via-emerald-50/30 to-lime-50/20">
+    <div className="w-full bg-gradient-to-br from-white via-emerald-50/30 to-emerald-50/20">
       <Header />
       <main className="min-h-screen w-full">
         {/* Hero Section */}
-        <div className="bg-gradient-to-br from-emerald-600 via-green-500 to-lime-500 text-white py-16 lg:py-20">
+        <div className="bg-gradient-to-br from-emerald-600 via-green-500 to-emerald-500 text-white py-16 lg:py-20">
           <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl">
               <div className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
@@ -859,7 +859,7 @@ const Blog = ({ filter, sidebarShowCategoryList = false, showCategoryHeader = fa
                 Health & Wellness Blog
               </div>
               <h1 className="text-4xl lg:text-6xl font-black leading-tight mb-6 drop-shadow-lg">
-                Discover Your Path to <span className="text-lime-300">Better Health</span>
+                Discover Your Path to <span>Better Health</span>
               </h1>
               <p className="text-xl lg:text-2xl text-white/90 leading-relaxed drop-shadow">
                 Expert insights, evidence-based advice, and inspiring stories to help you live your healthiest life.
